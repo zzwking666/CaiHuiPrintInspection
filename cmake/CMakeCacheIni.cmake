@@ -1,0 +1,1 @@
+set(BUILD_WITHOUT_HARDWARE "false" CACHE STRING "If build without hardware")

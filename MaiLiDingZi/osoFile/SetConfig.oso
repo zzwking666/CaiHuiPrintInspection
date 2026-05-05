@@ -1,0 +1,29 @@
+#include <string>
+
+namespace cdm {
+	class SetConfig
+	{
+	public:
+		xiangjiguangdianpingbishijian : double : default = 0;
+		shuchuxinhaoyanshi : double : default = 0;
+		shuchuxinhaochixushijian : double : default = 0;
+
+		shangxianwei1 : double : default = 0;
+		xiaxianwei1 : double : default = 0;
+		zuoxianwei1 : double : default = 0;
+		youxianwei1 : double : default = 0;
+		baoguang1 : double : default = 0;
+		zengyi1 : double : default = 0;
+		xiangsudangliang1 : double : default = 0;
+
+		shangxianwei2 : double : default = 0;
+		xiaxianwei2 : double : default = 0;
+		zuoxianwei2 : double : default = 0;
+		youxianwei2 : double : default = 0;
+		baoguang2 : double : default = 0;
+		zengyi2 : double : default = 0;
+		xiangsudangliang2 : double : default = 0;
+
+		changeLanguageIndex : int : default = 0;
+	};
+}

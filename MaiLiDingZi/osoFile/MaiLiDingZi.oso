@@ -1,0 +1,12 @@
+#include <string>
+
+namespace cdm {
+	class MaiLiDingZiConfig
+	{
+	public:
+		totalDefectiveVolume : int :default = 0;
+		isDebug : bool :default = false;
+		isDefect : bool :default = false;
+		isSaveImg : bool :default = false;
+	};
+}
