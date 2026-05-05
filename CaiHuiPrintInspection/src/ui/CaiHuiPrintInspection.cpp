@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include <QProcess>
 
-#include "ui_MaiLiDingZi.h"
+#include "ui_CaiHuiPrintInspection.h"
 #include <QPushButton>
 
 #include "DlgProductSet.h"
@@ -16,7 +16,7 @@
 
 MaiLiDingZi::MaiLiDingZi(QWidget* parent)
 	: QMainWindow(parent)
-	, ui(new Ui::MaiLiDingZiClass())
+	, ui(new Ui::CaiHuiPrintInspectionClass())
 {
 	ui->setupUi(this);
 

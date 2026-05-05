@@ -11,7 +11,7 @@
 #include "rqw_RunEnvCheck.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MaiLiDingZiClass; };
+namespace Ui { class CaiHuiPrintInspectionClass; };
 QT_END_NAMESPACE
 
 class MaiLiDingZi : public QMainWindow
@@ -58,6 +58,6 @@ private:
 	rw::rqw::ClickableLabel* clickableTitle = nullptr;
 	DlgCloseForm* _dlgCloseForm = nullptr;
 private:
-	Ui::MaiLiDingZiClass* ui;
+	Ui::CaiHuiPrintInspectionClass* ui;
 	int minimizeCount{ 3 };
 };
