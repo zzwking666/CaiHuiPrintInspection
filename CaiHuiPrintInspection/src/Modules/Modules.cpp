@@ -4,7 +4,7 @@
 #include <QMessageBox>
 
 #include "DlgProductSet.h"
-#include "MaiLiDingZi.h"
+#include "CaiHuiPrintInspection.h"
 #include "MaiLiDingZi.hpp"
 #include "rqw_RunEnvCheck.hpp"
 #include "SetConfig.hpp"

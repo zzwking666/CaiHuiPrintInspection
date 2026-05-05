@@ -1,6 +1,6 @@
 #include "UIModule.hpp"
 #include "DlgProductSet.h"
-#include "MaiLiDingZi.h"
+#include "CaiHuiPrintInspection.h"
 #include "ui_DlgProductSet.h"
 
 void UIModule::build()

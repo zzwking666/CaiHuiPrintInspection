@@ -15,7 +15,7 @@
 #include <algorithm>
 
 #include "Modules.hpp"
-#include "MaiLiDingZi.h"
+#include "CaiHuiPrintInspection.h"
 
 namespace {
 	// 在给定最小间隔内只放行一次调用：成功返回 true，其他并发/过快的调用返回 false

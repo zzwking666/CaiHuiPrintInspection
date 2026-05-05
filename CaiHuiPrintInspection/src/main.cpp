@@ -2,7 +2,7 @@
 #include <QtWidgets/QApplication>
 
 #include "Modules.hpp"
-#include "MaiLiDingZi.h"
+#include "CaiHuiPrintInspection.h"
 
 int main(int argc, char* argv[])
 {
