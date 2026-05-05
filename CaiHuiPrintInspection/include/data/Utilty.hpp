@@ -6,13 +6,13 @@
 inline struct GlobalPath
 {
 public:
-	QString projectHome = R"(D:\zfkjData\MaiLiDingZi\)";
+	QString projectHome = R"(D:\zfkjData\CaiHuiPrintInspection\)";
 public:
 	QString configRootPath = projectHome + R"(config\)";
 	QString modelRootPath = projectHome + R"(model\)";
-	QString maiLiDingZiConfigPath = configRootPath + R"(MaiLiDingZiConfig.xml)";
+	QString CaiHuiPrintInspectionConfigPath = configRootPath + R"(CaiHuiPrintInspection.xml)";
 	QString setConfigPath = configRootPath + R"(SetConfig.xml)";
-	QString modelPath = modelRootPath + R"(MaiLiDingZi.engine)";
+	QString modelPath = modelRootPath + R"(CaiHuiPrintInspection.engine)";
 public:
 	QString imageSaveRootPath = projectHome + R"(savedImages\)";
 public:

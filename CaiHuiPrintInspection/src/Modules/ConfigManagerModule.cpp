@@ -8,7 +8,7 @@ bool ConfigManagerModule::build()
 	storeContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
 
 #pragma region readHandleScannerCfg
-	auto loadMainWindowConfig = storeContext->loadSafe(globalPath.maiLiDingZiConfigPath.toStdString());
+	auto loadMainWindowConfig = storeContext->loadSafe(globalPath.CaiHuiPrintInspectionConfigPath.toStdString());
 	if (loadMainWindowConfig)
 	{
 		maiLiDingZiConfig = *loadMainWindowConfig;
@@ -28,7 +28,7 @@ bool ConfigManagerModule::build()
 
 void ConfigManagerModule::destroy()
 {
-	storeContext->saveSafe(maiLiDingZiConfig, globalPath.maiLiDingZiConfigPath.toStdString());
+	storeContext->saveSafe(maiLiDingZiConfig, globalPath.CaiHuiPrintInspectionConfigPath.toStdString());
 	storeContext->saveSafe(setConfig, globalPath.setConfigPath.toStdString());
 	storeContext.reset();
 }
