@@ -14,13 +14,13 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class CaiHuiPrintInspectionClass; };
 QT_END_NAMESPACE
 
-class MaiLiDingZi : public QMainWindow
+class CaiHuiPrintInspection : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	MaiLiDingZi(QWidget* parent = nullptr);
-	~MaiLiDingZi();
+	CaiHuiPrintInspection(QWidget* parent = nullptr);
+	~CaiHuiPrintInspection();
 #ifdef BUILD_WITHOUT_HARDWARE
 public:
 	QCheckBox* cBox_testPushImg{ nullptr };
@@ -30,7 +30,7 @@ public slots:
 public:
 	void build_ui();
 	void build_connect();
-	void build_MaiLiDingZiData();
+	void build_CaiHuiPrintInspectionData();
 	void ini_clickableTitle();
 	void build_DlgCloseForm();
 public:

@@ -14,7 +14,7 @@
 #include "Utilty.hpp"
 
 
-MaiLiDingZi::MaiLiDingZi(QWidget* parent)
+CaiHuiPrintInspection::CaiHuiPrintInspection(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::CaiHuiPrintInspectionClass())
 {
@@ -23,7 +23,7 @@ MaiLiDingZi::MaiLiDingZi(QWidget* parent)
 	initializeComponents();
 }
 
-MaiLiDingZi::~MaiLiDingZi()
+CaiHuiPrintInspection::~CaiHuiPrintInspection()
 {
 	Modules::getInstance().stop();
 	Modules::getInstance().destroy();
@@ -31,7 +31,7 @@ MaiLiDingZi::~MaiLiDingZi()
 }
 
 #ifdef BUILD_WITHOUT_HARDWARE
-void MaiLiDingZi::cBox_testPushImg_checked(bool checked)
+void CaiHuiPrintInspection::cBox_testPushImg_checked(bool checked)
 {
 	if (checked)
 	{
@@ -44,9 +44,9 @@ void MaiLiDingZi::cBox_testPushImg_checked(bool checked)
 }
 #endif
 
-void MaiLiDingZi::build_ui()
+void CaiHuiPrintInspection::build_ui()
 {
-	build_MaiLiDingZiData();
+	build_CaiHuiPrintInspectionData();
 	build_DlgCloseForm();
 
 #ifdef BUILD_WITHOUT_HARDWARE
@@ -54,30 +54,30 @@ void MaiLiDingZi::build_ui()
 	cBox_testPushImg->setText("图像推送状态");
 	ui->gBox_infor->layout()->addWidget(cBox_testPushImg);
 	QObject::connect(cBox_testPushImg, &QCheckBox::clicked,
-		this, &MaiLiDingZi::cBox_testPushImg_checked);
+		this, &CaiHuiPrintInspection::cBox_testPushImg_checked);
 #endif
 }
 
-void MaiLiDingZi::build_connect()
+void CaiHuiPrintInspection::build_connect()
 {
 	QObject::connect(ui->pbtn_exit, &QPushButton::clicked,
-		this, &MaiLiDingZi::pbtn_exit_clicked);
+		this, &CaiHuiPrintInspection::pbtn_exit_clicked);
 	QObject::connect(ui->pbtn_set, &QPushButton::clicked,
-		this, &MaiLiDingZi::pbtn_set_clicked);
+		this, &CaiHuiPrintInspection::pbtn_set_clicked);
 	QObject::connect(ui->rbtn_debug, &QRadioButton::clicked,
-		this, &MaiLiDingZi::rbtn_debug_checked);
+		this, &CaiHuiPrintInspection::rbtn_debug_checked);
 	QObject::connect(ui->rbtn_removeFunc, &QRadioButton::clicked,
-		this, &MaiLiDingZi::rbtn_removeFunc_checked);
+		this, &CaiHuiPrintInspection::rbtn_removeFunc_checked);
 	QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
-		this, &MaiLiDingZi::pbtn_resetProduct_clicked);
+		this, &CaiHuiPrintInspection::pbtn_resetProduct_clicked);
 	QObject::connect(ui->ckb_saveImg, &QCheckBox::clicked,
-		this, &MaiLiDingZi::ckb_saveImg_checked);
+		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
 	// 连接显示标题
 	QObject::connect(clickableTitle, &rw::rqw::ClickableLabel::clicked,
-		this, &MaiLiDingZi::lb_title_clicked);
+		this, &CaiHuiPrintInspection::lb_title_clicked);
 }
 
-void MaiLiDingZi::build_MaiLiDingZiData()
+void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
@@ -95,23 +95,23 @@ void MaiLiDingZi::build_MaiLiDingZiData()
 	changeLanguage(setConfig.changeLanguageIndex);
 }
 
-void MaiLiDingZi::ini_clickableTitle()
+void CaiHuiPrintInspection::ini_clickableTitle()
 {
 	// 初始化标题label
 	clickableTitle = new rw::rqw::ClickableLabel(this);
 	auto layoutTitle = ui->groupBox_head->layout();
 	layoutTitle->replaceWidget(ui->label_title, clickableTitle);
 	delete ui->label_title;
-	clickableTitle->setText("钉子检测");
+	clickableTitle->setText("印刷检测");
 	clickableTitle->setStyleSheet("QLabel {font-size: 30px;font-weight: bold;color: rgb(255, 255, 255);padding: 5px 5px;border-bottom: 2px solid #cccccc;}");
 }
 
-void MaiLiDingZi::build_DlgCloseForm()
+void CaiHuiPrintInspection::build_DlgCloseForm()
 {
 	_dlgCloseForm = new DlgCloseForm(this);
 }
 
-void MaiLiDingZi::initializeComponents()
+void CaiHuiPrintInspection::initializeComponents()
 {
 	build_ui();
 
@@ -123,7 +123,7 @@ void MaiLiDingZi::initializeComponents()
 #endif
 }
 
-void MaiLiDingZi::build_camera()
+void CaiHuiPrintInspection::build_camera()
 {
 	auto& cameraModules = Modules::getInstance().cameraModule;
 	auto errors = cameraModules.getBuildResults();
@@ -138,12 +138,12 @@ void MaiLiDingZi::build_camera()
 	}
 }
 
-void MaiLiDingZi::changeLanguage(int index)
+void CaiHuiPrintInspection::changeLanguage(int index)
 {
 	// 中文
 	if (0 == index)
 	{
-		clickableTitle->setText("钉子检测");
+		clickableTitle->setText("印刷检测");
 		ui->label_cameraStateTitle->setText("相机状态");
 		ui->label_info->setText("统计信息");
 		ui->pbtn_resetProduct->setText("产量清零");
@@ -181,7 +181,7 @@ void MaiLiDingZi::changeLanguage(int index)
 	}
 }
 
-void MaiLiDingZi::updateCameraLabelState(int cameraIndex, bool state)
+void CaiHuiPrintInspection::updateCameraLabelState(int cameraIndex, bool state)
 {
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
 	switch (cameraIndex)
@@ -239,13 +239,13 @@ void MaiLiDingZi::updateCameraLabelState(int cameraIndex, bool state)
 	}
 }
 
-void MaiLiDingZi::onUpdateStatisticalInfoUI()
+void CaiHuiPrintInspection::onUpdateStatisticalInfoUI()
 {
 	auto& statisticalInfo = Modules::getInstance().runtimeInfoModule.statisticalInfo;
 	ui->label_wasteProductsValue->setText(QString::number(statisticalInfo.wasteCount.load()));
 }
 
-void MaiLiDingZi::onCameraDisplay(size_t index, QPixmap image)
+void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
 {
 	if (1 == index)
 	{
@@ -257,7 +257,7 @@ void MaiLiDingZi::onCameraDisplay(size_t index, QPixmap image)
 	}
 }
 
-void MaiLiDingZi::lb_title_clicked()
+void CaiHuiPrintInspection::lb_title_clicked()
 {
 	if (0 != minimizeCount)
 	{
@@ -272,7 +272,7 @@ void MaiLiDingZi::lb_title_clicked()
 
 }
 
-void MaiLiDingZi::pbtn_exit_clicked()
+void CaiHuiPrintInspection::pbtn_exit_clicked()
 {
 #ifdef NDEBUG
 	if (_dlgCloseForm)
@@ -284,7 +284,7 @@ void MaiLiDingZi::pbtn_exit_clicked()
 #endif
 }
 
-void MaiLiDingZi::pbtn_set_clicked()
+void CaiHuiPrintInspection::pbtn_set_clicked()
 {
 	auto& _dlgProductSet = Modules::getInstance().uiModule._dlgProductSet;
 	_dlgProductSet->setFixedSize(this->width(), this->height());
@@ -292,7 +292,7 @@ void MaiLiDingZi::pbtn_set_clicked()
 	_dlgProductSet->exec();
 }
 
-void MaiLiDingZi::rbtn_debug_checked(bool checked)
+void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 {
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 
@@ -316,7 +316,7 @@ void MaiLiDingZi::rbtn_debug_checked(bool checked)
 	}
 }
 
-void MaiLiDingZi::rbtn_removeFunc_checked(bool checked)
+void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 {
 	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
 	auto& camera1 = Modules::getInstance().cameraModule.camera1;
@@ -337,7 +337,7 @@ void MaiLiDingZi::rbtn_removeFunc_checked(bool checked)
 	}
 }
 
-void MaiLiDingZi::pbtn_resetProduct_clicked()
+void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 
@@ -346,7 +346,7 @@ void MaiLiDingZi::pbtn_resetProduct_clicked()
 	onUpdateStatisticalInfoUI();
 }
 
-void MaiLiDingZi::ckb_saveImg_checked(bool checked)
+void CaiHuiPrintInspection::ckb_saveImg_checked(bool checked)
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 	maiLiDingZiConfig.isSaveImg = checked;

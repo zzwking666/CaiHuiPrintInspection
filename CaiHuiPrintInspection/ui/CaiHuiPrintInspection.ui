@@ -115,7 +115,7 @@ QGroupBox::title {
     }</string>
                  </property>
                  <property name="text">
-                  <string>钉子检测</string>
+                  <string>印刷检测</string>
                  </property>
                 </widget>
                </item>

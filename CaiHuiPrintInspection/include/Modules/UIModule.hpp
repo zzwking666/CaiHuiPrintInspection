@@ -4,7 +4,7 @@
 #include <QObject>
 #include "IModule.hpp"
 
-class MaiLiDingZi;
+class CaiHuiPrintInspection;
 class DlgProductSet;
 
 class UIModule
@@ -20,5 +20,5 @@ public:
 
 public:
 	DlgProductSet* _dlgProductSet = nullptr;
-	MaiLiDingZi* _maiLiDingZi = nullptr;
+	CaiHuiPrintInspection* _maiLiDingZi = nullptr;
 };
