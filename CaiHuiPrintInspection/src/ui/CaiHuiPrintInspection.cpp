@@ -1,6 +1,7 @@
 #include "CaiHuiPrintInspection.h"
 
 #include <QDir>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QProcess>
 
@@ -377,15 +378,28 @@ void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 
 void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 {
+	QString imagePath = QFileDialog::getOpenFileName(
+		this,
+		tr("选择图片"),
+		QDir::homePath(),
+		tr("Images (*.bmp *.jpg *.jpeg *.png *.tif *.tiff)")
+	);
 
+	if (imagePath.isEmpty())
+	{
+		return;
+	}
 
+	if (!_halconDisplay1 || !_halconDisplay1->isValid())
+	{
+		QMessageBox::warning(this, tr("提示"), tr("显示窗口未初始化"));
+		return;
+	}
 
-
-	/*auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
-
-	maiLiDingZiConfig.totalDefectiveVolume = 0;
-
-	onUpdateStatisticalInfoUI();*/
+	if (!_halconDisplay1->displayImageFromFile(imagePath, true))
+	{
+		QMessageBox::warning(this, tr("提示"), tr("图片显示失败"));
+	}
 }
 
 void CaiHuiPrintInspection::ckb_saveImg_checked(bool checked)

@@ -128,6 +128,14 @@ bool HalconDisplay::displayImage(const HalconCpp::HObject& image, bool fitToWind
     try {
         using namespace HalconCpp;
 
+        // 同步 Halcon 子窗口大小到父控件，避免显示区域过小
+        if (_parentWidget) {
+            const QRect rect = _parentWidget->contentsRect();
+            const int width = rect.width() > 1 ? rect.width() : 1;
+            const int height = rect.height() > 1 ? rect.height() : 1;
+            SetWindowExtents(*_windowHandle, 0, 0, width, height);
+        }
+
         // 获取图片尺寸
         HTuple hvWidth, hvHeight;
         GetImageSize(image, &hvWidth, &hvHeight);
