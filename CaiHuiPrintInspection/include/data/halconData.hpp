@@ -12,6 +12,7 @@ public:
 	~HalconData();
 public:
 
-	HalconCpp::HObject image;
+	HalconCpp::HObject processImage;
+	HalconCpp::HTuple hv_ModelID;
 
 };
