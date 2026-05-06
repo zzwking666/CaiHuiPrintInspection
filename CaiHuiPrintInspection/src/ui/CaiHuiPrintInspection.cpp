@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QProcess>
+#include <QTimer>
 
 #include "ui_CaiHuiPrintInspection.h"
 #include <QPushButton>
@@ -131,6 +132,16 @@ void CaiHuiPrintInspection::build_halconDisplay()
 	_halconDisplay1 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_1);
 	_halconDisplay2 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_2);
 
+	if (auto* display3Widget = this->findChild<QWidget*>("label_imgDisplay_3"))
+	{
+		_halconDisplay3 = std::make_unique<rw::rqw::HalconDisplay>(display3Widget);
+	}
+
+	if (auto* display4Widget = this->findChild<QWidget*>("label_imgDisplay_4"))
+	{
+		_halconDisplay4 = std::make_unique<rw::rqw::HalconDisplay>(display4Widget);
+	}
+
 	if (_halconDisplay1)
 	{
 		_halconDisplay1->initialize();
@@ -140,6 +151,36 @@ void CaiHuiPrintInspection::build_halconDisplay()
 	{
 		_halconDisplay2->initialize();
 	}
+
+	if (_halconDisplay3)
+	{
+		_halconDisplay3->initialize();
+	}
+
+	if (_halconDisplay4)
+	{
+		_halconDisplay4->initialize();
+	}
+
+	// 延迟到界面完成布局后再次初始化，避免初始窗口尺寸过小
+	QTimer::singleShot(0, this, [this]() {
+		if (_halconDisplay1)
+		{
+			_halconDisplay1->initialize();
+		}
+		if (_halconDisplay2)
+		{
+			_halconDisplay2->initialize();
+		}
+		if (_halconDisplay3)
+		{
+			_halconDisplay3->initialize();
+		}
+		if (_halconDisplay4)
+		{
+			_halconDisplay4->initialize();
+		}
+	});
 }
 
 void CaiHuiPrintInspection::build_camera()
@@ -292,6 +333,20 @@ void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
      if (_halconDisplay2 && _halconDisplay2->isValid())
 		{
 			_halconDisplay2->displayMat(matClone, true);
+		}
+	}
+   else if (3 == index)
+	{
+		if (_halconDisplay3 && _halconDisplay3->isValid())
+		{
+			_halconDisplay3->displayMat(matClone, true);
+		}
+	}
+	else if (4 == index)
+	{
+		if (_halconDisplay4 && _halconDisplay4->isValid())
+		{
+			_halconDisplay4->displayMat(matClone, true);
 		}
 	}
 }

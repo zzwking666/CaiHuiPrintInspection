@@ -61,6 +61,8 @@ private:
 	DlgCloseForm* _dlgCloseForm = nullptr;
     std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay1;
 	std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay2;
+    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay3;
+	std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay4;
 private:
 	Ui::CaiHuiPrintInspectionClass* ui;
 	int minimizeCount{ 3 };
