@@ -140,13 +140,34 @@ bool HalconDisplay::displayImage(const HalconCpp::HObject& image, bool fitToWind
         HTuple hvWidth, hvHeight;
         GetImageSize(image, &hvWidth, &hvHeight);
 
-        // 如果需要自适应窗口大小，设置显示区域
-        if (fitToWindow) {
-            SetPart(*_windowHandle, 0, 0, hvHeight - 1, hvWidth - 1);
-        }
+        if (fitToWindow && _parentWidget) {
+            const QRect rect = _parentWidget->contentsRect();
+            const double winWidth = rect.width() > 1 ? static_cast<double>(rect.width()) : 1.0;
+            const double winHeight = rect.height() > 1 ? static_cast<double>(rect.height()) : 1.0;
+            const double imgWidth = static_cast<double>(hvWidth[0].I());
+            const double imgHeight = static_cast<double>(hvHeight[0].I());
 
-        // 显示图片
-        DispObj(image, *_windowHandle);
+            // 保持图像纵横比，不拉伸失真（必要时留黑边）
+            const double winAspect = winWidth / winHeight;
+            const double imgAspect = imgWidth / imgHeight;
+
+            if (winAspect > imgAspect) {
+                const double displayWidth = imgHeight * winAspect;
+                const double colPadding = (displayWidth - imgWidth) * 0.5;
+                SetPart(*_windowHandle, 0.0, -colPadding, imgHeight - 1.0, imgWidth - 1.0 + colPadding);
+            }
+            else {
+                const double displayHeight = imgWidth / winAspect;
+                const double rowPadding = (displayHeight - imgHeight) * 0.5;
+                SetPart(*_windowHandle, -rowPadding, 0.0, imgHeight - 1.0 + rowPadding, imgWidth - 1.0);
+            }
+
+            DispObj(image, *_windowHandle);
+        }
+        else {
+            SetPart(*_windowHandle, 0, 0, hvHeight - 1, hvWidth - 1);
+            DispObj(image, *_windowHandle);
+        }
 
         // 保存图片引用
         if (_lastImage) {
