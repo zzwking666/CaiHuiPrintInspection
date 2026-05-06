@@ -9,6 +9,7 @@
 #include "DlgCloseForm.h"
 #include "oso_StorageContext.hpp"
 #include "rqw_RunEnvCheck.hpp"
+#include "HalconDisplay.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CaiHuiPrintInspectionClass; };
@@ -37,6 +38,7 @@ public:
 	void initializeComponents();
 public:
 	void build_camera();
+   void build_halconDisplay();
 public slots:
 	void changeLanguage(int index);
 public slots:
@@ -57,6 +59,8 @@ private slots:
 private:
 	rw::rqw::ClickableLabel* clickableTitle = nullptr;
 	DlgCloseForm* _dlgCloseForm = nullptr;
+    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay1;
+	std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay2;
 private:
 	Ui::CaiHuiPrintInspectionClass* ui;
 	int minimizeCount{ 3 };

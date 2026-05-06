@@ -12,6 +12,7 @@
 #include "NumberKeyboard.h"
 #include "rqw_RunEnvCheck.hpp"
 #include "Utilty.hpp"
+#include "HalconDisplay.hpp"
 
 
 CaiHuiPrintInspection::CaiHuiPrintInspection(QWidget* parent)
@@ -114,6 +115,7 @@ void CaiHuiPrintInspection::build_DlgCloseForm()
 void CaiHuiPrintInspection::initializeComponents()
 {
 	build_ui();
+	build_halconDisplay();
 
 	build_camera();
 
@@ -121,6 +123,22 @@ void CaiHuiPrintInspection::initializeComponents()
 
 #ifndef BUILD_WITHOUT_HARDWARE
 #endif
+}
+
+void CaiHuiPrintInspection::build_halconDisplay()
+{
+	_halconDisplay1 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_1);
+	_halconDisplay2 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_2);
+
+	if (_halconDisplay1)
+	{
+		_halconDisplay1->initialize();
+	}
+
+	if (_halconDisplay2)
+	{
+		_halconDisplay2->initialize();
+	}
 }
 
 void CaiHuiPrintInspection::build_camera()
@@ -247,13 +265,33 @@ void CaiHuiPrintInspection::onUpdateStatisticalInfoUI()
 
 void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
 {
+ if (image.isNull())
+	{
+		return;
+	}
+
+	QImage qImage = image.toImage().convertToFormat(QImage::Format_BGR888);
+	if (qImage.isNull())
+	{
+		return;
+	}
+
+	cv::Mat mat(qImage.height(), qImage.width(), CV_8UC3, const_cast<uchar*>(qImage.bits()), qImage.bytesPerLine());
+	cv::Mat matClone = mat.clone();
+
 	if (1 == index)
 	{
-		ui->label_imgDisplay_1->setPixmap(image.scaled(ui->label_imgDisplay_1->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+     if (_halconDisplay1 && _halconDisplay1->isValid())
+		{
+			_halconDisplay1->displayMat(matClone, true);
+		}
 	}
 	else if (2 == index)
 	{
-		ui->label_imgDisplay_2->setPixmap(image.scaled(ui->label_imgDisplay_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+     if (_halconDisplay2 && _halconDisplay2->isValid())
+		{
+			_halconDisplay2->displayMat(matClone, true);
+		}
 	}
 }
 
@@ -339,11 +377,15 @@ void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 
 void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 {
-	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
+
+
+
+
+	/*auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 
 	maiLiDingZiConfig.totalDefectiveVolume = 0;
 
-	onUpdateStatisticalInfoUI();
+	onUpdateStatisticalInfoUI();*/
 }
 
 void CaiHuiPrintInspection::ckb_saveImg_checked(bool checked)
