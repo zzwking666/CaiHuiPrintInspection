@@ -74,6 +74,7 @@ target_link_libraries(${PROJECT_NAME}
 	PRIVATE rqwime
 	PRIVATE imgPro
 	PRIVATE rqwscc
+	PRIVATE rqwhalcon
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
