@@ -5,6 +5,7 @@
 #include "oso_StorageContext.hpp"
 #include "SetConfig.hpp"
 #include "MaiLiDingZi.hpp"
+#include "halconData.hpp"
 
 class ConfigManagerModule
 	: public QObject, public IModule<bool>
@@ -20,4 +21,6 @@ public:
 public:
 	cdm::MaiLiDingZiConfig maiLiDingZiConfig{};
 	cdm::SetConfig setConfig{};
+	HalconData halconData{};
+
 };
