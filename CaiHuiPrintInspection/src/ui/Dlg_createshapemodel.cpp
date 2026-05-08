@@ -1,19 +1,39 @@
 #include "Dlg_createshapemodel.h"
 
+#include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
+
 Dlg_createshapemodel::Dlg_createshapemodel(QWidget* parent)
+   : QDialog(parent)
+    , ui(new Ui::Dlg_createshapemodelClass())
 {
+   ui->setupUi(this);
+
+    build_ui();
+    build_connect();
 }
 
 Dlg_createshapemodel::~Dlg_createshapemodel()
 {
+   delete ui;
 }
 
 void Dlg_createshapemodel::build_ui()
 {
+   _halconDisplay = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay);
+    if (_halconDisplay)
+    {
+        _halconDisplay->initialize();
+    }
 }
 
 void Dlg_createshapemodel::build_connect()
 {
+   QObject::connect(ui->btn_paintRegion, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_paintRegion_clicked);
+   QObject::connect(ui->btn_readImage, &QPushButton::clicked,
+       this, &Dlg_createshapemodel::btn_readImage_clicked);
 }
 
 void Dlg_createshapemodel::btn_exit_clicked()
@@ -22,10 +42,36 @@ void Dlg_createshapemodel::btn_exit_clicked()
 
 void Dlg_createshapemodel::btn_readImage_clicked()
 {
+    QString imagePath = QFileDialog::getOpenFileName(
+        this,
+        tr("选择图片"),
+        QDir::homePath(),
+        tr("Images (*.bmp *.jpg *.jpeg *.png *.tif *.tiff)")
+    );
+
+    if (imagePath.isEmpty())
+    {
+        return;
+    }
+
+    if (!_halconDisplay || !_halconDisplay->isValid())
+    {
+        QMessageBox::warning(this, tr("提示"), tr("显示窗口未初始化"));
+        return;
+    }
+
+    if (!_halconDisplay->displayImageFromFile(imagePath, true))
+    {
+        QMessageBox::warning(this, tr("提示"), tr("图片显示失败"));
+    }
 }
 
 void Dlg_createshapemodel::btn_paintRegion_clicked()
 {
+    
+
+
+
 }
 
 void Dlg_createshapemodel::btn_createShapeModel_clicked()

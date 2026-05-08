@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ui_Dlg_createshapemodel.h"
+#include <memory>
+#include "HalconDisplay.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -49,4 +51,5 @@ private slots:
 	void btn_mean_clicked();
 public:
 	Ui::Dlg_createshapemodelClass* ui;
+  std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay;
 };

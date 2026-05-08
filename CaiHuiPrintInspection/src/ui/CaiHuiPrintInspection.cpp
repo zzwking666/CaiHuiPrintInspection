@@ -10,6 +10,7 @@
 #include <QPushButton>
 
 #include "DlgProductSet.h"
+#include "Dlg_createshapemodel.h"
 #include "Modules.hpp"
 #include "NumberKeyboard.h"
 #include "rqw_RunEnvCheck.hpp"
@@ -75,6 +76,24 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::pbtn_resetProduct_clicked);
 	QObject::connect(ui->ckb_saveImg, &QCheckBox::clicked,
 		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
+
+	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
+		Dlg_createshapemodel dlg(this);
+		dlg.exec();
+	});
+	QObject::connect(ui->btn_createShapemodel_2, &QPushButton::clicked, this, [this]() {
+		Dlg_createshapemodel dlg(this);
+		dlg.exec();
+	});
+	QObject::connect(ui->btn_createShapemodel_3, &QPushButton::clicked, this, [this]() {
+		Dlg_createshapemodel dlg(this);
+		dlg.exec();
+	});
+	QObject::connect(ui->btn_createShapemodel_4, &QPushButton::clicked, this, [this]() {
+		Dlg_createshapemodel dlg(this);
+		dlg.exec();
+	});
+
 	// 连接显示标题
 	QObject::connect(clickableTitle, &rw::rqw::ClickableLabel::clicked,
 		this, &CaiHuiPrintInspection::lb_title_clicked);
