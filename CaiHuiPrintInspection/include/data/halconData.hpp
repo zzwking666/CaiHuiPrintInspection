@@ -17,8 +17,8 @@ public:
 	bool isMeaning = false;
 	double meaning = 10;
 	bool isContrast = false;
-	double maxcontrast = 10;
-	double mincontrast = 20;
+	double maxcontrast = 20;
+	double mincontrast = 10;
 
 	QVector<HalconCpp::HObject>createRegions;
 	QVector<HalconCpp::HObject>shieldRegions;

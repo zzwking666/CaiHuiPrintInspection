@@ -69,4 +69,5 @@ public:
 	HalconData _halconData;
 	bool _hasHalconData{ false };
   QVector<bool> _drawHistory;
+  HalconCpp::HObject _modelContours;
 };

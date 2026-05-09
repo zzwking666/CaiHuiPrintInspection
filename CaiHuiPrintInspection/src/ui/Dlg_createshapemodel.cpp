@@ -72,6 +72,13 @@ void Dlg_createshapemodel::build_ui()
                         DispObj(region, *windowHandle);
                     }
                 }
+
+                if (_modelContours.IsInitialized())
+                {
+                    SetColor(*windowHandle, "cyan");
+                    SetLineWidth(*windowHandle, 2);
+                    DispObj(_modelContours, *windowHandle);
+                }
             }
             catch (...)
             {
@@ -122,6 +129,8 @@ void Dlg_createshapemodel::build_connect()
 {
   QObject::connect(ui->btn_exit, &QPushButton::clicked,
         this, &Dlg_createshapemodel::btn_exit_clicked);
+   QObject::connect(ui->btn_createShapeModel, &QPushButton::clicked,
+       this, &Dlg_createshapemodel::btn_createShapeModel_clicked);
    QObject::connect(ui->btn_paintRegion, &QPushButton::clicked,
         this, &Dlg_createshapemodel::btn_paintRegion_clicked);
    QObject::connect(ui->btn_readImage, &QPushButton::clicked,
@@ -199,10 +208,199 @@ void Dlg_createshapemodel::btn_readImage_clicked()
     HalconCpp::ReadImage(&_halconData.processImage, imagePath.toStdString().c_str());
     _hasHalconData = true;
     _drawHistory.clear();
+    _modelContours.Clear();
     refresh_display_with_regions();
 }
 void Dlg_createshapemodel::btn_createShapeModel_clicked()
-{}
+{
+    if (!_hasHalconData || !_halconData.processImage.IsInitialized())
+    {
+        QMessageBox::warning(this, tr("提示"), tr("请先读取图片"));
+        return;
+    }
+
+    if (_halconData.createRegions.isEmpty())
+    {
+        QMessageBox::warning(this, tr("提示"), tr("请先绘制创建区域"));
+        return;
+    }
+
+    try
+    {
+        using namespace HalconCpp;
+
+        auto buildUnionFromRegions = [](const QVector<HObject>& regions, HObject* outUnion)
+            {
+                HObject concatRegions;
+                GenEmptyObj(&concatRegions);
+
+                for (const auto& region : regions)
+                {
+                    if (!region.IsInitialized())
+                    {
+                        continue;
+                    }
+
+                    HObject tmp;
+                    ConcatObj(concatRegions, region, &tmp);
+                    concatRegions = tmp;
+                }
+
+                Union1(concatRegions, outUnion);
+            };
+
+        HObject createUnion;
+        buildUnionFromRegions(_halconData.createRegions, &createUnion);
+
+        HObject modelRegion = createUnion;
+        if (!_halconData.shieldRegions.isEmpty())
+        {
+            HObject shieldUnion;
+            buildUnionFromRegions(_halconData.shieldRegions, &shieldUnion);
+
+            HObject diffRegion;
+            Difference(createUnion, shieldUnion, &diffRegion);
+            modelRegion = diffRegion;
+        }
+
+        HTuple hvArea, hvRow, hvCol;
+        AreaCenter(modelRegion, &hvArea, &hvRow, &hvCol);
+        if (hvArea.TupleLength() <= 0 || hvArea.TupleSum().D() <= 0.0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("有效建模区域为空，请检查创建/屏蔽区域"));
+            return;
+        }
+
+        HObject imageForModel;
+        ReduceDomain(_halconData.processImage, modelRegion, &imageForModel);
+
+        if (_halconData.isMeaning)
+        {
+            int meanSize = static_cast<int>(std::round(_halconData.meaning));
+            if (meanSize < 1)
+            {
+                meanSize = 1;
+            }
+            if (meanSize % 2 == 0)
+            {
+                ++meanSize;
+            }
+
+            HObject meanImage;
+            MeanImage(imageForModel, &meanImage, meanSize, meanSize);
+            imageForModel = meanImage;
+        }
+
+        if (_halconData.hv_ModelID.TupleLength() > 0)
+        {
+            try
+            {
+                ClearShapeModel(_halconData.hv_ModelID);
+            }
+            catch (...)
+            {
+            }
+            _halconData.hv_ModelID = HTuple();
+        }
+
+        HTuple hvModelID;
+        if (_halconData.isContrast)
+        {
+            CreateShapeModel(imageForModel,
+                "auto",
+                -3.1415926,
+                6.2831852,
+                "auto",
+                "auto",
+                "use_polarity",
+                _halconData.maxcontrast,
+                _halconData.mincontrast,
+                &hvModelID);
+        }
+        else
+        {
+            CreateShapeModel(imageForModel,
+                "auto",
+                -3.1415926,
+                6.2831852,
+                "auto",
+                "auto",
+                "use_polarity",
+                "auto",
+                "auto",
+                &hvModelID);
+        }
+
+        _halconData.hv_ModelID = hvModelID;
+
+        HObject modelContours;
+        GetShapeModelContours(&modelContours, hvModelID, 1);
+
+        HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
+        FindShapeModel(imageForModel,
+            hvModelID,
+            -3.1415926,
+            6.2831852,
+            0.1,
+            1,
+            0.5,
+            "least_squares",
+            0,
+            0.7,
+            &hvFindRow,
+            &hvFindCol,
+            &hvFindAngle,
+            &hvFindScore);
+
+        _modelContours.Clear();
+        if (hvFindRow.TupleLength() > 0)
+        {
+            HTuple hvHomMat2D;
+            VectorAngleToRigid(0.0, 0.0, 0.0,
+                hvFindRow[0].D(), hvFindCol[0].D(), hvFindAngle[0].D(),
+                &hvHomMat2D);
+
+            HObject foundContours;
+            AffineTransContourXld(modelContours, &foundContours, hvHomMat2D);
+            _modelContours = foundContours;
+
+            auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+            const int index = _templateIndex - 1;
+            if (index >= 0)
+            {
+                if (halconDatas.size() <= index)
+                {
+                    halconDatas.resize(index + 1);
+                }
+                halconDatas[index] = _halconData;
+            }
+
+            QMessageBox::information(this, tr("提示"), tr("模板创建成功"));
+            refresh_display_with_regions();
+        }
+        else
+        {
+            _halconData.hv_ModelID = HalconCpp::HTuple();
+            try
+            {
+                HalconCpp::ClearShapeModel(hvModelID);
+            }
+            catch (...)
+            {
+            }
+            QMessageBox::warning(this, tr("提示"), tr("创建模板失败: 未找到匹配轮廓"));
+            return;
+        }
+    }
+    catch (const HalconCpp::HException& e)
+    {
+        QMessageBox::warning(this, tr("提示"), tr("创建模板失败: %1").arg(QString::fromStdString(e.ErrorMessage().Text())));
+    }
+    catch (...)
+    {
+        QMessageBox::warning(this, tr("提示"), tr("创建模板失败"));
+    }
+}
 void Dlg_createshapemodel::btn_paintRegion_clicked()
 {
     drawRectangleAndStore(false);
@@ -225,6 +423,7 @@ void Dlg_createshapemodel::btn_clearRegion_clicked()
     _halconData.createRegions.clear();
     _halconData.shieldRegions.clear();
     _drawHistory.clear();
+    _modelContours.Clear();
     refresh_display_with_regions();
 }
 
@@ -436,6 +635,13 @@ void Dlg_createshapemodel::refresh_display_with_regions()
             {
                 DispObj(region, *windowHandle);
             }
+        }
+
+        if (_modelContours.IsInitialized())
+        {
+            SetColor(*windowHandle, "cyan");
+            SetLineWidth(*windowHandle, 2);
+            DispObj(_modelContours, *windowHandle);
         }
     }
     catch (...)
