@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QtGlobal>
 #include <algorithm>
+#include <halconcpp/HalconCpp.h>
 
 #include "Modules.hpp"
 
@@ -26,6 +27,10 @@ Dlg_createshapemodel::Dlg_createshapemodel(int templateIndex, QWidget* parent)
 
 Dlg_createshapemodel::~Dlg_createshapemodel()
 {
+   if (_halconDisplay)
+    {
+        _halconDisplay->clearOverlayDrawer();
+    }
    delete ui;
 }
 
@@ -37,6 +42,41 @@ void Dlg_createshapemodel::build_ui()
     if (_halconDisplay)
     {
         _halconDisplay->initialize();
+        _halconDisplay->setOverlayDrawer([this](HalconCpp::HTuple* windowHandle) {
+            if (!windowHandle || !_hasHalconData)
+            {
+                return;
+            }
+
+            try
+            {
+                using namespace HalconCpp;
+
+                SetLineWidth(*windowHandle, 2);
+                SetDraw(*windowHandle, "margin");
+
+                SetColor(*windowHandle, "green");
+                for (const auto& region : _halconData.createRegions)
+                {
+                    if (region.IsInitialized())
+                    {
+                        DispObj(region, *windowHandle);
+                    }
+                }
+
+                SetColor(*windowHandle, "yellow");
+                for (const auto& region : _halconData.shieldRegions)
+                {
+                    if (region.IsInitialized())
+                    {
+                        DispObj(region, *windowHandle);
+                    }
+                }
+            }
+            catch (...)
+            {
+            }
+            });
     }
 }
 
@@ -46,18 +86,20 @@ void Dlg_createshapemodel::refresh_ui_from_data()
     const int index = _templateIndex - 1;
     if (index < 0 || index >= halconDatas.size())
     {
+        _hasHalconData = false;
         return;
     }
 
-    auto& halconData = halconDatas[index];
+    _halconData = halconDatas[index];
+    _hasHalconData = true;
 
-    ui->btn_baoguang->setText(QString::number(halconData.baoguang));
-    ui->btn_zengyi->setText(QString::number(halconData.zengyi));
+    ui->btn_baoguang->setText(QString::number(_halconData.baoguang));
+    ui->btn_zengyi->setText(QString::number(_halconData.zengyi));
 
-    ui->ckb_mean->setChecked(halconData.isMeaning);
-    ui->btn_mean->setText(QString::number(halconData.meaning));
+    ui->ckb_mean->setChecked(_halconData.isMeaning);
+    ui->btn_mean->setText(QString::number(_halconData.meaning));
 
-    if (halconData.isContrast)
+    if (_halconData.isContrast)
     {
         ui->rbtn_manual->setChecked(true);
     }
@@ -66,8 +108,8 @@ void Dlg_createshapemodel::refresh_ui_from_data()
         ui->rbtn_auto->setChecked(true);
     }
 
-    ui->btn_maxcontrast->setText(QString::number(halconData.maxcontrast));
-    ui->btn_mincontrast->setText(QString::number(halconData.mincontrast));
+    ui->btn_maxcontrast->setText(QString::number(_halconData.maxcontrast));
+    ui->btn_mincontrast->setText(QString::number(_halconData.mincontrast));
 }
 
 void Dlg_createshapemodel::showEvent(QShowEvent* event)
@@ -78,14 +120,54 @@ void Dlg_createshapemodel::showEvent(QShowEvent* event)
 
 void Dlg_createshapemodel::build_connect()
 {
+  QObject::connect(ui->btn_exit, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_exit_clicked);
    QObject::connect(ui->btn_paintRegion, &QPushButton::clicked,
         this, &Dlg_createshapemodel::btn_paintRegion_clicked);
    QObject::connect(ui->btn_readImage, &QPushButton::clicked,
        this, &Dlg_createshapemodel::btn_readImage_clicked);
+   QObject::connect(ui->btn_shiledRegion, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_shiledRegion_clicked);
+    QObject::connect(ui->btn_clearRegion2, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_clearRegion2_clicked);
+    QObject::connect(ui->btn_clearRegion, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_clearRegion_clicked);
 }
 
 void Dlg_createshapemodel::btn_exit_clicked()
 {
+    auto reply = QMessageBox::question(this, tr("提示"), tr("是否保存当前参数？"),
+        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+
+    if (reply == QMessageBox::Cancel)
+    {
+        return;
+    }
+
+    if (reply == QMessageBox::Yes)
+    {
+        _halconData.baoguang = ui->btn_baoguang->text().toDouble();
+        _halconData.zengyi = ui->btn_zengyi->text().toDouble();
+        _halconData.isMeaning = ui->ckb_mean->isChecked();
+        _halconData.meaning = ui->btn_mean->text().toDouble();
+        _halconData.isContrast = ui->rbtn_manual->isChecked();
+        _halconData.maxcontrast = ui->btn_maxcontrast->text().toDouble();
+        _halconData.mincontrast = ui->btn_mincontrast->text().toDouble();
+
+        auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+        const int index = _templateIndex - 1;
+        if (index >= 0)
+        {
+            if (halconDatas.size() <= index)
+            {
+                halconDatas.resize(index + 1);
+            }
+            halconDatas[index] = _halconData;
+            _hasHalconData = true;
+        }
+    }
+
+    accept();
 }
 
 void Dlg_createshapemodel::btn_readImage_clicked()
@@ -114,32 +196,36 @@ void Dlg_createshapemodel::btn_readImage_clicked()
         return;
     }
 
-    auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
-    const int index = _templateIndex - 1;
-    if (index >= 0 && index < halconDatas.size())
-    {
-        HalconCpp::ReadImage(&halconDatas[index].processImage, imagePath.toStdString().c_str());
-    }
+    HalconCpp::ReadImage(&_halconData.processImage, imagePath.toStdString().c_str());
+    _hasHalconData = true;
+    _drawHistory.clear();
+    refresh_display_with_regions();
 }
-
+void Dlg_createshapemodel::btn_createShapeModel_clicked()
+{}
 void Dlg_createshapemodel::btn_paintRegion_clicked()
 {
-    
-
-
-
+    drawRectangleAndStore(false);
 }
 
-void Dlg_createshapemodel::btn_createShapeModel_clicked()
-{
-}
+
 
 void Dlg_createshapemodel::btn_shiledRegion_clicked()
 {
+   drawRectangleAndStore(true);
 }
 
 void Dlg_createshapemodel::btn_clearRegion_clicked()
 {
+   if (!_hasHalconData)
+    {
+        return;
+    }
+
+    _halconData.createRegions.clear();
+    _halconData.shieldRegions.clear();
+    _drawHistory.clear();
+    refresh_display_with_regions();
 }
 
 void Dlg_createshapemodel::btn_paintCenterPoint_clicked()
@@ -188,6 +274,30 @@ void Dlg_createshapemodel::btn_mincontrast_clicked()
 
 void Dlg_createshapemodel::btn_clearRegion2_clicked()
 {
+   if (!_hasHalconData || _drawHistory.isEmpty())
+    {
+        return;
+    }
+
+    const bool lastIsShield = _drawHistory.back();
+    _drawHistory.pop_back();
+
+    if (lastIsShield)
+    {
+        if (!_halconData.shieldRegions.isEmpty())
+        {
+            _halconData.shieldRegions.removeLast();
+        }
+    }
+    else
+    {
+        if (!_halconData.createRegions.isEmpty())
+        {
+            _halconData.createRegions.removeLast();
+        }
+    }
+
+    refresh_display_with_regions();
 }
 
 void Dlg_createshapemodel::btn_zengyi_clicked()
@@ -208,4 +318,127 @@ void Dlg_createshapemodel::btn_opening_clicked()
 
 void Dlg_createshapemodel::btn_mean_clicked()
 {
+}
+
+bool Dlg_createshapemodel::drawRectangleAndStore(bool isShieldRegion)
+{
+    if (!_hasHalconData)
+    {
+        QMessageBox::warning(this, tr("提示"), tr("请先读取图片"));
+        return false;
+    }
+
+    if (!_halconDisplay || !_halconDisplay->isValid())
+    {
+        QMessageBox::warning(this, tr("提示"), tr("显示窗口未初始化"));
+        return false;
+    }
+
+    if (!_halconData.processImage.IsInitialized())
+    {
+        QMessageBox::warning(this, tr("提示"), tr("当前没有可绘制的图片"));
+        return false;
+    }
+
+    try
+    {
+        using namespace HalconCpp;
+
+        _halconDisplay->setInteractionEnabled(false);
+
+        if (auto* windowHandle = _halconDisplay->getWindowHandle())
+        {
+            SetColor(*windowHandle, isShieldRegion ? "yellow" : "green");
+            SetLineWidth(*windowHandle, 2);
+            SetDraw(*windowHandle, "margin");
+        }
+
+        refresh_display_with_regions();
+
+        HTuple hvRow1, hvCol1, hvRow2, hvCol2;
+        DrawRectangle1(*_halconDisplay->getWindowHandle(), &hvRow1, &hvCol1, &hvRow2, &hvCol2);
+
+        HObject rectangle;
+        GenRectangle1(&rectangle,
+            hvRow1[0].D(), hvCol1[0].D(),
+            hvRow2[0].D(), hvCol2[0].D());
+
+        if (isShieldRegion)
+        {
+            _halconData.shieldRegions.push_back(rectangle);
+        }
+        else
+        {
+            _halconData.createRegions.push_back(rectangle);
+        }
+
+        _drawHistory.push_back(isShieldRegion);
+        refresh_display_with_regions();
+        _halconDisplay->setInteractionEnabled(true);
+        return true;
+    }
+    catch (const HalconCpp::HException& e)
+    {
+        _halconDisplay->setInteractionEnabled(true);
+        QMessageBox::warning(this, tr("提示"), tr("绘制区域失败: %1").arg(QString::fromStdString(e.ErrorMessage().Text())));
+        return false;
+    }
+    catch (...)
+    {
+        _halconDisplay->setInteractionEnabled(true);
+        QMessageBox::warning(this, tr("提示"), tr("绘制区域失败"));
+        return false;
+    }
+}
+
+void Dlg_createshapemodel::refresh_display_with_regions()
+{
+    if (!_halconDisplay || !_halconDisplay->isValid() || !_hasHalconData)
+    {
+        return;
+    }
+
+    if (!_halconData.processImage.IsInitialized())
+    {
+        return;
+    }
+
+    try
+    {
+        using namespace HalconCpp;
+
+        auto* windowHandle = _halconDisplay->getWindowHandle();
+        if (!windowHandle)
+        {
+            return;
+        }
+
+        // 不重置 SetPart，保持当前缩放/平移视图，仅重绘内容
+        ClearWindow(*windowHandle);
+        DispObj(_halconData.processImage, *windowHandle);
+
+        SetLineWidth(*windowHandle, 2);
+        SetDraw(*windowHandle, "margin");
+
+        SetColor(*windowHandle, "green");
+        for (const auto& region : _halconData.createRegions)
+        {
+            if (region.IsInitialized())
+            {
+                DispObj(region, *windowHandle);
+            }
+        }
+
+        SetColor(*windowHandle, "yellow");
+        for (const auto& region : _halconData.shieldRegions)
+        {
+            if (region.IsInitialized())
+            {
+                DispObj(region, *windowHandle);
+            }
+        }
+    }
+    catch (...)
+    {
+    }
 }

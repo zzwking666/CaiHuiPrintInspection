@@ -334,6 +334,10 @@ bool HalconDisplay::eventFilter(QObject* watched, QEvent* event)
         return QObject::eventFilter(watched, event);
     }
 
+    if (!_interactionEnabled) {
+        return QObject::eventFilter(watched, event);
+    }
+
     if (!isValid() || !_lastImage) {
         return QObject::eventFilter(watched, event);
     }
@@ -442,6 +446,9 @@ void HalconDisplay::refreshDisplay()
 
         HalconCpp::SetPart(*_windowHandle, _partRow1, _partCol1, _partRow2, _partCol2);
         HalconCpp::DispObj(*_lastImage, *_windowHandle);
+        if (_overlayDrawer) {
+            _overlayDrawer(_windowHandle);
+        }
     }
     catch (...) {
     }

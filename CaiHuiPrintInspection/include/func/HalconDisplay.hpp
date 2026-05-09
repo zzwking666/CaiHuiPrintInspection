@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <functional>
 #include <QPoint>
 #include <QWidget>
 #include <QString>
@@ -135,6 +136,12 @@ public:
      */
     bool displayMat(const cv::Mat& mat, bool fitToWindow = true);
 
+    void setInteractionEnabled(bool enabled) { _interactionEnabled = enabled; }
+    bool isInteractionEnabled() const { return _interactionEnabled; }
+
+    void setOverlayDrawer(const std::function<void(HalconCpp::HTuple*)>& drawer) { _overlayDrawer = drawer; }
+    void clearOverlayDrawer() { _overlayDrawer = nullptr; }
+
 protected:
     bool eventFilter(QObject* watched, QEvent* event) override;
 
@@ -161,6 +168,8 @@ private:
 
     bool _isPanning = false;
     QPoint _lastMousePos;
+    bool _interactionEnabled = true;
+    std::function<void(HalconCpp::HTuple*)> _overlayDrawer;
 };
 
 } // namespace rqw

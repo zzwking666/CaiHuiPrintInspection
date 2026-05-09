@@ -4,6 +4,8 @@
 #include <memory>
 #include <QSize>
 #include <QShowEvent>
+#include <QVector>
+#include "halconData.hpp"
 #include "HalconDisplay.hpp"
 
 
@@ -55,9 +57,16 @@ private slots:
 	void btn_angle_clicked();
 	void btn_opening_clicked();
 	void btn_mean_clicked();
+
+private:
+	bool drawRectangleAndStore(bool isShieldRegion);
+	void refresh_display_with_regions();
 public:
 	Ui::Dlg_createshapemodelClass* ui;
    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay;
 	int _templateIndex{ 1 };
-  QSize _initialSize;
+   QSize _initialSize;
+	HalconData _halconData;
+	bool _hasHalconData{ false };
+  QVector<bool> _drawHistory;
 };
