@@ -131,6 +131,11 @@ void Dlg_createshapemodel::refresh_ui_from_data()
 
     ui->btn_maxcontrast->setText(QString::number(_halconData.maxcontrast));
     ui->btn_mincontrast->setText(QString::number(_halconData.mincontrast));
+
+    if (auto* ckbFindShapeModel = this->findChild<QCheckBox*>("ckb_findShapemodel"))
+    {
+        ckbFindShapeModel->setChecked(_halconData.ckb_findShapemodel);
+    }
 }
 
 void Dlg_createshapemodel::showEvent(QShowEvent* event)
@@ -174,6 +179,15 @@ void Dlg_createshapemodel::build_connect()
         this, &Dlg_createshapemodel::rbtn_auto_toggled);
     QObject::connect(ui->rbtn_manual, &QRadioButton::toggled,
         this, &Dlg_createshapemodel::rbtn_manual_toggled);
+
+    if (auto* ckbFindShapeModel = this->findChild<QCheckBox*>("ckb_findShapemodel"))
+    {
+        QObject::connect(ckbFindShapeModel, &QCheckBox::toggled, this,
+            [this](bool checked)
+            {
+                _halconData.ckb_findShapemodel = checked;
+            });
+    }
 }
 
 void Dlg_createshapemodel::btn_exit_clicked()
@@ -195,6 +209,10 @@ void Dlg_createshapemodel::btn_exit_clicked()
         _halconData.isContrast = ui->rbtn_manual->isChecked();
         _halconData.maxcontrast = ui->btn_maxcontrast->text().toDouble();
         _halconData.mincontrast = ui->btn_mincontrast->text().toDouble();
+        if (auto* ckbFindShapeModel = this->findChild<QCheckBox*>("ckb_findShapemodel"))
+        {
+            _halconData.ckb_findShapemodel = ckbFindShapeModel->isChecked();
+        }
 
         auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
         const int index = _templateIndex - 1;

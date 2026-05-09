@@ -6,13 +6,17 @@
 #include <qfuture.h>
 #include <qtconcurrentrun.h>
 #include <atomic>
+#include <QDir>
+#include <QFileInfo>
 #include "Utilty.hpp"
 #include "halconcpp/HalconCpp.h"
 #include "Halcon.h"
+#include "HalconDisplay.hpp"
 #include <QPainter>
 #include <QPen>
 #include <cmath>
 #include <algorithm>
+#include <limits>
 
 #include "Modules.hpp"
 #include "CaiHuiPrintInspection.h"
@@ -83,34 +87,238 @@ void ImageProcessor::run()
 
 void ImageProcessor::run_debug(MatInfo& frame)
 {
-	auto& imgPro = *_imgProcess;
-	imgPro(frame.image);
-	auto maskImg = imgPro.getMaskImg(frame.image);
-	auto defectResult = imgPro.getDefectResultInfo();
+  MatInfo debugFrame = frame;
 
-	emit imageReady(imageProcessingModuleIndex, QPixmap::fromImage(maskImg));
+	const QString customPath = ("C:\\Users\\zfkj4090\\Desktop\\1111\\NGDefect20260422072837640.jpg") ;
+	if (!customPath.isEmpty())
+	{
+		cv::Mat customImage;
+		QFileInfo fileInfo(customPath);
+		if (fileInfo.exists() && fileInfo.isFile())
+		{
+			customImage = cv::imread(customPath.toStdString(), cv::IMREAD_COLOR);
+		}
+		else
+		{
+			QDir dir(customPath);
+			if (dir.exists())
+			{
+				static const QSet<QString> supportedSuffixes = {
+					"jpg", "jpeg", "png", "bmp", "gif", "tiff", "webp"
+				};
+				QFileInfoList fileList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+				for (const QFileInfo& imgInfo : fileList)
+				{
+					if (!supportedSuffixes.contains(imgInfo.suffix().toLower()))
+					{
+						continue;
+					}
+
+					customImage = cv::imread(imgInfo.absoluteFilePath().toStdString(), cv::IMREAD_COLOR);
+					if (!customImage.empty())
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		if (!customImage.empty())
+		{
+			debugFrame.image = customImage;
+		}
+	}
+
+	run_OpenRemoveFunc(debugFrame);
 }
 
 void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 {
-	auto& imgPro = *_imgProcess;
-	imgPro(frame.image);
-	auto maskImg = imgPro.getMaskImg(frame.image);
-	auto defectResult = imgPro.getDefectResultInfo();
+	bool isMatched = false;
+	const bool shouldEmitError =
+		Modules::getInstance().runtimeInfoModule.runningState.load() == RunningState::OpenRemoveFunc;
 
-	bool isBad = false;
-
-	if (0 == defectResult.disableDefects.size())
+	try
 	{
-		isBad = true;
+		auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+		if (halconDatas.isEmpty())
+		{
+         if (shouldEmitError)
+			{
+				run_OpenRemoveFunc_emitErrorInfo(true);
+			}
+			return;
+		}
+
+		int halconIndex = -1;
+		if (frame.index > 0)
+		{
+			halconIndex = static_cast<int>(frame.index) - 1;
+		}
+		if (halconIndex < 0 || halconIndex >= halconDatas.size())
+		{
+			halconIndex = imageProcessingModuleIndex - 1;
+		}
+		if (halconIndex < 0 || halconIndex >= halconDatas.size())
+		{
+         if (shouldEmitError)
+			{
+				run_OpenRemoveFunc_emitErrorInfo(true);
+			}
+			return;
+		}
+
+		auto& halconData = halconDatas[halconIndex];
+
+		if (!halconData.ckb_findShapemodel)
+		{
+			isMatched = true;
+		}
+		else if (halconData.hv_ModelID.TupleLength() > 0)
+		{
+			using namespace HalconCpp;
+
+			auto buildUnionFromRegions = [](const QVector<HObject>& regions, HObject* outUnion)
+				{
+					HObject concatRegions;
+					GenEmptyObj(&concatRegions);
+
+					for (const auto& region : regions)
+					{
+						if (!region.IsInitialized())
+						{
+							continue;
+						}
+
+						HObject tmp;
+						ConcatObj(concatRegions, region, &tmp);
+						concatRegions = tmp;
+					}
+
+					Union1(concatRegions, outUnion);
+				};
+
+			HObject imageForMatch = rw::rqw::HalconDisplay::matToHObject(frame.image);
+
+			if (halconData.isMeaning)
+			{
+				int meanSize = static_cast<int>(std::round(halconData.meaning));
+				if (meanSize < 1)
+				{
+					meanSize = 1;
+				}
+				if (meanSize % 2 == 0)
+				{
+					++meanSize;
+				}
+
+				HObject meanImage;
+				MeanImage(imageForMatch, &meanImage, meanSize, meanSize);
+				imageForMatch = meanImage;
+			}
+
+            // 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain
+
+			HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
+			FindShapeModel(imageForMatch,
+				halconData.hv_ModelID,
+				-3.1415926,
+				6.2831852,
+				0.1,
+				1,
+				0.5,
+				"least_squares",
+				0,
+				0.7,
+				&hvFindRow,
+				&hvFindCol,
+				&hvFindAngle,
+				&hvFindScore);
+
+			isMatched = hvFindRow.TupleLength() > 0;
+
+			if (isMatched)
+			{
+				HObject modelContours;
+				GetShapeModelContours(&modelContours, halconData.hv_ModelID, 1);
+
+				const int matchCount = static_cast<int>(hvFindRow.TupleLength());
+				for (int matchIdx = 0; matchIdx < matchCount; ++matchIdx)
+				{
+					HTuple hvHomMat2D;
+					VectorAngleToRigid(
+						0.0,
+						0.0,
+						0.0,
+						hvFindRow[matchIdx],
+						hvFindCol[matchIdx],
+						hvFindAngle[matchIdx],
+						&hvHomMat2D);
+
+					HObject transContours;
+					AffineTransContourXld(modelContours, &transContours, hvHomMat2D);
+
+					HTuple hvContourCount;
+					CountObj(transContours, &hvContourCount);
+					const int contourCount = hvContourCount.TupleLength() > 0 ? hvContourCount[0].I() : 0;
+
+					double minCol = std::numeric_limits<double>::max();
+					double minRow = std::numeric_limits<double>::max();
+					double maxCol = std::numeric_limits<double>::lowest();
+					double maxRow = std::numeric_limits<double>::lowest();
+					bool hasPoint = false;
+
+					for (int contourIdx = 1; contourIdx <= contourCount; ++contourIdx)
+					{
+						HObject oneContour;
+						SelectObj(transContours, &oneContour, contourIdx);
+
+						HTuple hvRows, hvCols;
+						GetContourXld(oneContour, &hvRows, &hvCols);
+
+						const int pointCount = static_cast<int>(hvRows.TupleLength());
+						if (pointCount < 2)
+						{
+							continue;
+						}
+
+                       for (int pointIdx = 0; pointIdx < pointCount; ++pointIdx)
+						{
+                         const double col = hvCols[pointIdx].D();
+							const double row = hvRows[pointIdx].D();
+							minCol = std::min(minCol, col);
+							minRow = std::min(minRow, row);
+							maxCol = std::max(maxCol, col);
+							maxRow = std::max(maxRow, row);
+							hasPoint = true;
+						}
+					}
+
+					if (hasPoint)
+					{
+						const cv::Point topLeft(cvRound(minCol), cvRound(minRow));
+						const cv::Point bottomRight(cvRound(maxCol), cvRound(maxRow));
+						cv::rectangle(frame.image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
+					}
+				}
+			}
+		}
+
+       if (shouldEmitError)
+		{
+			run_OpenRemoveFunc_emitErrorInfo(!isMatched);
+		}
+	}
+	catch (...)
+	{
+     if (shouldEmitError)
+		{
+			run_OpenRemoveFunc_emitErrorInfo(true);
+		}
 	}
 
-	run_OpenRemoveFunc_emitErrorInfo(isBad);
-
-	emit imageReady(frame.index,QPixmap::fromImage(maskImg));
-
-	rw::rqw::ImageInfo imageInfo(rw::rqw::cvMatToQImage(frame.image));
-	save_image(imageInfo, maskImg);
+	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	emit imageReady(imageProcessingModuleIndex, QPixmap::fromImage(qimg.copy()));
 }
 
 void ImageProcessor::run_OpenRemoveFunc_emitErrorInfo(bool isbad)
