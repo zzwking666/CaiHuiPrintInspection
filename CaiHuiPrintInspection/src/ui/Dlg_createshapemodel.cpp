@@ -3,9 +3,11 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTimer>
 #include <QtGlobal>
 #include <algorithm>
 #include <halconcpp/HalconCpp.h>
+#include "NumberKeyboard.h"
 
 #include "Modules.hpp"
 
@@ -84,6 +86,14 @@ void Dlg_createshapemodel::build_ui()
             {
             }
             });
+
+        QTimer::singleShot(0, this, [this]() {
+            if (_halconDisplay)
+            {
+                _halconDisplay->initialize();
+                refresh_display_with_regions();
+            }
+        });
     }
 }
 
@@ -93,12 +103,16 @@ void Dlg_createshapemodel::refresh_ui_from_data()
     const int index = _templateIndex - 1;
     if (index < 0 || index >= halconDatas.size())
     {
-        _hasHalconData = false;
-        return;
+        _halconData = HalconData();
+        _hasHalconData = true;
+        _drawHistory.clear();
+        _modelContours.Clear();
     }
-
-    _halconData = halconDatas[index];
-    _hasHalconData = true;
+    else
+    {
+        _halconData = halconDatas[index];
+        _hasHalconData = true;
+    }
 
     ui->btn_baoguang->setText(QString::number(_halconData.baoguang));
     ui->btn_zengyi->setText(QString::number(_halconData.zengyi));
@@ -123,6 +137,12 @@ void Dlg_createshapemodel::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
     refresh_ui_from_data();
+
+    if (_halconDisplay)
+    {
+        _halconDisplay->initialize();
+        refresh_display_with_regions();
+    }
 }
 
 void Dlg_createshapemodel::build_connect()
@@ -141,6 +161,19 @@ void Dlg_createshapemodel::build_connect()
         this, &Dlg_createshapemodel::btn_clearRegion2_clicked);
     QObject::connect(ui->btn_clearRegion, &QPushButton::clicked,
         this, &Dlg_createshapemodel::btn_clearRegion_clicked);
+
+    QObject::connect(ui->btn_mean, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_mean_clicked);
+    QObject::connect(ui->btn_maxcontrast, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_maxcontrast_clicked);
+    QObject::connect(ui->btn_mincontrast, &QPushButton::clicked,
+        this, &Dlg_createshapemodel::btn_mincontrast_clicked);
+    QObject::connect(ui->ckb_mean, &QCheckBox::toggled,
+        this, &Dlg_createshapemodel::ckb_mean_toggled);
+    QObject::connect(ui->rbtn_auto, &QRadioButton::toggled,
+        this, &Dlg_createshapemodel::rbtn_auto_toggled);
+    QObject::connect(ui->rbtn_manual, &QRadioButton::toggled,
+        this, &Dlg_createshapemodel::rbtn_manual_toggled);
 }
 
 void Dlg_createshapemodel::btn_exit_clicked()
@@ -271,9 +304,7 @@ void Dlg_createshapemodel::btn_createShapeModel_clicked()
             return;
         }
 
-        HObject imageForModel;
-        ReduceDomain(_halconData.processImage, modelRegion, &imageForModel);
-
+        HObject imageForModel = _halconData.processImage;
         if (_halconData.isMeaning)
         {
             int meanSize = static_cast<int>(std::round(_halconData.meaning));
@@ -290,6 +321,10 @@ void Dlg_createshapemodel::btn_createShapeModel_clicked()
             MeanImage(imageForModel, &meanImage, meanSize, meanSize);
             imageForModel = meanImage;
         }
+
+        HObject reducedImage;
+        ReduceDomain(imageForModel, modelRegion, &reducedImage);
+        imageForModel = reducedImage;
 
         if (_halconData.hv_ModelID.TupleLength() > 0)
         {
@@ -457,10 +492,24 @@ void Dlg_createshapemodel::btn_createXLD_clicked()
 
 void Dlg_createshapemodel::rbtn_auto_toggled(bool checked)
 {
+    if (!checked)
+    {
+        return;
+    }
+
+    _halconData.isContrast = false;
+    ui->rbtn_manual->setChecked(false);
 }
 
 void Dlg_createshapemodel::rbtn_manual_toggled(bool checked)
 {
+    if (!checked)
+    {
+        return;
+    }
+
+    _halconData.isContrast = true;
+    ui->rbtn_auto->setChecked(false);
 }
 
 void Dlg_createshapemodel::btn_contrast_clicked()
@@ -469,6 +518,40 @@ void Dlg_createshapemodel::btn_contrast_clicked()
 
 void Dlg_createshapemodel::btn_mincontrast_clicked()
 {
+    NumberKeyboard numKeyBord;
+    numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+    auto isAccept = numKeyBord.exec();
+    if (isAccept == QDialog::Accepted)
+    {
+        auto value = numKeyBord.getValue();
+        if (value.toDouble() < 0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("请输入大于等于0的数值"));
+            return;
+        }
+
+        _halconData.mincontrast = value.toDouble();
+        ui->btn_mincontrast->setText(value);
+    }
+}
+
+void Dlg_createshapemodel::btn_maxcontrast_clicked()
+{
+    NumberKeyboard numKeyBord;
+    numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+    auto isAccept = numKeyBord.exec();
+    if (isAccept == QDialog::Accepted)
+    {
+        auto value = numKeyBord.getValue();
+        if (value.toDouble() < 0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("请输入大于等于0的数值"));
+            return;
+        }
+
+        _halconData.maxcontrast = value.toDouble();
+        ui->btn_maxcontrast->setText(value);
+    }
 }
 
 void Dlg_createshapemodel::btn_clearRegion2_clicked()
@@ -517,6 +600,26 @@ void Dlg_createshapemodel::btn_opening_clicked()
 
 void Dlg_createshapemodel::btn_mean_clicked()
 {
+    NumberKeyboard numKeyBord;
+    numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+    auto isAccept = numKeyBord.exec();
+    if (isAccept == QDialog::Accepted)
+    {
+        auto value = numKeyBord.getValue();
+        if (value.toDouble() < 0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("请输入大于等于0的数值"));
+            return;
+        }
+
+        _halconData.meaning = value.toDouble();
+        ui->btn_mean->setText(value);
+    }
+}
+
+void Dlg_createshapemodel::ckb_mean_toggled(bool checked)
+{
+    _halconData.isMeaning = checked;
 }
 
 bool Dlg_createshapemodel::drawRectangleAndStore(bool isShieldRegion)

@@ -48,8 +48,10 @@ private slots:
 
 	void rbtn_auto_toggled(bool checked);
 	void rbtn_manual_toggled(bool checked);
+    void btn_maxcontrast_clicked();
 	void btn_contrast_clicked();
 	void btn_mincontrast_clicked();
+	void ckb_mean_toggled(bool checked);
 
 	void btn_clearRegion2_clicked();
 	void btn_zengyi_clicked();
