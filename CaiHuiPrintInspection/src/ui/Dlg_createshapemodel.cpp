@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QtGlobal>
+#include <algorithm>
 
 #include "Modules.hpp"
 
@@ -41,19 +42,22 @@ void Dlg_createshapemodel::build_ui()
 
 void Dlg_createshapemodel::refresh_ui_from_data()
 {
-    auto* halconData = Modules::getInstance().configManagerModule.getHalconData(_templateIndex - 1);
-    if (!halconData)
+    auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+    const int index = _templateIndex - 1;
+    if (index < 0 || index >= halconDatas.size())
     {
         return;
     }
 
-    ui->btn_baoguang->setText(QString::number(halconData->baoguang));
-    ui->btn_zengyi->setText(QString::number(halconData->zengyi));
+    auto& halconData = halconDatas[index];
 
-    ui->ckb_mean->setChecked(halconData->isMeaning);
-    ui->btn_mean->setText(QString::number(halconData->meaning));
+    ui->btn_baoguang->setText(QString::number(halconData.baoguang));
+    ui->btn_zengyi->setText(QString::number(halconData.zengyi));
 
-    if (halconData->isContrast)
+    ui->ckb_mean->setChecked(halconData.isMeaning);
+    ui->btn_mean->setText(QString::number(halconData.meaning));
+
+    if (halconData.isContrast)
     {
         ui->rbtn_manual->setChecked(true);
     }
@@ -62,8 +66,8 @@ void Dlg_createshapemodel::refresh_ui_from_data()
         ui->rbtn_auto->setChecked(true);
     }
 
-    ui->btn_maxcontrast->setText(QString::number(halconData->maxcontrast));
-    ui->btn_mincontrast->setText(QString::number(halconData->mincontrast));
+    ui->btn_maxcontrast->setText(QString::number(halconData.maxcontrast));
+    ui->btn_mincontrast->setText(QString::number(halconData.mincontrast));
 }
 
 void Dlg_createshapemodel::showEvent(QShowEvent* event)
@@ -110,10 +114,11 @@ void Dlg_createshapemodel::btn_readImage_clicked()
         return;
     }
 
-    auto* halconData = Modules::getInstance().configManagerModule.getHalconData(_templateIndex - 1);
-    if (halconData)
+    auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+    const int index = _templateIndex - 1;
+    if (index >= 0 && index < halconDatas.size())
     {
-        HalconCpp::ReadImage(&halconData->processImage, imagePath.toStdString().c_str());
+        HalconCpp::ReadImage(&halconDatas[index].processImage, imagePath.toStdString().c_str());
     }
 }
 

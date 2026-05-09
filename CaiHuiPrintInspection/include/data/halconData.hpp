@@ -1,12 +1,10 @@
 #pragma once
 
-#include <QObject>
+#include <QVector>
 #include <halconcpp/HalconCpp.h>
 
-class HalconData : public QObject
+class HalconData
 {
-	Q_OBJECT
-
 public:
 	HalconData();
 	~HalconData();

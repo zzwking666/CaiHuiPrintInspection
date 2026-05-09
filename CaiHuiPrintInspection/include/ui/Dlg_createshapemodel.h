@@ -59,5 +59,5 @@ public:
 	Ui::Dlg_createshapemodelClass* ui;
    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay;
 	int _templateIndex{ 1 };
-  QSize _initialSize{};
+  QSize _initialSize;
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QObject>
+#include <QPoint>
 #include <QWidget>
 #include <QString>
 #include <opencv2/opencv.hpp>
@@ -19,7 +21,7 @@ namespace rqw {
  * 封装 Halcon 窗口的创建、管理和图片显示功能
  * 在构造函数中传入 QWidget 作为父窗口，自动创建 Halcon 窗口
  */
-class HalconDisplay
+class HalconDisplay : public QObject
 {
 public:
     /**
@@ -133,11 +135,32 @@ public:
      */
     bool displayMat(const cv::Mat& mat, bool fitToWindow = true);
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
+private:
+    void refreshDisplay();
+    void clampAndApplyPart(double row1, double col1, double row2, double col2);
+
 private:
     QWidget* _parentWidget = nullptr;           ///< 父控件
     HalconCpp::HTuple* _windowHandle = nullptr; ///< Halcon 窗口句柄
     HalconCpp::HObject* _lastImage = nullptr;   ///< 最后显示的图片
     bool _isInitialized = false;                ///< 是否已初始化
+
+    int _imageWidth = 0;
+    int _imageHeight = 0;
+
+    double _partRow1 = 0.0;
+    double _partCol1 = 0.0;
+    double _partRow2 = 0.0;
+    double _partCol2 = 0.0;
+
+    double _maxPartWidth = 0.0;
+    double _maxPartHeight = 0.0;
+
+    bool _isPanning = false;
+    QPoint _lastMousePos;
 };
 
 } // namespace rqw
