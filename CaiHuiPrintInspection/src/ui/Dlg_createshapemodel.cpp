@@ -3,12 +3,21 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QtGlobal>
 
-Dlg_createshapemodel::Dlg_createshapemodel(QWidget* parent)
+#include "Modules.hpp"
+
+Dlg_createshapemodel::Dlg_createshapemodel(int templateIndex, QWidget* parent)
    : QDialog(parent)
     , ui(new Ui::Dlg_createshapemodelClass())
+    , _templateIndex(templateIndex)
 {
    ui->setupUi(this);
+
+    setWindowFlags(windowFlags() | Qt::WindowMinMaxButtonsHint);
+    setSizeGripEnabled(true);
+    _initialSize = size();
+    setMinimumSize(_initialSize);
 
     build_ui();
     build_connect();
@@ -21,11 +30,46 @@ Dlg_createshapemodel::~Dlg_createshapemodel()
 
 void Dlg_createshapemodel::build_ui()
 {
+    refresh_ui_from_data();
+
    _halconDisplay = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay);
     if (_halconDisplay)
     {
         _halconDisplay->initialize();
     }
+}
+
+void Dlg_createshapemodel::refresh_ui_from_data()
+{
+    auto* halconData = Modules::getInstance().configManagerModule.getHalconData(_templateIndex - 1);
+    if (!halconData)
+    {
+        return;
+    }
+
+    ui->btn_baoguang->setText(QString::number(halconData->baoguang));
+    ui->btn_zengyi->setText(QString::number(halconData->zengyi));
+
+    ui->ckb_mean->setChecked(halconData->isMeaning);
+    ui->btn_mean->setText(QString::number(halconData->meaning));
+
+    if (halconData->isContrast)
+    {
+        ui->rbtn_manual->setChecked(true);
+    }
+    else
+    {
+        ui->rbtn_auto->setChecked(true);
+    }
+
+    ui->btn_maxcontrast->setText(QString::number(halconData->maxcontrast));
+    ui->btn_mincontrast->setText(QString::number(halconData->mincontrast));
+}
+
+void Dlg_createshapemodel::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    refresh_ui_from_data();
 }
 
 void Dlg_createshapemodel::build_connect()
@@ -63,6 +107,13 @@ void Dlg_createshapemodel::btn_readImage_clicked()
     if (!_halconDisplay->displayImageFromFile(imagePath, true))
     {
         QMessageBox::warning(this, tr("提示"), tr("图片显示失败"));
+        return;
+    }
+
+    auto* halconData = Modules::getInstance().configManagerModule.getHalconData(_templateIndex - 1);
+    if (halconData)
+    {
+        HalconCpp::ReadImage(&halconData->processImage, imagePath.toStdString().c_str());
     }
 }
 

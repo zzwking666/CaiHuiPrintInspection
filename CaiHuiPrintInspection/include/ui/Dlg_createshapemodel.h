@@ -2,6 +2,8 @@
 
 #include "ui_Dlg_createshapemodel.h"
 #include <memory>
+#include <QSize>
+#include <QShowEvent>
 #include "HalconDisplay.hpp"
 
 
@@ -13,12 +15,16 @@ class Dlg_createshapemodel : public QDialog
 {
 	Q_OBJECT
 public:
-	Dlg_createshapemodel(QWidget* parent = nullptr);
+    Dlg_createshapemodel(int templateIndex, QWidget* parent = nullptr);
 	~Dlg_createshapemodel();
 
 public:
 	void build_ui();
 	void build_connect();
+	void refresh_ui_from_data();
+
+protected:
+	void showEvent(QShowEvent* event) override;
 
 private slots:
 	void btn_exit_clicked();
@@ -51,5 +57,7 @@ private slots:
 	void btn_mean_clicked();
 public:
 	Ui::Dlg_createshapemodelClass* ui;
-  std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay;
+   std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay;
+	int _templateIndex{ 1 };
+  QSize _initialSize{};
 };

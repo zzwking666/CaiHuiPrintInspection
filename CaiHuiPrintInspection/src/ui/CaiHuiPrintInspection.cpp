@@ -78,19 +78,19 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
 
 	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
-		Dlg_createshapemodel dlg(this);
+     Dlg_createshapemodel dlg(1, this);
 		dlg.exec();
 	});
 	QObject::connect(ui->btn_createShapemodel_2, &QPushButton::clicked, this, [this]() {
-		Dlg_createshapemodel dlg(this);
+     Dlg_createshapemodel dlg(2, this);
 		dlg.exec();
 	});
 	QObject::connect(ui->btn_createShapemodel_3, &QPushButton::clicked, this, [this]() {
-		Dlg_createshapemodel dlg(this);
+     Dlg_createshapemodel dlg(3, this);
 		dlg.exec();
 	});
 	QObject::connect(ui->btn_createShapemodel_4, &QPushButton::clicked, this, [this]() {
-		Dlg_createshapemodel dlg(this);
+     Dlg_createshapemodel dlg(4, this);
 		dlg.exec();
 	});
 

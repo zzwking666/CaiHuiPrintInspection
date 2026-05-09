@@ -2,6 +2,8 @@
 
 #include"IModule.hpp"
 #include<QObject>
+#include <QVector>
+#include <memory>
 #include "oso_StorageContext.hpp"
 #include "SetConfig.hpp"
 #include "MaiLiDingZi.hpp"
@@ -19,8 +21,12 @@ public:
 public:
 	std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
+ static constexpr int templateMatchWindowCount{ 4 };
+
 	cdm::MaiLiDingZiConfig maiLiDingZiConfig{};
 	cdm::SetConfig setConfig{};
-	HalconData halconData{};
+ QVector<std::shared_ptr<HalconData>> halconDatas;
 
+	HalconData* getHalconData(int index);
+	const HalconData* getHalconData(int index) const;
 };
