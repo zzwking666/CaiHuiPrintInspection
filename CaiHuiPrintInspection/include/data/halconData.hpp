@@ -17,7 +17,7 @@ public:
 	bool isMeaning = false;
 	double meaning = 10;
 	bool isContrast = false;
-    bool ckb_findShapemodel = true;
+ bool ckb_findShapemodel = false;
 	double maxcontrast = 20;
 	double mincontrast = 10;
 

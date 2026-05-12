@@ -2,8 +2,10 @@
 
 #include <QDir>
 #include <QFileDialog>
+#include <QLabel>
 #include <QMessageBox>
 #include <QProcess>
+#include <QResizeEvent>
 #include <QTimer>
 
 #include "ui_CaiHuiPrintInspection.h"
@@ -15,7 +17,6 @@
 #include "NumberKeyboard.h"
 #include "rqw_RunEnvCheck.hpp"
 #include "Utilty.hpp"
-#include "HalconDisplay.hpp"
 
 
 CaiHuiPrintInspection::CaiHuiPrintInspection(QWidget* parent)
@@ -76,6 +77,10 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::pbtn_resetProduct_clicked);
 	QObject::connect(ui->ckb_saveImg, &QCheckBox::clicked,
 		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
+	QObject::connect(ui->ckb_findShapemodel_1, &QCheckBox::clicked,
+		this, &CaiHuiPrintInspection::ckb_findShapemodel_1_checked);
+	QObject::connect(ui->ckb_findShapemodel_2, &QCheckBox::clicked,
+		this, &CaiHuiPrintInspection::ckb_findShapemodel_2_checked);
 
 	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
      Dlg_createshapemodel dlg(1, this);
@@ -85,6 +90,20 @@ void CaiHuiPrintInspection::build_connect()
      Dlg_createshapemodel dlg(2, this);
 		dlg.exec();
 	});
+    if (auto* btnCreateShapeModel3 = this->findChild<QPushButton*>("btn_createShapemodel_3"))
+	{
+		QObject::connect(btnCreateShapeModel3, &QPushButton::clicked, this, [this]() {
+			Dlg_createshapemodel dlg(3, this);
+			dlg.exec();
+		});
+	}
+	if (auto* btnCreateShapeModel4 = this->findChild<QPushButton*>("btn_createShapemodel_4"))
+	{
+		QObject::connect(btnCreateShapeModel4, &QPushButton::clicked, this, [this]() {
+			Dlg_createshapemodel dlg(4, this);
+			dlg.exec();
+		});
+	}
 
 
 	// 连接显示标题
@@ -96,10 +115,13 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
+  auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
 	maiLiDingZiConfig.isDebug = false;
 	maiLiDingZiConfig.isDefect = true;		// 默认开启剔废
 	maiLiDingZiConfig.isSaveImg = false;	// 默认不开启图片保存
 	ui->ckb_saveImg->setChecked(false);
+	ui->ckb_findShapemodel_1->setChecked(halconDatas.size() > 0 ? halconDatas[0].ckb_findShapemodel : true);
+	ui->ckb_findShapemodel_2->setChecked(halconDatas.size() > 1 ? halconDatas[1].ckb_findShapemodel : true);
 
 	ui->label_wasteProductsValue->setText(QString::number(maiLiDingZiConfig.totalDefectiveVolume));
 	ui->rbtn_removeFunc->setChecked(maiLiDingZiConfig.isDefect);
@@ -141,58 +163,55 @@ void CaiHuiPrintInspection::initializeComponents()
 
 void CaiHuiPrintInspection::build_halconDisplay()
 {
-	_halconDisplay1 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_1);
-	_halconDisplay2 = std::make_unique<rw::rqw::HalconDisplay>(ui->label_imgDisplay_2);
+   _labelMinSize1 = ui->label_imgDisplay_1->size();
+	_labelMinSize2 = ui->label_imgDisplay_2->size();
+	_labelMinSize3 = ui->label_imgDisplay_3->size();
+	_labelMinSize4 = ui->label_imgDisplay_4->size();
 
-	if (auto* display3Widget = this->findChild<QWidget*>("label_imgDisplay_3"))
-	{
-		_halconDisplay3 = std::make_unique<rw::rqw::HalconDisplay>(display3Widget);
-	}
+   ui->label_imgDisplay_1->setAlignment(Qt::AlignCenter);
+	ui->label_imgDisplay_2->setAlignment(Qt::AlignCenter);
+	ui->label_imgDisplay_3->setAlignment(Qt::AlignCenter);
+	ui->label_imgDisplay_4->setAlignment(Qt::AlignCenter);
 
-	if (auto* display4Widget = this->findChild<QWidget*>("label_imgDisplay_4"))
-	{
-		_halconDisplay4 = std::make_unique<rw::rqw::HalconDisplay>(display4Widget);
-	}
+	ui->label_imgDisplay_1->setScaledContents(false);
+	ui->label_imgDisplay_2->setScaledContents(false);
+	ui->label_imgDisplay_3->setScaledContents(false);
+	ui->label_imgDisplay_4->setScaledContents(false);
 
-	if (_halconDisplay1)
-	{
-		_halconDisplay1->initialize();
-	}
-
-	if (_halconDisplay2)
-	{
-		_halconDisplay2->initialize();
-	}
-
-	if (_halconDisplay3)
-	{
-		_halconDisplay3->initialize();
-	}
-
-	if (_halconDisplay4)
-	{
-		_halconDisplay4->initialize();
-	}
-
-	// 延迟到界面完成布局后再次初始化，避免初始窗口尺寸过小
 	QTimer::singleShot(0, this, [this]() {
-		if (_halconDisplay1)
-		{
-			_halconDisplay1->initialize();
-		}
-		if (_halconDisplay2)
-		{
-			_halconDisplay2->initialize();
-		}
-     if (_halconDisplay3)
-		{
-			_halconDisplay3->initialize();
-		}
-		if (_halconDisplay4)
-		{
-			_halconDisplay4->initialize();
-		}
+		refreshAllDisplayLabels();
 	});
+}
+
+void CaiHuiPrintInspection::refreshDisplayLabel(QLabel* label, const QPixmap& pixmap, const QSize& minimumSize)
+{
+	if (!label || pixmap.isNull())
+	{
+		return;
+	}
+
+	QSize targetSize = label->size();
+	if (minimumSize.isValid())
+	{
+		targetSize.setWidth((targetSize.width() < minimumSize.width()) ? minimumSize.width() : targetSize.width());
+		targetSize.setHeight((targetSize.height() < minimumSize.height()) ? minimumSize.height() : targetSize.height());
+	}
+
+	label->setPixmap(pixmap.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void CaiHuiPrintInspection::refreshAllDisplayLabels()
+{
+	refreshDisplayLabel(ui->label_imgDisplay_1, _pixmap1, _labelMinSize1);
+	refreshDisplayLabel(ui->label_imgDisplay_2, _pixmap2, _labelMinSize2);
+	refreshDisplayLabel(ui->label_imgDisplay_3, _pixmap3, _labelMinSize3);
+	refreshDisplayLabel(ui->label_imgDisplay_4, _pixmap4, _labelMinSize4);
+}
+
+void CaiHuiPrintInspection::resizeEvent(QResizeEvent* event)
+{
+	QMainWindow::resizeEvent(event);
+	refreshAllDisplayLabels();
 }
 
 void CaiHuiPrintInspection::build_camera()
@@ -319,47 +338,30 @@ void CaiHuiPrintInspection::onUpdateStatisticalInfoUI()
 
 void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
 {
- if (image.isNull())
+    if (image.isNull())
 	{
 		return;
 	}
-
-	QImage qImage = image.toImage().convertToFormat(QImage::Format_BGR888);
-	if (qImage.isNull())
-	{
-		return;
-	}
-
-	cv::Mat mat(qImage.height(), qImage.width(), CV_8UC3, const_cast<uchar*>(qImage.bits()), qImage.bytesPerLine());
-	cv::Mat matClone = mat.clone();
 
 	if (1 == index)
 	{
-     if (_halconDisplay1 && _halconDisplay1->isValid())
-		{
-			_halconDisplay1->displayMat(matClone, true);
-		}
+     _pixmap1 = image;
+		refreshDisplayLabel(ui->label_imgDisplay_1, _pixmap1, _labelMinSize1);
 	}
 	else if (2 == index)
 	{
-     if (_halconDisplay2 && _halconDisplay2->isValid())
-		{
-			_halconDisplay2->displayMat(matClone, true);
-		}
+     _pixmap2 = image;
+		refreshDisplayLabel(ui->label_imgDisplay_2, _pixmap2, _labelMinSize2);
 	}
-   else if (3 == index)
+ else if (3 == index)
 	{
-		if (_halconDisplay3 && _halconDisplay3->isValid())
-		{
-			_halconDisplay3->displayMat(matClone, true);
-		}
+      _pixmap3 = image;
+		refreshDisplayLabel(ui->label_imgDisplay_3, _pixmap3, _labelMinSize3);
 	}
 	else if (4 == index)
 	{
-		if (_halconDisplay4 && _halconDisplay4->isValid())
-		{
-			_halconDisplay4->displayMat(matClone, true);
-		}
+      _pixmap4 = image;
+		refreshDisplayLabel(ui->label_imgDisplay_4, _pixmap4, _labelMinSize4);
 	}
 }
 
@@ -457,20 +459,37 @@ void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 		return;
 	}
 
-	if (!_halconDisplay1 || !_halconDisplay1->isValid())
+    QPixmap pixmap(imagePath);
+	if (pixmap.isNull())
 	{
-		QMessageBox::warning(this, tr("提示"), tr("显示窗口未初始化"));
+       QMessageBox::warning(this, tr("提示"), tr("图片加载失败"));
 		return;
 	}
 
-	if (!_halconDisplay1->displayImageFromFile(imagePath, true))
-	{
-		QMessageBox::warning(this, tr("提示"), tr("图片显示失败"));
-	}
+    _pixmap1 = pixmap;
+	refreshDisplayLabel(ui->label_imgDisplay_1, _pixmap1, _labelMinSize1);
 }
 
 void CaiHuiPrintInspection::ckb_saveImg_checked(bool checked)
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 	maiLiDingZiConfig.isSaveImg = checked;
+}
+
+void CaiHuiPrintInspection::ckb_findShapemodel_1_checked(bool checked)
+{
+	auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+	if (halconDatas.size() > 0)
+	{
+		halconDatas[0].ckb_findShapemodel = checked;
+	}
+}
+
+void CaiHuiPrintInspection::ckb_findShapemodel_2_checked(bool checked)
+{
+	auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+	if (halconDatas.size() > 1)
+	{
+		halconDatas[1].ckb_findShapemodel = checked;
+	}
 }

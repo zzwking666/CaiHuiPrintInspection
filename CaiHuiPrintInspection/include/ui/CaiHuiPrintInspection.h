@@ -4,12 +4,12 @@
 #include <memory>
 #include <atomic>
 #include <QCheckBox>
+#include <QPixmap>
 
 #include "rqw_LabelClickable.h"
 #include "DlgCloseForm.h"
 #include "oso_StorageContext.hpp"
 #include "rqw_RunEnvCheck.hpp"
-#include "HalconDisplay.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CaiHuiPrintInspectionClass; };
@@ -38,7 +38,11 @@ public:
 	void initializeComponents();
 public:
 	void build_camera();
-   void build_halconDisplay();
+  void build_halconDisplay();
+	void refreshDisplayLabel(QLabel* label, const QPixmap& pixmap, const QSize& minimumSize);
+	void refreshAllDisplayLabels();
+protected:
+	void resizeEvent(QResizeEvent* event) override;
 public slots:
 	void changeLanguage(int index);
 public slots:
@@ -56,13 +60,19 @@ private slots:
 	void rbtn_removeFunc_checked(bool checked);
 	void pbtn_resetProduct_clicked();
 	void ckb_saveImg_checked(bool checked);
+    void ckb_findShapemodel_1_checked(bool checked);
+	void ckb_findShapemodel_2_checked(bool checked);
 private:
 	rw::rqw::ClickableLabel* clickableTitle = nullptr;
 	DlgCloseForm* _dlgCloseForm = nullptr;
-    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay1;
-	std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay2;
-    std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay3;
-	std::unique_ptr<rw::rqw::HalconDisplay> _halconDisplay4;
+    QPixmap _pixmap1;
+	QPixmap _pixmap2;
+	QPixmap _pixmap3;
+	QPixmap _pixmap4;
+	QSize _labelMinSize1;
+	QSize _labelMinSize2;
+	QSize _labelMinSize3;
+	QSize _labelMinSize4;
 private:
 	Ui::CaiHuiPrintInspectionClass* ui;
 	int minimizeCount{ 3 };

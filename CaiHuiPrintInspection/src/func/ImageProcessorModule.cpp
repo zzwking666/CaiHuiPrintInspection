@@ -166,6 +166,11 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 
 		auto& halconData = halconDatas[halconIndex];
 
+		HalconCpp::HObject hoImage = rw::rqw::HalconDisplay::matToHObject(frame.image);
+		HalconCpp::HObject copiedImage;
+		HalconCpp::CopyImage(hoImage, &copiedImage);
+		halconData.processImage = copiedImage;
+
 		if (!halconData.ckb_findShapemodel)
 		{
 			isMatched = true;
@@ -194,7 +199,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 					Union1(concatRegions, outUnion);
 				};
 
-			HObject imageForMatch = rw::rqw::HalconDisplay::matToHObject(frame.image);
+          HObject imageForMatch = hoImage;
 
 			if (halconData.isMeaning)
 			{
