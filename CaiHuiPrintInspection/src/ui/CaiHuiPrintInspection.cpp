@@ -85,14 +85,7 @@ void CaiHuiPrintInspection::build_connect()
      Dlg_createshapemodel dlg(2, this);
 		dlg.exec();
 	});
-	QObject::connect(ui->btn_createShapemodel_3, &QPushButton::clicked, this, [this]() {
-     Dlg_createshapemodel dlg(3, this);
-		dlg.exec();
-	});
-	QObject::connect(ui->btn_createShapemodel_4, &QPushButton::clicked, this, [this]() {
-     Dlg_createshapemodel dlg(4, this);
-		dlg.exec();
-	});
+
 
 	// 连接显示标题
 	QObject::connect(clickableTitle, &rw::rqw::ClickableLabel::clicked,
@@ -191,7 +184,7 @@ void CaiHuiPrintInspection::build_halconDisplay()
 		{
 			_halconDisplay2->initialize();
 		}
-		if (_halconDisplay3)
+     if (_halconDisplay3)
 		{
 			_halconDisplay3->initialize();
 		}

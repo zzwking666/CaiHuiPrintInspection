@@ -124,7 +124,8 @@ void ImageProcessor::run_debug(MatInfo& frame)
 	}
 
 	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
-	emit imageReady(imageProcessingModuleIndex, QPixmap::fromImage(qimg.copy()));
+ QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
+	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 }
 
 void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
@@ -293,7 +294,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 					{
 						const cv::Point topLeft(cvRound(minCol), cvRound(minRow));
 						const cv::Point bottomRight(cvRound(maxCol), cvRound(maxRow));
-						cv::rectangle(frame.image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 2, cv::LINE_AA);
+						cv::rectangle(frame.image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 5, cv::LINE_AA);
 					}
 				}
 			}
@@ -312,8 +313,21 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 		}
 	}
 
-	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
-	emit imageReady(imageProcessingModuleIndex, QPixmap::fromImage(qimg.copy()));
+ QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
+	emit imageReady(imageProcessingModuleIndex, displayPixmap);
+
+	if (!isMatched)
+	{
+		if (1 == imageProcessingModuleIndex)
+		{
+			emit imageReady(3, displayPixmap);
+		}
+		else if (2 == imageProcessingModuleIndex)
+		{
+			emit imageReady(4, displayPixmap);
+		}
+	}
 }
 
 void ImageProcessor::run_OpenRemoveFunc_emitErrorInfo(bool isbad)

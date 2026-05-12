@@ -727,15 +727,16 @@ void Dlg_createshapemodel::refresh_display_with_regions()
     {
         using namespace HalconCpp;
 
+        if (!_halconDisplay->displayImage(_halconData.processImage, true))
+        {
+            return;
+        }
+
         auto* windowHandle = _halconDisplay->getWindowHandle();
         if (!windowHandle)
         {
             return;
         }
-
-        // 不重置 SetPart，保持当前缩放/平移视图，仅重绘内容
-        ClearWindow(*windowHandle);
-        DispObj(_halconData.processImage, *windowHandle);
 
         SetLineWidth(*windowHandle, 2);
         SetDraw(*windowHandle, "margin");
