@@ -52,7 +52,6 @@ void DetachDefectThread::processQueue1(std::unique_ptr<rw::dsl::ThreadSafeHeap<b
 				camera->setOutTriggerConfig(outTriggerConfig);
 				camera->outTrigger();
 			}
-			qDebug() << "报警";
 		}
 	}
 	catch (const std::runtime_error&)

@@ -124,7 +124,7 @@ void ImageProcessor::run_debug(MatInfo& frame)
 	}
 
 	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
- QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
+	QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
 	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 }
 
@@ -139,7 +139,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 		auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
 		if (halconDatas.isEmpty())
 		{
-         if (shouldEmitError)
+			if (shouldEmitError)
 			{
 				run_OpenRemoveFunc_emitErrorInfo(true);
 			}
@@ -157,7 +157,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 		}
 		if (halconIndex < 0 || halconIndex >= halconDatas.size())
 		{
-         if (shouldEmitError)
+			if (shouldEmitError)
 			{
 				run_OpenRemoveFunc_emitErrorInfo(true);
 			}
@@ -213,7 +213,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 				imageForMatch = meanImage;
 			}
 
-            // 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain
+			// 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain
 
 			HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
 			FindShapeModel(imageForMatch,
@@ -278,9 +278,9 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 							continue;
 						}
 
-                       for (int pointIdx = 0; pointIdx < pointCount; ++pointIdx)
+						for (int pointIdx = 0; pointIdx < pointCount; ++pointIdx)
 						{
-                         const double col = hvCols[pointIdx].D();
+							const double col = hvCols[pointIdx].D();
 							const double row = hvRows[pointIdx].D();
 							minCol = std::min(minCol, col);
 							minRow = std::min(minRow, row);
@@ -300,20 +300,20 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 			}
 		}
 
-       if (shouldEmitError)
+		if (shouldEmitError)
 		{
 			run_OpenRemoveFunc_emitErrorInfo(!isMatched);
 		}
 	}
 	catch (...)
 	{
-     if (shouldEmitError)
+		if (shouldEmitError)
 		{
 			run_OpenRemoveFunc_emitErrorInfo(true);
 		}
 	}
 
- QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
 	QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
 	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 
@@ -321,10 +321,14 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 	{
 		if (1 == imageProcessingModuleIndex)
 		{
+			auto& priorityQueue = Modules::getInstance().eliminateModule.productPriorityQueue1;
+			priorityQueue->push(true);
 			emit imageReady(3, displayPixmap);
 		}
 		else if (2 == imageProcessingModuleIndex)
 		{
+			auto& priorityQueue = Modules::getInstance().eliminateModule.productPriorityQueue2;
+			priorityQueue->push(true);
 			emit imageReady(4, displayPixmap);
 		}
 	}
