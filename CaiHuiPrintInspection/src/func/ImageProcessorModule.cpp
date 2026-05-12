@@ -87,49 +87,44 @@ void ImageProcessor::run()
 
 void ImageProcessor::run_debug(MatInfo& frame)
 {
-  MatInfo debugFrame = frame;
-
-	const QString customPath = ("C:\\Users\\zfkj4090\\Desktop\\1111\\NGDefect20260422072837640.jpg") ;
-	if (!customPath.isEmpty())
+	if (frame.image.empty())
 	{
-		cv::Mat customImage;
-		QFileInfo fileInfo(customPath);
-		if (fileInfo.exists() && fileInfo.isFile())
-		{
-			customImage = cv::imread(customPath.toStdString(), cv::IMREAD_COLOR);
-		}
-		else
-		{
-			QDir dir(customPath);
-			if (dir.exists())
-			{
-				static const QSet<QString> supportedSuffixes = {
-					"jpg", "jpeg", "png", "bmp", "gif", "tiff", "webp"
-				};
-				QFileInfoList fileList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-				for (const QFileInfo& imgInfo : fileList)
-				{
-					if (!supportedSuffixes.contains(imgInfo.suffix().toLower()))
-					{
-						continue;
-					}
-
-					customImage = cv::imread(imgInfo.absoluteFilePath().toStdString(), cv::IMREAD_COLOR);
-					if (!customImage.empty())
-					{
-						break;
-					}
-				}
-			}
-		}
-
-		if (!customImage.empty())
-		{
-			debugFrame.image = customImage;
-		}
+		return;
 	}
 
-	run_OpenRemoveFunc(debugFrame);
+	try
+	{
+		auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+
+		int halconIndex = -1;
+		if (frame.index > 0)
+		{
+			halconIndex = static_cast<int>(frame.index) - 1;
+		}
+		if (halconIndex < 0)
+		{
+			halconIndex = imageProcessingModuleIndex - 1;
+		}
+
+		if (halconIndex >= 0)
+		{
+			if (halconDatas.size() <= halconIndex)
+			{
+				halconDatas.resize(halconIndex + 1);
+			}
+
+			HalconCpp::HObject hoImage = rw::rqw::HalconDisplay::matToHObject(frame.image);
+			HalconCpp::HObject copiedImage;
+			HalconCpp::CopyImage(hoImage, &copiedImage);
+			halconDatas[halconIndex].processImage = copiedImage;
+		}
+	}
+	catch (...)
+	{
+	}
+
+	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	emit imageReady(imageProcessingModuleIndex, QPixmap::fromImage(qimg.copy()));
 }
 
 void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
