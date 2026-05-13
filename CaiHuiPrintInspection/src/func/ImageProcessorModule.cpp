@@ -8,6 +8,7 @@
 #include <atomic>
 #include <QDir>
 #include <QFileInfo>
+#include <QDateTime>
 #include "Utilty.hpp"
 #include "halconcpp/HalconCpp.h"
 #include "Halcon.h"
@@ -123,8 +124,11 @@ void ImageProcessor::run_debug(MatInfo& frame)
 	{
 	}
 
-	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
-	QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
+ QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	QImage savedImage = qimg.copy();
+	rw::rqw::ImageInfo imageInfo(savedImage);
+	save_image(imageInfo, savedImage);
+	QPixmap displayPixmap = QPixmap::fromImage(savedImage);
 	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 }
 
@@ -318,8 +322,11 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 		}
 	}
 
-	QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
-	QPixmap displayPixmap = QPixmap::fromImage(qimg.copy());
+ QImage qimg(frame.image.data, frame.image.cols, frame.image.rows, frame.image.step, QImage::Format_BGR888);
+	QImage savedImage = qimg.copy();
+	rw::rqw::ImageInfo imageInfo(savedImage);
+	save_image(imageInfo, savedImage);
+	QPixmap displayPixmap = QPixmap::fromImage(savedImage);
 	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 
 	if (!isMatched)
@@ -363,14 +370,28 @@ void ImageProcessor::save_image(rw::rqw::ImageInfo& imageInfo, const QImage& ima
 
 void ImageProcessor::save_image_work(rw::rqw::ImageInfo& imageInfo, const QImage& image)
 {
-	auto& imageSaveEngine = Modules::getInstance().imgSaveModule.imageSaveEngine;
-	auto& config = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
+   auto& config = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 
-	if (config.isSaveImg)
+	if (!config.isSaveImg)
 	{
-		imageInfo.classify = "NG";
-		imageSaveEngine->pushImage(imageInfo);
+		return;
 	}
+
+	const QString rootPath = R"(C:\Users\zzw\Desktop\temp)";
+	const QString dateFolder = QDate::currentDate().toString("yyyy_MM_dd");
+	QDir dir(rootPath);
+	if (!dir.exists())
+	{
+		dir.mkpath(".");
+	}
+	if (!dir.exists(dateFolder))
+	{
+		dir.mkpath(dateFolder);
+	}
+
+	const QString fileName = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz") + ".jpg";
+	const QString filePath = dir.filePath(dateFolder + QLatin1Char('/') + fileName);
+	image.save(filePath, "JPG");
 }
 
 void ImageProcessor::buildObbModelEngine(const QString& enginePath)
@@ -396,7 +417,7 @@ void ImageProcessingModule::BuildModule()
 		ImageProcessor* processor = new ImageProcessor(_queue, _mutex, _condition, workIndexCount, this);
 		workIndexCount++;
 		processor->imageProcessingModuleIndex = index;
-		processor->buildObbModelEngine(modelEnginePath);
+		//processor->buildObbModelEngine(modelEnginePath);
 		connect(processor, &ImageProcessor::imageReady, this, &ImageProcessingModule::imageReady, Qt::QueuedConnection);
 
 		_processors.push_back(processor);

@@ -191,11 +191,11 @@ bool Modules::check()
 #pragma endregion
 
 #pragma region check model exist
-	if (!rw::rqw::RunEnvCheck::isFileExist(globalPath.modelPath))
+	/*if (!rw::rqw::RunEnvCheck::isFileExist(globalPath.modelPath))
 	{
 		QMessageBox::warning(nullptr, "错误", "模型文件缺失");
 		return false;
-	}
+	}*/
 #pragma endregion
 
 #pragma region check config format and exist
