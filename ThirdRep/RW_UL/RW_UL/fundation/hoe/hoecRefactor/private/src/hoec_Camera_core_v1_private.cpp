@@ -28,6 +28,11 @@ namespace rw
 				image = cv::Mat(height, width, CV_8UC1, data);
 				cv::cvtColor(image, image, cv::COLOR_BayerRG2BGR);
 				break;
+			case PixelType_Gvsp_BayerBG8:
+				// Bayer BG8格式图像
+				image = cv::Mat(height, width, CV_8UC1, data);
+				cv::cvtColor(image, image, cv::COLOR_BayerBG2RGB);
+				break;
 			case PixelType_Gvsp_Mono8:
 				// 单通道灰度图像
 				image = cv::Mat(height, width, CV_8UC1, data);
@@ -96,6 +101,13 @@ namespace rw
 
 				cv::cvtColor(bayerImage, rgbImage, cv::COLOR_BayerGB2RGB);
 
+				return rgbImage;
+			}
+			else if (frameInfo.enPixelType == PixelType_Gvsp_BayerBG8)
+			{
+				cv::Mat bayerImage(height, width, CV_8UC1, pData);
+				cv::Mat rgbImage;
+				cv::cvtColor(bayerImage, rgbImage, cv::COLOR_BayerBG2RGB);
 				return rgbImage;
 			}
 			else if (frameInfo.enPixelType == PixelType_Gvsp_BayerRG8)
