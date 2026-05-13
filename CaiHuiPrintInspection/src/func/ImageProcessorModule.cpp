@@ -129,6 +129,9 @@ void ImageProcessor::run_debug(MatInfo& frame)
 	rw::rqw::ImageInfo imageInfo(savedImage);
 	save_image(imageInfo, savedImage);
 	QPixmap displayPixmap = QPixmap::fromImage(savedImage);
+	
+
+	
 	emit imageReady(imageProcessingModuleIndex, displayPixmap);
 }
 
@@ -241,7 +244,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 				&hvFindScore);
 
 			isMatched = hvFindRow.TupleLength() > 0;
-
+			qDebug() << "FindShapeModel result: " << isMatched << " matches found.";
 			if (isMatched)
 			{
 				HObject modelContours;
@@ -370,28 +373,7 @@ void ImageProcessor::save_image(rw::rqw::ImageInfo& imageInfo, const QImage& ima
 
 void ImageProcessor::save_image_work(rw::rqw::ImageInfo& imageInfo, const QImage& image)
 {
-   auto& config = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
-
-	if (!config.isSaveImg)
-	{
-		return;
-	}
-
-	const QString rootPath = R"(C:\Users\zzw\Desktop\temp)";
-	const QString dateFolder = QDate::currentDate().toString("yyyy_MM_dd");
-	QDir dir(rootPath);
-	if (!dir.exists())
-	{
-		dir.mkpath(".");
-	}
-	if (!dir.exists(dateFolder))
-	{
-		dir.mkpath(dateFolder);
-	}
-
-	const QString fileName = QDateTime::currentDateTime().toString("yyyyMMddhhmmsszzz") + ".jpg";
-	const QString filePath = dir.filePath(dateFolder + QLatin1Char('/') + fileName);
-	image.save(filePath, "JPG");
+ 
 }
 
 void ImageProcessor::buildObbModelEngine(const QString& enginePath)
@@ -460,9 +442,10 @@ void ImageProcessingModule::onFrameCaptured(rw::rqw::MatInfo matInfo, size_t ind
 	const long long debounceMs = static_cast<long long>(std::max(0.0, setConfig.xiangjiguangdianpingbishijian));
 	const auto minInterval = std::chrono::milliseconds(debounceMs);
 
-	static std::atomic<long long> lastCamNs{ 0 };
+   static std::array<std::atomic<long long>, 2> lastCamNs{ 0, 0 };
+	const size_t camSlot = (index > 0 && index <= lastCamNs.size()) ? index - 1 : 0;
 
-	if (!AllowOncePer(lastCamNs, minInterval)) {
+	if (!AllowOncePer(lastCamNs[camSlot], minInterval)) {
 		return;
 	}
 

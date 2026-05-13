@@ -404,8 +404,9 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 {
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 
-	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
+ auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
 	auto& camera1 = Modules::getInstance().cameraModule.camera1;
+	auto& camera2 = Modules::getInstance().cameraModule.camera2;
 	if (!isRuning) {
 		if (checked) {
 			runningState = RunningState::Debug;
@@ -413,6 +414,11 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 			{
 				camera1->setTriggerState(false);
 				camera1->setFrameRate(5);
+			}
+           if (camera2)
+			{
+				camera2->setTriggerState(false);
+				camera2->setFrameRate(5);
 			}
 		}
 		else {
@@ -426,8 +432,9 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 
 void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 {
-	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
+ auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
 	auto& camera1 = Modules::getInstance().cameraModule.camera1;
+	auto& camera2 = Modules::getInstance().cameraModule.camera2;
 	if (checked)
 	{
 		runningState = RunningState::OpenRemoveFunc;
@@ -436,6 +443,12 @@ void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 			camera1->setTriggerState(true);
 			camera1->setTriggerSource(rw::rqw::TriggerSource::Line0);
 			camera1->setFrameRate(50);
+		}
+      if (camera2)
+		{
+			camera2->setTriggerState(true);
+			camera2->setTriggerSource(rw::rqw::TriggerSource::Line0);
+			camera2->setFrameRate(50);
 		}
 		ui->rbtn_debug->setChecked(false);
 	}
