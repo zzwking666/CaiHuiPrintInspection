@@ -1,0 +1,1852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DataSetAnalysisClass</class>
+ <widget class="QMainWindow" name="DataSetAnalysisClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>940</width>
+    <height>646</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DataSetAnalysis</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="styleSheet">
+       <string notr="true">QTabWidget::pane {
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    background: #F8F8F8;
+}
+
+QTabBar::tab {
+    font: bold 14px;
+    color: #666;
+    background: #F8F8F8;
+    border: 1px solid #DDD;
+    border-bottom: none; /* 让选中tab和pane连起来 */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 5px 15px;
+    margin-right: 2px;
+}
+
+QTabBar::tab:selected {
+    background: #FFF;
+    color: #333;
+    border-color: #AAA;
+}
+
+QTabBar::tab:!selected {
+    background: #F8F8F8;
+    color: #666;
+}
+
+QTabBar::tab:hover {
+    background: #EEE;
+}</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <widget class="QPushButton" name="pbtn_Exit">
+        <property name="geometry">
+         <rect>
+          <x>840</x>
+          <y>0</y>
+          <width>75</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pbtn_ImportDatas">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>171</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+        </property>
+        <property name="text">
+         <string>导入数据集</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="ledit_DataSetPath">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>10</y>
+          <width>591</width>
+          <height>51</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pbtn_StartImportDatas">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>190</y>
+          <width>371</width>
+          <height>171</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+        </property>
+        <property name="text">
+         <string>开始导入</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="cmb_SelectType">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>80</y>
+          <width>151</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>目标检测</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>语义分割</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>目标检测旋转</string>
+         </property>
+        </item>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QProgressBar" name="progressBar_ImportDatas">
+          <property name="styleSheet">
+           <string notr="true">/* 基础进度条 */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    text-align: center;
+    height: 24px;
+}
+
+/* 进度填充 */
+QProgressBar::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #888888,
+        stop:1 #666666
+    );
+    border-radius: 2px;
+    margin: 2px;
+}
+
+/* 状态变体 */
+QProgressBar[state=&quot;success&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #88AA88,
+        stop:1 #669966
+    );
+}
+
+QProgressBar[state=&quot;error&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #CC6666,
+        stop:1 #AA4444
+    );
+}
+
+QProgressBar[state=&quot;warning&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #FFD700,
+        stop:1 #D4B000
+    );
+}
+
+/* 禁用状态 */
+QProgressBar:disabled {
+    border-color: #DDDDDD;
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+QProgressBar:disabled::chunk {
+    background: #DDDDDD;
+}
+
+/* 紧凑模式 */
+QProgressBar.compact {
+    height: 16px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+QProgressBar.compact::chunk {
+    margin: 1px;
+}
+
+/* 垂直模式 */
+QProgressBar.vertical {
+    width: 24px;
+    height: 200px;
+}
+
+QProgressBar.vertical::chunk {
+    width: 100%;
+    margin: 2px 0;
+}
+
+/* 不确定模式 */
+QProgressBar:indeterminate::chunk {
+    background: repeating-linear-gradient(
+        45deg,
+        #666666,
+        #666666 10px,
+        #888888 10px,
+        #888888 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+/* 环形进度条变体 */
+QProgressBar.circular {
+    border-radius: 50%;
+    border: 2px solid #AAAAAA;
+    width: 64px;
+    height: 64px;
+    qproperty-format: &quot;&quot;;
+}
+
+QProgressBar.circular::chunk {
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #666666 0%,
+        #666666 var(--progress),
+        transparent var(--progress),
+        transparent 100%
+    );
+}</string>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPlainTextEdit" name="plainTextEdit_ImportDatastabFindPicture">
+          <property name="styleSheet">
+           <string notr="true">/* 基础文本编辑框 */
+QPlainTextEdit {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    font-family: &quot;Consolas&quot;, monospace;
+    padding: 4px;
+    selection-background-color: #666666;
+    selection-color: #FFFFFF;
+}
+
+/* 光标样式 */
+QPlainTextEdit::cursor {
+    width: 1.5px;
+    background: #444444;
+}
+
+/* 行号栏 */
+QPlainTextEdit .linenumber {
+    background: #F8F8F8;
+    border-right: 1px solid #DDDDDD;
+    color: #888888;
+    padding: 0 8px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 13px;
+    qproperty-alignment: AlignRight;
+}
+
+/* 当前行高亮 */
+QPlainTextEdit::current-line {
+    background: #F5F5F5;
+    border: none;
+}
+
+/* 断点标记 */
+QPlainTextEdit[breakpoint=&quot;true&quot;]::block-mark {
+    background: #FF6666;
+    border-radius: 4px;
+    width: 12px;
+    margin: 2px;
+}
+
+/* 代码折叠区域 */
+QPlainTextEdit::fold-area {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+}
+
+/* 滚动条系统 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* 禁用状态 */
+QPlainTextEdit:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+}
+
+/* 只读状态 */
+QPlainTextEdit[readOnly=&quot;true&quot;] {
+    background: #FFFFFF;
+    border-color: #CCCCCC;
+}
+
+/* 错误波浪线 */
+QPlainTextEdit::error-wave {
+    color: #FF6666;
+    wave-height: 2px;
+    wave-length: 4px;
+}
+
+/* 搜索高亮 */
+QPlainTextEdit::search-highlight {
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+/* 紧凑型变体 */
+QPlainTextEdit.compact {
+    font-size: 13px;
+    padding: 2px;
+}
+
+QPlainTextEdit.compact .linenumber {
+    font-size: 12px;
+    padding: 0 6px;
+}</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Tab 3</string>
+       </attribute>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>131</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>22</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>功能选择</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>808</width>
+          <height>134</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>功能1</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_16" stretch="0,0">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <pointsize>22</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>将每一类classid划分到对应的文件夹下</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbtn_divideByClassid">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+           </property>
+           <property name="text">
+            <string>划分数据集</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>220</y>
+          <width>808</width>
+          <height>134</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>功能2</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_17" stretch="0,0">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <pointsize>22</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>所有图片随机按比例按train,val,test分到文件夹下</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbtn_divideByRandom">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+           </property>
+           <property name="text">
+            <string>随机划分</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>370</y>
+          <width>808</width>
+          <height>134</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>功能2</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_18" stretch="0,0">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <pointsize>22</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>根据classid多少,最少的先分配然后再分配多的以此类推</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbtn_divideByProportion">
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+           </property>
+           <property name="text">
+            <string>百分比划分</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Tab 4</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pbtn_divideByClassidExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>设定导出的目录文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledit_divideByClassidDataSetPath">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QPushButton" name="pbtn_startdivideByClassidExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>开始导出</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QProgressBar" name="progressBar_divideByClassid">
+          <property name="styleSheet">
+           <string notr="true">/* 基础进度条 */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    text-align: center;
+    height: 24px;
+}
+
+/* 进度填充 */
+QProgressBar::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #888888,
+        stop:1 #666666
+    );
+    border-radius: 2px;
+    margin: 2px;
+}
+
+/* 状态变体 */
+QProgressBar[state=&quot;success&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #88AA88,
+        stop:1 #669966
+    );
+}
+
+QProgressBar[state=&quot;error&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #CC6666,
+        stop:1 #AA4444
+    );
+}
+
+QProgressBar[state=&quot;warning&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #FFD700,
+        stop:1 #D4B000
+    );
+}
+
+/* 禁用状态 */
+QProgressBar:disabled {
+    border-color: #DDDDDD;
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+QProgressBar:disabled::chunk {
+    background: #DDDDDD;
+}
+
+/* 紧凑模式 */
+QProgressBar.compact {
+    height: 16px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+QProgressBar.compact::chunk {
+    margin: 1px;
+}
+
+/* 垂直模式 */
+QProgressBar.vertical {
+    width: 24px;
+    height: 200px;
+}
+
+QProgressBar.vertical::chunk {
+    width: 100%;
+    margin: 2px 0;
+}
+
+/* 不确定模式 */
+QProgressBar:indeterminate::chunk {
+    background: repeating-linear-gradient(
+        45deg,
+        #666666,
+        #666666 10px,
+        #888888 10px,
+        #888888 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+/* 环形进度条变体 */
+QProgressBar.circular {
+    border-radius: 50%;
+    border: 2px solid #AAAAAA;
+    width: 64px;
+    height: 64px;
+    qproperty-format: &quot;&quot;;
+}
+
+QProgressBar.circular::chunk {
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #666666 0%,
+        #666666 var(--progress),
+        transparent var(--progress),
+        transparent 100%
+    );
+}</string>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QPlainTextEdit" name="plainTextEdit_divideByClassid">
+          <property name="styleSheet">
+           <string notr="true">/* 基础文本编辑框 */
+QPlainTextEdit {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    font-family: &quot;Consolas&quot;, monospace;
+    padding: 4px;
+    selection-background-color: #666666;
+    selection-color: #FFFFFF;
+}
+
+/* 光标样式 */
+QPlainTextEdit::cursor {
+    width: 1.5px;
+    background: #444444;
+}
+
+/* 行号栏 */
+QPlainTextEdit .linenumber {
+    background: #F8F8F8;
+    border-right: 1px solid #DDDDDD;
+    color: #888888;
+    padding: 0 8px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 13px;
+    qproperty-alignment: AlignRight;
+}
+
+/* 当前行高亮 */
+QPlainTextEdit::current-line {
+    background: #F5F5F5;
+    border: none;
+}
+
+/* 断点标记 */
+QPlainTextEdit[breakpoint=&quot;true&quot;]::block-mark {
+    background: #FF6666;
+    border-radius: 4px;
+    width: 12px;
+    margin: 2px;
+}
+
+/* 代码折叠区域 */
+QPlainTextEdit::fold-area {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+}
+
+/* 滚动条系统 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* 禁用状态 */
+QPlainTextEdit:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+}
+
+/* 只读状态 */
+QPlainTextEdit[readOnly=&quot;true&quot;] {
+    background: #FFFFFF;
+    border-color: #CCCCCC;
+}
+
+/* 错误波浪线 */
+QPlainTextEdit::error-wave {
+    color: #FF6666;
+    wave-height: 2px;
+    wave-length: 4px;
+}
+
+/* 搜索高亮 */
+QPlainTextEdit::search-highlight {
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+/* 紧凑型变体 */
+QPlainTextEdit.compact {
+    font-size: 13px;
+    padding: 2px;
+}
+
+QPlainTextEdit.compact .linenumber {
+    font-size: 12px;
+    padding: 0 6px;
+}</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_5">
+       <attribute name="title">
+        <string>Tab 5</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pbtn_divideByRandomExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>设定导出的目录文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledit_divideByRandomDataSetPath">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>train比例</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledit_divideByRandomTrain">
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>val比例</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledit_divideByRandomVal">
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>test比例</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ledit_divideByRandomTest">
+              <property name="font">
+               <font>
+                <pointsize>20</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_10">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QPushButton" name="pbtn_startdivideByRandomExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>开始导出</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QProgressBar" name="progressBar_divideByRandom">
+          <property name="styleSheet">
+           <string notr="true">/* 基础进度条 */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    text-align: center;
+    height: 24px;
+}
+
+/* 进度填充 */
+QProgressBar::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #888888,
+        stop:1 #666666
+    );
+    border-radius: 2px;
+    margin: 2px;
+}
+
+/* 状态变体 */
+QProgressBar[state=&quot;success&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #88AA88,
+        stop:1 #669966
+    );
+}
+
+QProgressBar[state=&quot;error&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #CC6666,
+        stop:1 #AA4444
+    );
+}
+
+QProgressBar[state=&quot;warning&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #FFD700,
+        stop:1 #D4B000
+    );
+}
+
+/* 禁用状态 */
+QProgressBar:disabled {
+    border-color: #DDDDDD;
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+QProgressBar:disabled::chunk {
+    background: #DDDDDD;
+}
+
+/* 紧凑模式 */
+QProgressBar.compact {
+    height: 16px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+QProgressBar.compact::chunk {
+    margin: 1px;
+}
+
+/* 垂直模式 */
+QProgressBar.vertical {
+    width: 24px;
+    height: 200px;
+}
+
+QProgressBar.vertical::chunk {
+    width: 100%;
+    margin: 2px 0;
+}
+
+/* 不确定模式 */
+QProgressBar:indeterminate::chunk {
+    background: repeating-linear-gradient(
+        45deg,
+        #666666,
+        #666666 10px,
+        #888888 10px,
+        #888888 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+/* 环形进度条变体 */
+QProgressBar.circular {
+    border-radius: 50%;
+    border: 2px solid #AAAAAA;
+    width: 64px;
+    height: 64px;
+    qproperty-format: &quot;&quot;;
+}
+
+QProgressBar.circular::chunk {
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #666666 0%,
+        #666666 var(--progress),
+        transparent var(--progress),
+        transparent 100%
+    );
+}</string>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QPlainTextEdit" name="plainTextEdit_divideByRandom">
+          <property name="styleSheet">
+           <string notr="true">/* 基础文本编辑框 */
+QPlainTextEdit {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    font-family: &quot;Consolas&quot;, monospace;
+    padding: 4px;
+    selection-background-color: #666666;
+    selection-color: #FFFFFF;
+}
+
+/* 光标样式 */
+QPlainTextEdit::cursor {
+    width: 1.5px;
+    background: #444444;
+}
+
+/* 行号栏 */
+QPlainTextEdit .linenumber {
+    background: #F8F8F8;
+    border-right: 1px solid #DDDDDD;
+    color: #888888;
+    padding: 0 8px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 13px;
+    qproperty-alignment: AlignRight;
+}
+
+/* 当前行高亮 */
+QPlainTextEdit::current-line {
+    background: #F5F5F5;
+    border: none;
+}
+
+/* 断点标记 */
+QPlainTextEdit[breakpoint=&quot;true&quot;]::block-mark {
+    background: #FF6666;
+    border-radius: 4px;
+    width: 12px;
+    margin: 2px;
+}
+
+/* 代码折叠区域 */
+QPlainTextEdit::fold-area {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+}
+
+/* 滚动条系统 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* 禁用状态 */
+QPlainTextEdit:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+}
+
+/* 只读状态 */
+QPlainTextEdit[readOnly=&quot;true&quot;] {
+    background: #FFFFFF;
+    border-color: #CCCCCC;
+}
+
+/* 错误波浪线 */
+QPlainTextEdit::error-wave {
+    color: #FF6666;
+    wave-height: 2px;
+    wave-length: 4px;
+}
+
+/* 搜索高亮 */
+QPlainTextEdit::search-highlight {
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+/* 紧凑型变体 */
+QPlainTextEdit.compact {
+    font-size: 13px;
+    padding: 2px;
+}
+
+QPlainTextEdit.compact .linenumber {
+    font-size: 12px;
+    padding: 0 6px;
+}</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Tab 6</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0" colspan="2">
+         <widget class="QPushButton" name="pbtn_divideByProportionExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>设定导出的目录文件夹</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2" colspan="2">
+         <widget class="QLineEdit" name="ledit_divideByProportionDataSetPath">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>train比例</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledit_divideByProportionTrain">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_16">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>%</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0" colspan="4">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>val比例</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledit_divideByProportionVal">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>%</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0" colspan="4">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>test比例</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledit_divideByProportionTest">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="font">
+             <font>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>%</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="QLabel" name="label_18">
+          <property name="font">
+           <font>
+            <pointsize>22</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>需要忽略的classid用英文逗号分割</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="3">
+         <widget class="QLineEdit" name="ledit_divideByProportionMissClassid">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_17">
+          <property name="font">
+           <font>
+            <pointsize>22</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>划分策略</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="cmb_divideByProportionSelectType">
+          <item>
+           <property name="text">
+            <string>优先处理少的</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>优先处理多的</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="5" column="2" colspan="2">
+         <widget class="QPushButton" name="pbtn_startdivideByProportionExportDatas">
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+	font-size:24px;
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+          </property>
+          <property name="text">
+           <string>开始导出</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="4">
+         <widget class="QProgressBar" name="progressBar_divideByProportion">
+          <property name="styleSheet">
+           <string notr="true">/* 基础进度条 */
+QProgressBar {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    text-align: center;
+    height: 24px;
+}
+
+/* 进度填充 */
+QProgressBar::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #888888,
+        stop:1 #666666
+    );
+    border-radius: 2px;
+    margin: 2px;
+}
+
+/* 状态变体 */
+QProgressBar[state=&quot;success&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #88AA88,
+        stop:1 #669966
+    );
+}
+
+QProgressBar[state=&quot;error&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #CC6666,
+        stop:1 #AA4444
+    );
+}
+
+QProgressBar[state=&quot;warning&quot;]::chunk {
+    background: qlineargradient(
+        x1:0, y1:0,
+        x2:1, y2:0,
+        stop:0 #FFD700,
+        stop:1 #D4B000
+    );
+}
+
+/* 禁用状态 */
+QProgressBar:disabled {
+    border-color: #DDDDDD;
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+QProgressBar:disabled::chunk {
+    background: #DDDDDD;
+}
+
+/* 紧凑模式 */
+QProgressBar.compact {
+    height: 16px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+QProgressBar.compact::chunk {
+    margin: 1px;
+}
+
+/* 垂直模式 */
+QProgressBar.vertical {
+    width: 24px;
+    height: 200px;
+}
+
+QProgressBar.vertical::chunk {
+    width: 100%;
+    margin: 2px 0;
+}
+
+/* 不确定模式 */
+QProgressBar:indeterminate::chunk {
+    background: repeating-linear-gradient(
+        45deg,
+        #666666,
+        #666666 10px,
+        #888888 10px,
+        #888888 20px
+    );
+    animation: progress-stripes 1s linear infinite;
+}
+
+@keyframes progress-stripes {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+}
+
+/* 环形进度条变体 */
+QProgressBar.circular {
+    border-radius: 50%;
+    border: 2px solid #AAAAAA;
+    width: 64px;
+    height: 64px;
+    qproperty-format: &quot;&quot;;
+}
+
+QProgressBar.circular::chunk {
+    border-radius: 50%;
+    background: conic-gradient(
+        from 90deg,
+        #666666 0%,
+        #666666 var(--progress),
+        transparent var(--progress),
+        transparent 100%
+    );
+}</string>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="4">
+         <widget class="QPlainTextEdit" name="plainTextEdit_divideByProportion">
+          <property name="styleSheet">
+           <string notr="true">/* 基础文本编辑框 */
+QPlainTextEdit {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 14px;
+    font-family: &quot;Consolas&quot;, monospace;
+    padding: 4px;
+    selection-background-color: #666666;
+    selection-color: #FFFFFF;
+}
+
+/* 光标样式 */
+QPlainTextEdit::cursor {
+    width: 1.5px;
+    background: #444444;
+}
+
+/* 行号栏 */
+QPlainTextEdit .linenumber {
+    background: #F8F8F8;
+    border-right: 1px solid #DDDDDD;
+    color: #888888;
+    padding: 0 8px;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 13px;
+    qproperty-alignment: AlignRight;
+}
+
+/* 当前行高亮 */
+QPlainTextEdit::current-line {
+    background: #F5F5F5;
+    border: none;
+}
+
+/* 断点标记 */
+QPlainTextEdit[breakpoint=&quot;true&quot;]::block-mark {
+    background: #FF6666;
+    border-radius: 4px;
+    width: 12px;
+    margin: 2px;
+}
+
+/* 代码折叠区域 */
+QPlainTextEdit::fold-area {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+}
+
+/* 滚动条系统 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+/* 禁用状态 */
+QPlainTextEdit:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+    border-color: #DDDDDD;
+}
+
+/* 只读状态 */
+QPlainTextEdit[readOnly=&quot;true&quot;] {
+    background: #FFFFFF;
+    border-color: #CCCCCC;
+}
+
+/* 错误波浪线 */
+QPlainTextEdit::error-wave {
+    color: #FF6666;
+    wave-height: 2px;
+    wave-length: 4px;
+}
+
+/* 搜索高亮 */
+QPlainTextEdit::search-highlight {
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+/* 紧凑型变体 */
+QPlainTextEdit.compact {
+    font-size: 13px;
+    padding: 2px;
+}
+
+QPlainTextEdit.compact .linenumber {
+    font-size: 12px;
+    padding: 0 6px;
+}</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>940</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../qrc/DataSetAnalysis.qrc"/>
+ </resources>
+ <connections/>
+</ui>

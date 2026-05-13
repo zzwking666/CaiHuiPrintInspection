@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+
+
+namespace rw{
+	namespace cdm{
+        class testClass
+        {
+        public:
+            expousureTime : size_t ;
+            test1 : size_t : default = 1000;
+            test2 : int : default = 1000;
+            test3 : std::string : default = "1000";
+            test4 : bool : default = true;
+        };
+
+		class testClass1
+        {
+        public:
+            expousureTime : size_t ;
+            test1 : size_t : default = 1000;
+            test2 : int : default = 1000;
+            test3 : std::string : default = "1000";
+            test4 : bool : default = true;
+        };
+	}
+}
+
+
+
+
+

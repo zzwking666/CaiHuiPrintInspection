@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PicturesPainterVersionDunDaiClass</class>
+ <widget class="QDialog" name="PicturesPainterVersionDunDaiClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PicturesPainterVersionDunDai</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,10">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_close">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+    font-size: 30px; 
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+         </property>
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="styleSheet">
+          <string notr="true">QGroupBox {
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font: bold 14px;
+    color: #666;
+    background-color: #F8F8F8;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding: 0 5px;
+}</string>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="DrawLabel" name="label_imgDisplay">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QGroupBox {
+    border: 1px solid #DDD;
+    border-radius: 4px;
+    font: bold 14px;
+    color: #666;
+    background-color: rgb(202, 202, 202);
+    padding: 10px; 
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding: 0 5px;
+}</string>
+         </property>
+         <property name="title">
+          <string>绘画设置</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout" stretch="1,5,1,1">
+            <item>
+             <widget class="QPushButton" name="btn_zhinengpingbi">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+    font-size: 30px; 
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+              </property>
+              <property name="text">
+               <string>智能屏蔽</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListView" name="listView">
+              <property name="styleSheet">
+               <string notr="true">/* 基础列表视图 */
+QListView {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background: #FFFFFF;
+    color: #444444;
+    font-size: 20px;
+    outline: 0; 
+    padding: 2px;
+}
+
+/* 列表项通用样式 */
+QListView::item {
+    height: 28px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    margin: 1px 2px;
+}
+
+/* 悬停效果 */
+QListView::item:hover {
+    background: #F8F8F8;
+    border: 1px solid #888888;
+}
+
+/* 选中状态 */
+QListView::item:selected {
+    background: #666666;
+    color: #FFFFFF;
+    border: 1px solid #555555;
+}
+
+/* 焦点状态 */
+QListView::item:selected:active {
+    background: qlineargradient(
+        x1:0, y1:0, x2:0, y2:1,
+        stop:0 #666666, 
+        stop:1 #555555
+    );
+}
+
+/* 禁用状态 */
+QListView:disabled {
+    border-color: #DDDDDD;
+    color: #AAAAAA;
+}
+
+QListView::item:disabled {
+    background: #F5F5F5;
+    color: #AAAAAA;
+}
+
+/* 紧凑型变体 */
+QListView.compact {
+    font-size: 13px;
+}
+
+QListView.compact::item {
+    height: 24px;
+    padding: 2px 6px;
+}
+
+/* 滚动条样式 */
+QScrollBar:vertical {
+    width: 10px;
+    background: #FFFFFF;
+}
+
+QScrollBar::handle:vertical {
+    background: #CCCCCC;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #AAAAAA;
+}
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* 强调型变体 */
+QListView.emphasized::item:selected {
+    background: #4A4A4A;
+    border-color: #3A3A3A;
+}
+
+/* 交替行颜色 */
+QListView::item:alternate {
+    background: #FAFAFA;
+}
+
+/* 角部处理 */
+QScrollBar #qt_scrollarea_corner {
+    background: #FFFFFF;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_clear">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+    font-size: 30px; 
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+              </property>
+              <property name="text">
+               <string>清空</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbtn_ok">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    padding: 6px 14px;
+    border: 2px solid #CCC;
+    border-radius: 4px;
+    background-color: white;
+    color: #444;
+    font-size: 30px; 
+}
+
+QPushButton:hover {
+    border-color: #999;
+    background-color: #F5F5F5;
+}
+
+QPushButton:pressed {
+    border-color: #777;
+    background-color: #EEE;
+}</string>
+              </property>
+              <property name="text">
+               <string>确定</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>DrawLabel</class>
+   <extends>QLabel</extends>
+   <header>PicturesPainter.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

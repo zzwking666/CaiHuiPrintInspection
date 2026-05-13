@@ -1,0 +1,49 @@
+project(ime VERSION 0.1 LANGUAGES CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+
+FIND_SOURCES_AND_HEADERS(SRC_LIST
+	${CMAKE_CURRENT_SOURCE_DIR}/include 
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+add_library(${PROJECT_NAME}  ${SRC_LIST} ${UTILTY_SRC_LIST})
+
+target_include_directories(${PROJECT_NAME} 
+	PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PUBLIC ${UTILTY_INCLUDES}
+)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC  ${OpenCV_LIBS})
+
+target_link_libraries(${PROJECT_NAME} 
+	PUBLIC imet
+	PUBLIC imeo
+)
+
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/lib
+    LIBRARY DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/lib
+    RUNTIME DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/bin
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/include/
+)
+
+install(DIRECTORY ${IME_UTILTY_ROOTPATH}/include/
+    DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/include/
+)
+
+install(FILES ${TensorRT_dlls} ${OnnxRuntime_dlls}
+    DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/dll 
+)
+
+install(FILES ${TensorRT_libs} ${OnnxRuntime_libs}
+    DESTINATION ${INSTALL_PATH}/${PROJECT_NAME}/libs
+)
+
+if(CONFIG_TEST)
+    add_subdirectory(./test)
+endif()

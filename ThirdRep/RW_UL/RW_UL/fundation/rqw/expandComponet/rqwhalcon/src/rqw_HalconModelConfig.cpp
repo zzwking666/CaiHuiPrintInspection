@@ -1,0 +1,1 @@
+#include"rqw_HalconModelConfig.hpp"

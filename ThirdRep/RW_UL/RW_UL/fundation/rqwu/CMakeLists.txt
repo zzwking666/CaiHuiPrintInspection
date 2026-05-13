@@ -1,0 +1,57 @@
+cmake_minimum_required(VERSION 3.17)
+
+project(rqwu VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_AUTOMOC ON)
+
+
+find_package(Qt6 CONFIG REQUIRED COMPONENTS Core Widgets)
+
+
+FIND_SOURCES_AND_HEADERS(SRC_LIST
+	${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME} 
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+	${CMAKE_CURRENT_SOURCE_DIR}/include/Keyboard/${PROJECT_NAME} 
+	${CMAKE_CURRENT_SOURCE_DIR}/src/Keyboard
+	${CMAKE_CURRENT_SOURCE_DIR}/private/include/${PROJECT_NAME} 
+	${CMAKE_CURRENT_SOURCE_DIR}/private/src
+)
+
+
+file(GLOB UI_FILES "${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui")
+qt_wrap_ui(GENERATED_UI_HEADERS ${UI_FILES})
+
+file(GLOB QRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/qrc/*.qrc")
+qt6_add_resources(GENERATED_QRC_SRCS ${QRC_FILES})
+
+add_library(${PROJECT_NAME} STATIC ${SRC_LIST} ${GENERATED_QRC_SRCS} ${GENERATED_UI_HEADERS})
+
+
+# 为 Debug 版本添加后缀
+set_target_properties(${PROJECT_NAME} PROPERTIES
+	DEBUG_POSTFIX "d"
+	RELEASE_POSTFIX ""
+)
+
+# 设置包含目录
+target_include_directories(${PROJECT_NAME} 
+	PUBLIC 
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+	PRIVATE
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/private/include/>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+)
+
+target_link_libraries(${PROJECT_NAME}  
+	PUBLIC Qt6::Core Qt6::Widgets
+)
+
+add_library(RWUL::rqwu ALIAS ${PROJECT_NAME})
+
+if(BUILD_TESTING)
+	add_subdirectory(./test)
+endif()

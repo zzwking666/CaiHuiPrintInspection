@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/DlgModelManager">
+        <file>imgs/search.png</file>
+	    <file>imgs/clear.png</file>
+    </qresource>
+</RCC>
