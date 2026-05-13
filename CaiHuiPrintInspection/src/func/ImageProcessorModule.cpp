@@ -228,13 +228,14 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 			// 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain
 
 			HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
+            const auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
 			FindShapeModel(imageForMatch,
 				halconData.hv_ModelID,
 				-3.1415926,
 				6.2831852,
 				0.1,
 				1,
-				0.5,
+				setConfig.shapemodelScore,
 				"least_squares",
 				0,
 				0.7,

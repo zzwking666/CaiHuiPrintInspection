@@ -81,6 +81,8 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::ckb_findShapemodel_1_checked);
 	QObject::connect(ui->ckb_findShapemodel_2, &QCheckBox::clicked,
 		this, &CaiHuiPrintInspection::ckb_findShapemodel_2_checked);
+	QObject::connect(ui->pbtn_score, &QPushButton::clicked,
+		this, &CaiHuiPrintInspection::pbtn_score_clicked);
 
 	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
      Dlg_createshapemodel dlg(1, this);
@@ -120,12 +122,13 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 	maiLiDingZiConfig.isDefect = true;		// 默认开启剔废
 	maiLiDingZiConfig.isSaveImg = false;	// 默认不开启图片保存
 	ui->ckb_saveImg->setChecked(false);
-	ui->ckb_findShapemodel_1->setChecked(halconDatas.size() > 0 ? halconDatas[0].ckb_findShapemodel : true);
-	ui->ckb_findShapemodel_2->setChecked(halconDatas.size() > 1 ? halconDatas[1].ckb_findShapemodel : true);
+    ui->ckb_findShapemodel_1->setChecked(false);
+	ui->ckb_findShapemodel_2->setChecked(false);
+	ui->pbtn_score->setText(QString::number(setConfig.shapemodelScore));
 
 	ui->label_wasteProductsValue->setText(QString::number(maiLiDingZiConfig.totalDefectiveVolume));
 	ui->rbtn_removeFunc->setChecked(maiLiDingZiConfig.isDefect);
-
+	
 	rbtn_removeFunc_checked(true);
 
 	ini_clickableTitle();
@@ -505,4 +508,25 @@ void CaiHuiPrintInspection::ckb_findShapemodel_2_checked(bool checked)
 	{
 		halconDatas[1].ckb_findShapemodel = checked;
 	}
+}
+
+void CaiHuiPrintInspection::pbtn_score_clicked()
+{
+	NumberKeyboard numKeyBord;
+	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
+	if (numKeyBord.exec() != QDialog::Accepted)
+	{
+		return;
+	}
+
+	const auto valueText = numKeyBord.getValue();
+	const double value = valueText.toDouble();
+	if (value < 0.0 || value > 1.0)
+	{
+		QMessageBox::warning(this, tr("提示"), tr("请输入0到1之间的数值"));
+		return;
+	}
+
+ ui->pbtn_score->setText(valueText);
+	Modules::getInstance().configManagerModule.setConfig.shapemodelScore = value;
 }

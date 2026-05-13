@@ -62,6 +62,7 @@ private slots:
 	void ckb_saveImg_checked(bool checked);
     void ckb_findShapemodel_1_checked(bool checked);
 	void ckb_findShapemodel_2_checked(bool checked);
+    void pbtn_score_clicked();
 private:
 	rw::rqw::ClickableLabel* clickableTitle = nullptr;
 	DlgCloseForm* _dlgCloseForm = nullptr;

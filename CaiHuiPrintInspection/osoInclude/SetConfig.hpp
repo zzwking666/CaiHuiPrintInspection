@@ -36,6 +36,7 @@ namespace cdm {
         double baoguang2{ 0 };
         double zengyi2{ 0 };
         double xiangsudangliang2{ 0 };
+       double shapemodelScore{ 0.5 };
         int changeLanguageIndex{ 0 };
     };
 
@@ -136,6 +137,11 @@ namespace cdm {
             throw std::runtime_error("$variable$changeLanguageIndex is not found");
         }
         changeLanguageIndex = changeLanguageIndexItem->getValueAsInt();
+       auto shapemodelScoreItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shapemodelScore$"));
+        if (!shapemodelScoreItem) {
+            throw std::runtime_error("$variable$shapemodelScore is not found");
+        }
+        shapemodelScore = shapemodelScoreItem->getValueAsDouble();
     }
 
     inline SetConfig::SetConfig(const SetConfig& obj)
@@ -157,6 +163,7 @@ namespace cdm {
         baoguang2 = obj.baoguang2;
         zengyi2 = obj.zengyi2;
         xiangsudangliang2 = obj.xiangsudangliang2;
+      shapemodelScore = obj.shapemodelScore;
         changeLanguageIndex = obj.changeLanguageIndex;
     }
 
@@ -180,6 +187,7 @@ namespace cdm {
             baoguang2 = obj.baoguang2;
             zengyi2 = obj.zengyi2;
             xiangsudangliang2 = obj.xiangsudangliang2;
+          shapemodelScore = obj.shapemodelScore;
             changeLanguageIndex = obj.changeLanguageIndex;
         }
         return *this;
@@ -257,6 +265,10 @@ namespace cdm {
         xiangsudangliang2Item->setName("$variable$xiangsudangliang2$");
         xiangsudangliang2Item->setValueFromDouble(xiangsudangliang2);
         assembly.addItem(xiangsudangliang2Item);
+        auto shapemodelScoreItem = std::make_shared<rw::oso::ObjectStoreItem>();
+        shapemodelScoreItem->setName("$variable$shapemodelScore$");
+        shapemodelScoreItem->setValueFromDouble(shapemodelScore);
+        assembly.addItem(shapemodelScoreItem);
         auto changeLanguageIndexItem = std::make_shared<rw::oso::ObjectStoreItem>();
         changeLanguageIndexItem->setName("$variable$changeLanguageIndex$");
         changeLanguageIndexItem->setValueFromInt(changeLanguageIndex);

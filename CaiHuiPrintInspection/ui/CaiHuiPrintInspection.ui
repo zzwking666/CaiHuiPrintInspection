@@ -706,9 +706,9 @@ QGroupBox::title {
           <property name="title">
            <string/>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout" stretch="1,2,2,1,1,1">
+          <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,2,1,1,1">
            <item>
-            <layout class="QHBoxLayout" name="hLayout_info" stretch="1,1">
+            <layout class="QHBoxLayout" name="hLayout_info" stretch="0">
              <item>
               <widget class="QLabel" name="label_info">
                <property name="styleSheet">
@@ -728,8 +728,31 @@ QGroupBox::title {
                </property>
               </widget>
              </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="hLayout_info_2" stretch="1,1">
              <item>
-              <widget class="QPushButton" name="pbtn_resetProduct">
+              <widget class="QLabel" name="label_score">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+       font-size: 24px;        
+       font-weight: bold;        
+       color:  rgb(141, 141, 141);       
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+               </property>
+               <property name="text">
+                <string>识别分数</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pbtn_score">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -755,45 +778,6 @@ QPushButton:pressed {
     border-color: #777;
     background-color: #EEE;
 }</string>
-               </property>
-               <property name="text">
-                <string>产量清零</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="hLayout_wasteProducts" stretch="1,2">
-             <item>
-              <widget class="QLabel" name="label_wasteProducts">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-       font-size: 24px;        
-       font-weight: bold;        
-       color:  rgb(141, 141, 141);       
-       padding: 5px 5px;     
-       border-bottom: 2px solid #cccccc; 
-    }</string>
-               </property>
-               <property name="text">
-                <string>废品总量</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_wasteProductsValue">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-       font-size: 24px;        
-       font-weight: bold;        
-       color:   rgb(255, 0, 0);      
-       padding: 5px 5px;     
-       border-bottom: 2px solid #cccccc; 
-    }</string>
                </property>
                <property name="text">
                 <string>0</string>
