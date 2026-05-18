@@ -162,7 +162,7 @@ void Modules::connect()
 bool Modules::check()
 {
 #pragma region check single instance
-	if (!rw::rqw::RunEnvCheck::isSingleInstance("MaiLiDingZi.exe"))
+	if (!rw::rqw::RunEnvCheck::isSingleInstance("CaiHuiPrintInspection.exe"))
 	{
 		QMessageBox::warning(nullptr, "错误", "已经有程序在运行，请勿多次打开");
 		return false;
