@@ -20,5 +20,5 @@ public:
 
 public:
 	DlgProductSet* _dlgProductSet = nullptr;
-	CaiHuiPrintInspection* _maiLiDingZi = nullptr;
+	CaiHuiPrintInspection* _caiHuiPrintInspection = nullptr;
 };

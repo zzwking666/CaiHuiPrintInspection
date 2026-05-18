@@ -111,14 +111,14 @@ void Modules::connect()
 
 #pragma region connect UIModule and ReconnectModule
 	QObject::connect(reconnectModule.monitorCameraAndCardStateThread.get(), &CameraAndCardStateThread::updateCameraLabelState,
-		uiModule._maiLiDingZi, &CaiHuiPrintInspection::updateCameraLabelState);
+		uiModule._caiHuiPrintInspection, &CaiHuiPrintInspection::updateCameraLabelState);
 #pragma endregion
 
 #pragma region connect UIModule and imgProModule
 	QObject::connect(imgProModule.imageProcessingModule1.get(), &ImageProcessingModule::imageReady,
-		uiModule._maiLiDingZi, &CaiHuiPrintInspection::onCameraDisplay);
+		uiModule._caiHuiPrintInspection, &CaiHuiPrintInspection::onCameraDisplay);
 	QObject::connect(imgProModule.imageProcessingModule2.get(), &ImageProcessingModule::imageReady,
-		uiModule._maiLiDingZi, &CaiHuiPrintInspection::onCameraDisplay);
+		uiModule._caiHuiPrintInspection, &CaiHuiPrintInspection::onCameraDisplay);
 
 	QObject::connect(uiModule._dlgProductSet,&DlgProductSet::paramsChanged,
 		&imgProModule, &ImgProModule::onUpdateImgProContext);
@@ -126,7 +126,7 @@ void Modules::connect()
 
 #pragma region connect UIModules
 	QObject::connect(uiModule._dlgProductSet, &DlgProductSet::emit_changeLanguage,
-		uiModule._maiLiDingZi, &CaiHuiPrintInspection::changeLanguage);
+		uiModule._caiHuiPrintInspection, &CaiHuiPrintInspection::changeLanguage);
 #pragma endregion
 
 #pragma region connect camera and ReconnectModule
@@ -148,7 +148,7 @@ void Modules::connect()
 
 #pragma region connect UIModule and RuntimeInfoModule
 	QObject::connect(runtimeInfoModule.detachUtiltyThread.get(), &DetachUtiltyThread::updateStatisticalInfo,
-		uiModule._maiLiDingZi, &CaiHuiPrintInspection::onUpdateStatisticalInfoUI, Qt::QueuedConnection);
+		uiModule._caiHuiPrintInspection, &CaiHuiPrintInspection::onUpdateStatisticalInfoUI, Qt::QueuedConnection);
 #pragma endregion
 
 #ifdef BUILD_WITHOUT_HARDWARE
