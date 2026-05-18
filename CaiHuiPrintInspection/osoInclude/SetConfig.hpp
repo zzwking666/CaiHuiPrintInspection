@@ -36,7 +36,7 @@ namespace cdm {
         double baoguang2{ 0 };
         double zengyi2{ 0 };
         double xiangsudangliang2{ 0 };
-       double shapemodelScore{ 0.5 };
+        double shapemodelScore{ 0.5 };
         int changeLanguageIndex{ 0 };
     };
 
@@ -137,11 +137,11 @@ namespace cdm {
             throw std::runtime_error("$variable$changeLanguageIndex is not found");
         }
         changeLanguageIndex = changeLanguageIndexItem->getValueAsInt();
-       auto shapemodelScoreItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shapemodelScore$"));
-        if (!shapemodelScoreItem) {
-            throw std::runtime_error("$variable$shapemodelScore is not found");
+
+        auto shapemodelScoreItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shapemodelScore$"));
+        if (shapemodelScoreItem) {
+            shapemodelScore = shapemodelScoreItem->getValueAsDouble();
         }
-        shapemodelScore = shapemodelScoreItem->getValueAsDouble();
     }
 
     inline SetConfig::SetConfig(const SetConfig& obj)
@@ -163,7 +163,7 @@ namespace cdm {
         baoguang2 = obj.baoguang2;
         zengyi2 = obj.zengyi2;
         xiangsudangliang2 = obj.xiangsudangliang2;
-      shapemodelScore = obj.shapemodelScore;
+        shapemodelScore = obj.shapemodelScore;
         changeLanguageIndex = obj.changeLanguageIndex;
     }
 
@@ -187,7 +187,7 @@ namespace cdm {
             baoguang2 = obj.baoguang2;
             zengyi2 = obj.zengyi2;
             xiangsudangliang2 = obj.xiangsudangliang2;
-          shapemodelScore = obj.shapemodelScore;
+            shapemodelScore = obj.shapemodelScore;
             changeLanguageIndex = obj.changeLanguageIndex;
         }
         return *this;
@@ -278,7 +278,7 @@ namespace cdm {
 
     inline bool SetConfig::operator==(const SetConfig& obj) const
     {
-        return xiangjiguangdianpingbishijian == obj.xiangjiguangdianpingbishijian && shuchuxinhaoyanshi == obj.shuchuxinhaoyanshi && shuchuxinhaochixushijian == obj.shuchuxinhaochixushijian && shangxianwei1 == obj.shangxianwei1 && xiaxianwei1 == obj.xiaxianwei1 && zuoxianwei1 == obj.zuoxianwei1 && youxianwei1 == obj.youxianwei1 && baoguang1 == obj.baoguang1 && zengyi1 == obj.zengyi1 && xiangsudangliang1 == obj.xiangsudangliang1 && shangxianwei2 == obj.shangxianwei2 && xiaxianwei2 == obj.xiaxianwei2 && zuoxianwei2 == obj.zuoxianwei2 && youxianwei2 == obj.youxianwei2 && baoguang2 == obj.baoguang2 && zengyi2 == obj.zengyi2 && xiangsudangliang2 == obj.xiangsudangliang2 && changeLanguageIndex == obj.changeLanguageIndex;
+        return xiangjiguangdianpingbishijian == obj.xiangjiguangdianpingbishijian && shuchuxinhaoyanshi == obj.shuchuxinhaoyanshi && shuchuxinhaochixushijian == obj.shuchuxinhaochixushijian && shangxianwei1 == obj.shangxianwei1 && xiaxianwei1 == obj.xiaxianwei1 && zuoxianwei1 == obj.zuoxianwei1 && youxianwei1 == obj.youxianwei1 && baoguang1 == obj.baoguang1 && zengyi1 == obj.zengyi1 && xiangsudangliang1 == obj.xiangsudangliang1 && shangxianwei2 == obj.shangxianwei2 && xiaxianwei2 == obj.xiaxianwei2 && zuoxianwei2 == obj.zuoxianwei2 && youxianwei2 == obj.youxianwei2 && baoguang2 == obj.baoguang2 && zengyi2 == obj.zengyi2 && xiangsudangliang2 == obj.xiangsudangliang2 && shapemodelScore == obj.shapemodelScore && changeLanguageIndex == obj.changeLanguageIndex;
     }
 
     inline bool SetConfig::operator!=(const SetConfig& obj) const

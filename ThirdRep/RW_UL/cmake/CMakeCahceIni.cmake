@@ -13,4 +13,4 @@ set(BUILD_WITH_MVS "true" CACHE STRING "Enable building with Hikvision (∫£øµ) ca
 set(BUILD_WITH_DS "true" CACHE STRING "Enable building with DuShen (∂»…Í) camera support. Set to false to use a test environment.")
 
 
-set(BUILD_CUDA113_WITH_TENSOR86 "false" CACHE STRING "When build with cuda11.3 use tensor8.6")
+set(BUILD_CUDA113_WITH_TENSOR86 "true" CACHE STRING "When build with cuda11.3 use tensor8.6")
