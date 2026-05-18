@@ -73,8 +73,7 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::rbtn_debug_checked);
 	QObject::connect(ui->rbtn_removeFunc, &QRadioButton::clicked,
 		this, &CaiHuiPrintInspection::rbtn_removeFunc_checked);
-	QObject::connect(ui->pbtn_resetProduct, &QPushButton::clicked,
-		this, &CaiHuiPrintInspection::pbtn_resetProduct_clicked);
+	
 	QObject::connect(ui->ckb_saveImg, &QCheckBox::clicked,
 		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
 	QObject::connect(ui->ckb_findShapemodel_1, &QCheckBox::clicked,
@@ -126,7 +125,6 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 	ui->ckb_findShapemodel_2->setChecked(false);
 	ui->pbtn_score->setText(QString::number(setConfig.shapemodelScore));
 
-	ui->label_wasteProductsValue->setText(QString::number(maiLiDingZiConfig.totalDefectiveVolume));
 	ui->rbtn_removeFunc->setChecked(maiLiDingZiConfig.isDefect);
 	
 	rbtn_removeFunc_checked(true);
@@ -240,8 +238,6 @@ void CaiHuiPrintInspection::changeLanguage(int index)
 		clickableTitle->setText("印刷检测");
 		ui->label_cameraStateTitle->setText("相机状态");
 		ui->label_info->setText("统计信息");
-		ui->pbtn_resetProduct->setText("产量清零");
-		ui->label_wasteProducts->setText("废品总量");
 		ui->rbtn_debug->setText("调试模式");
 		ui->rbtn_removeFunc->setText("剔除功能");
 		ui->pbtn_set->setText("设置");
@@ -260,8 +256,7 @@ void CaiHuiPrintInspection::changeLanguage(int index)
 
 		// 统计区
 		ui->label_info->setText("Statistics");
-		ui->pbtn_resetProduct->setText("Clear Count");
-		ui->label_wasteProducts->setText("Total Rejects");
+		
 
 		// 模式/功能
 		ui->rbtn_debug->setText("Debug Mode");
@@ -336,7 +331,6 @@ void CaiHuiPrintInspection::updateCameraLabelState(int cameraIndex, bool state)
 void CaiHuiPrintInspection::onUpdateStatisticalInfoUI()
 {
 	auto& statisticalInfo = Modules::getInstance().runtimeInfoModule.statisticalInfo;
-	ui->label_wasteProductsValue->setText(QString::number(statisticalInfo.wasteCount.load()));
 }
 
 void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
