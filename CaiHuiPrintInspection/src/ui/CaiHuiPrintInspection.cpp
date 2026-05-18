@@ -116,7 +116,7 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 {
 	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
-  auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+	auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
 	maiLiDingZiConfig.isDebug = false;
 	maiLiDingZiConfig.isDefect = true;		// 默认开启剔废
 	maiLiDingZiConfig.isSaveImg = false;	// 默认不开启图片保存

@@ -25,5 +25,7 @@ namespace cdm {
 		xiangsudangliang2 : double : default = 0;
 
 		changeLanguageIndex : int : default = 0;
+
+		shapemodelScore : double : default = 0;
 	};
 }
