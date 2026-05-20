@@ -38,7 +38,7 @@ namespace cdm {
         double xiangsudangliang2{ 0 };
         int changeLanguageIndex{ 0 };
         double shapemodelScore{ 0 };
-        double shapemodelMaxOverlap{ 0.7 };
+        double shapemodelMaxOverlap{ 0 };
     };
 
     inline SetConfig::SetConfig(const rw::oso::ObjectStoreAssembly& assembly)
@@ -143,11 +143,11 @@ namespace cdm {
             throw std::runtime_error("$variable$shapemodelScore is not found");
         }
         shapemodelScore = shapemodelScoreItem->getValueAsDouble();
-
         auto shapemodelMaxOverlapItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shapemodelMaxOverlap$"));
-        if (shapemodelMaxOverlapItem) {
-            shapemodelMaxOverlap = shapemodelMaxOverlapItem->getValueAsDouble();
+        if (!shapemodelMaxOverlapItem) {
+            throw std::runtime_error("$variable$shapemodelMaxOverlap is not found");
         }
+        shapemodelMaxOverlap = shapemodelMaxOverlapItem->getValueAsDouble();
     }
 
     inline SetConfig::SetConfig(const SetConfig& obj)

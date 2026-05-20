@@ -27,5 +27,6 @@ namespace cdm {
 		changeLanguageIndex : int : default = 0;
 
 		shapemodelScore : double : default = 0;
+		shapemodelMaxOverlap : double : default = 0;
 	};
 }
