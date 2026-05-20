@@ -38,7 +38,7 @@ public:
 	void initializeComponents();
 public:
 	void build_camera();
-  void build_halconDisplay();
+	void build_halconDisplay();
 	void refreshDisplayLabel(QLabel* label, const QPixmap& pixmap, const QSize& minimumSize);
 	void refreshAllDisplayLabels();
 protected:
@@ -60,14 +60,15 @@ private slots:
 	void rbtn_removeFunc_checked(bool checked);
 	void pbtn_resetProduct_clicked();
 	void ckb_saveImg_checked(bool checked);
-    void ckb_findShapemodel_1_checked(bool checked);
+	void ckb_findShapemodel_1_checked(bool checked);
 	void ckb_findShapemodel_2_checked(bool checked);
-    void pbtn_score_clicked();
+	void pbtn_score_clicked();
 	void pbtn_cover_clicked();
+	void btn_greediness_clicked();
 private:
 	rw::rqw::ClickableLabel* clickableTitle = nullptr;
 	DlgCloseForm* _dlgCloseForm = nullptr;
-    QPixmap _pixmap1;
+	QPixmap _pixmap1;
 	QPixmap _pixmap2;
 	QPixmap _pixmap3;
 	QPixmap _pixmap4;

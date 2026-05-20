@@ -28,5 +28,7 @@ namespace cdm {
 
 		shapemodelScore : double : default = 0;
 		shapemodelMaxOverlap : double : default = 0;
+		shapemodelGreediness : double : default = 0;
+
 	};
 }
