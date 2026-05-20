@@ -238,7 +238,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 				setConfig.shapemodelScore,
 				"least_squares",
 				0,
-				0.7,
+				setConfig.shapemodelMaxOverlap,
 				&hvFindRow,
 				&hvFindCol,
 				&hvFindAngle,

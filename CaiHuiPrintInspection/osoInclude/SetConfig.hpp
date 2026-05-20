@@ -38,6 +38,7 @@ namespace cdm {
         double xiangsudangliang2{ 0 };
         int changeLanguageIndex{ 0 };
         double shapemodelScore{ 0 };
+        double shapemodelMaxOverlap{ 0.7 };
     };
 
     inline SetConfig::SetConfig(const rw::oso::ObjectStoreAssembly& assembly)
@@ -142,6 +143,11 @@ namespace cdm {
             throw std::runtime_error("$variable$shapemodelScore is not found");
         }
         shapemodelScore = shapemodelScoreItem->getValueAsDouble();
+
+        auto shapemodelMaxOverlapItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$shapemodelMaxOverlap$"));
+        if (shapemodelMaxOverlapItem) {
+            shapemodelMaxOverlap = shapemodelMaxOverlapItem->getValueAsDouble();
+        }
     }
 
     inline SetConfig::SetConfig(const SetConfig& obj)
@@ -165,6 +171,7 @@ namespace cdm {
         xiangsudangliang2 = obj.xiangsudangliang2;
         changeLanguageIndex = obj.changeLanguageIndex;
         shapemodelScore = obj.shapemodelScore;
+        shapemodelMaxOverlap = obj.shapemodelMaxOverlap;
     }
 
     inline SetConfig& SetConfig::operator=(const SetConfig& obj)
@@ -189,6 +196,7 @@ namespace cdm {
             xiangsudangliang2 = obj.xiangsudangliang2;
             changeLanguageIndex = obj.changeLanguageIndex;
             shapemodelScore = obj.shapemodelScore;
+            shapemodelMaxOverlap = obj.shapemodelMaxOverlap;
         }
         return *this;
     }
@@ -273,12 +281,16 @@ namespace cdm {
         shapemodelScoreItem->setName("$variable$shapemodelScore$");
         shapemodelScoreItem->setValueFromDouble(shapemodelScore);
         assembly.addItem(shapemodelScoreItem);
+        auto shapemodelMaxOverlapItem = std::make_shared<rw::oso::ObjectStoreItem>();
+        shapemodelMaxOverlapItem->setName("$variable$shapemodelMaxOverlap$");
+        shapemodelMaxOverlapItem->setValueFromDouble(shapemodelMaxOverlap);
+        assembly.addItem(shapemodelMaxOverlapItem);
         return assembly;
     }
 
     inline bool SetConfig::operator==(const SetConfig& obj) const
     {
-        return xiangjiguangdianpingbishijian == obj.xiangjiguangdianpingbishijian && shuchuxinhaoyanshi == obj.shuchuxinhaoyanshi && shuchuxinhaochixushijian == obj.shuchuxinhaochixushijian && shangxianwei1 == obj.shangxianwei1 && xiaxianwei1 == obj.xiaxianwei1 && zuoxianwei1 == obj.zuoxianwei1 && youxianwei1 == obj.youxianwei1 && baoguang1 == obj.baoguang1 && zengyi1 == obj.zengyi1 && xiangsudangliang1 == obj.xiangsudangliang1 && shangxianwei2 == obj.shangxianwei2 && xiaxianwei2 == obj.xiaxianwei2 && zuoxianwei2 == obj.zuoxianwei2 && youxianwei2 == obj.youxianwei2 && baoguang2 == obj.baoguang2 && zengyi2 == obj.zengyi2 && xiangsudangliang2 == obj.xiangsudangliang2 && changeLanguageIndex == obj.changeLanguageIndex && shapemodelScore == obj.shapemodelScore;
+        return xiangjiguangdianpingbishijian == obj.xiangjiguangdianpingbishijian && shuchuxinhaoyanshi == obj.shuchuxinhaoyanshi && shuchuxinhaochixushijian == obj.shuchuxinhaochixushijian && shangxianwei1 == obj.shangxianwei1 && xiaxianwei1 == obj.xiaxianwei1 && zuoxianwei1 == obj.zuoxianwei1 && youxianwei1 == obj.youxianwei1 && baoguang1 == obj.baoguang1 && zengyi1 == obj.zengyi1 && xiangsudangliang1 == obj.xiangsudangliang1 && shangxianwei2 == obj.shangxianwei2 && xiaxianwei2 == obj.xiaxianwei2 && zuoxianwei2 == obj.zuoxianwei2 && youxianwei2 == obj.youxianwei2 && baoguang2 == obj.baoguang2 && zengyi2 == obj.zengyi2 && xiangsudangliang2 == obj.xiangsudangliang2 && changeLanguageIndex == obj.changeLanguageIndex && shapemodelScore == obj.shapemodelScore && shapemodelMaxOverlap == obj.shapemodelMaxOverlap;
     }
 
     inline bool SetConfig::operator!=(const SetConfig& obj) const
