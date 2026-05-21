@@ -73,7 +73,7 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::rbtn_debug_checked);
 	QObject::connect(ui->rbtn_removeFunc, &QRadioButton::clicked,
 		this, &CaiHuiPrintInspection::rbtn_removeFunc_checked);
-	
+
 	QObject::connect(ui->ckb_saveImg, &QCheckBox::clicked,
 		this, &CaiHuiPrintInspection::ckb_saveImg_checked);
 	QObject::connect(ui->ckb_findShapemodel_1, &QCheckBox::clicked,
@@ -82,29 +82,29 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::ckb_findShapemodel_2_checked);
 	QObject::connect(ui->pbtn_score, &QPushButton::clicked,
 		this, &CaiHuiPrintInspection::pbtn_score_clicked);
-	
+
 
 	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
-     Dlg_createshapemodel dlg(1, this);
+		Dlg_createshapemodel dlg(1, this);
 		dlg.exec();
-	});
+		});
 	QObject::connect(ui->btn_createShapemodel_2, &QPushButton::clicked, this, [this]() {
-     Dlg_createshapemodel dlg(2, this);
+		Dlg_createshapemodel dlg(2, this);
 		dlg.exec();
-	});
-    if (auto* btnCreateShapeModel3 = this->findChild<QPushButton*>("btn_createShapemodel_3"))
+		});
+	if (auto* btnCreateShapeModel3 = this->findChild<QPushButton*>("btn_createShapemodel_3"))
 	{
 		QObject::connect(btnCreateShapeModel3, &QPushButton::clicked, this, [this]() {
 			Dlg_createshapemodel dlg(3, this);
 			dlg.exec();
-		});
+			});
 	}
 	if (auto* btnCreateShapeModel4 = this->findChild<QPushButton*>("btn_createShapemodel_4"))
 	{
 		QObject::connect(btnCreateShapeModel4, &QPushButton::clicked, this, [this]() {
 			Dlg_createshapemodel dlg(4, this);
 			dlg.exec();
-		});
+			});
 	}
 
 
@@ -122,13 +122,13 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 	maiLiDingZiConfig.isDefect = true;		// 默认开启剔废
 	maiLiDingZiConfig.isSaveImg = false;	// 默认不开启图片保存
 	ui->ckb_saveImg->setChecked(false);
-    ui->ckb_findShapemodel_1->setChecked(false);
+	ui->ckb_findShapemodel_1->setChecked(false);
 	ui->ckb_findShapemodel_2->setChecked(false);
 	ui->pbtn_score->setText(QString::number(setConfig.shapemodelScore));
-	
+
 
 	ui->rbtn_removeFunc->setChecked(maiLiDingZiConfig.isDefect);
-	
+
 	rbtn_removeFunc_checked(true);
 
 	ini_clickableTitle();
@@ -166,12 +166,12 @@ void CaiHuiPrintInspection::initializeComponents()
 
 void CaiHuiPrintInspection::build_halconDisplay()
 {
-   _labelMinSize1 = ui->label_imgDisplay_1->size();
+	_labelMinSize1 = ui->label_imgDisplay_1->size();
 	_labelMinSize2 = ui->label_imgDisplay_2->size();
 	_labelMinSize3 = ui->label_imgDisplay_3->size();
 	_labelMinSize4 = ui->label_imgDisplay_4->size();
 
-   ui->label_imgDisplay_1->setAlignment(Qt::AlignCenter);
+	ui->label_imgDisplay_1->setAlignment(Qt::AlignCenter);
 	ui->label_imgDisplay_2->setAlignment(Qt::AlignCenter);
 	ui->label_imgDisplay_3->setAlignment(Qt::AlignCenter);
 	ui->label_imgDisplay_4->setAlignment(Qt::AlignCenter);
@@ -183,7 +183,7 @@ void CaiHuiPrintInspection::build_halconDisplay()
 
 	QTimer::singleShot(0, this, [this]() {
 		refreshAllDisplayLabels();
-	});
+		});
 }
 
 void CaiHuiPrintInspection::refreshDisplayLabel(QLabel* label, const QPixmap& pixmap, const QSize& minimumSize)
@@ -258,7 +258,7 @@ void CaiHuiPrintInspection::changeLanguage(int index)
 
 		// 统计区
 		ui->label_info->setText("Statistics");
-		
+
 
 		// 模式/功能
 		ui->rbtn_debug->setText("Debug Mode");
@@ -337,29 +337,29 @@ void CaiHuiPrintInspection::onUpdateStatisticalInfoUI()
 
 void CaiHuiPrintInspection::onCameraDisplay(size_t index, QPixmap image)
 {
-    if (image.isNull())
+	if (image.isNull())
 	{
 		return;
 	}
 
 	if (1 == index)
 	{
-     _pixmap1 = image;
+		_pixmap1 = image;
 		refreshDisplayLabel(ui->label_imgDisplay_1, _pixmap1, _labelMinSize1);
 	}
 	else if (2 == index)
 	{
-     _pixmap2 = image;
+		_pixmap2 = image;
 		refreshDisplayLabel(ui->label_imgDisplay_2, _pixmap2, _labelMinSize2);
 	}
- else if (3 == index)
+	else if (3 == index)
 	{
-      _pixmap3 = image;
+		_pixmap3 = image;
 		refreshDisplayLabel(ui->label_imgDisplay_3, _pixmap3, _labelMinSize3);
 	}
 	else if (4 == index)
 	{
-      _pixmap4 = image;
+		_pixmap4 = image;
 		refreshDisplayLabel(ui->label_imgDisplay_4, _pixmap4, _labelMinSize4);
 	}
 }
@@ -403,7 +403,7 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 {
 	auto isRuning = ui->rbtn_removeFunc->isChecked();
 
- auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
+	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
 	auto& camera1 = Modules::getInstance().cameraModule.camera1;
 	auto& camera2 = Modules::getInstance().cameraModule.camera2;
 	if (!isRuning) {
@@ -414,7 +414,7 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 				camera1->setTriggerState(false);
 				camera1->setFrameRate(5);
 			}
-           if (camera2)
+			if (camera2)
 			{
 				camera2->setTriggerState(false);
 				camera2->setFrameRate(5);
@@ -431,7 +431,7 @@ void CaiHuiPrintInspection::rbtn_debug_checked(bool checked)
 
 void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 {
- auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
+	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
 	auto& camera1 = Modules::getInstance().cameraModule.camera1;
 	auto& camera2 = Modules::getInstance().cameraModule.camera2;
 	if (checked)
@@ -443,7 +443,7 @@ void CaiHuiPrintInspection::rbtn_removeFunc_checked(bool checked)
 			camera1->setTriggerSource(rw::rqw::TriggerSource::Line0);
 			camera1->setFrameRate(50);
 		}
-      if (camera2)
+		if (camera2)
 		{
 			camera2->setTriggerState(true);
 			camera2->setTriggerSource(rw::rqw::TriggerSource::Line0);
@@ -471,14 +471,14 @@ void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 		return;
 	}
 
-    QPixmap pixmap(imagePath);
+	QPixmap pixmap(imagePath);
 	if (pixmap.isNull())
 	{
-       QMessageBox::warning(this, tr("提示"), tr("图片加载失败"));
+		QMessageBox::warning(this, tr("提示"), tr("图片加载失败"));
 		return;
 	}
 
-    _pixmap1 = pixmap;
+	_pixmap1 = pixmap;
 	refreshDisplayLabel(ui->label_imgDisplay_1, _pixmap1, _labelMinSize1);
 }
 
@@ -523,7 +523,7 @@ void CaiHuiPrintInspection::pbtn_score_clicked()
 		return;
 	}
 
- ui->pbtn_score->setText(valueText);
+	ui->pbtn_score->setText(valueText);
 	Modules::getInstance().configManagerModule.setConfig.shapemodelScore = value;
 }
 

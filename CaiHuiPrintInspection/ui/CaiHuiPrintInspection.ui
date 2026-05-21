@@ -22,34 +22,72 @@
         <property name="title">
          <string/>
         </property>
-        <layout class="QGridLayout" name="gridLayout_4">
+        <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,1,1,1">
+          <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1">
              <item>
-              <widget class="QLabel" name="label_imgDisplay_1">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>999</width>
-                 <height>999</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_createShapemodel_1">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
+              <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,9">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_8" stretch="5">
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>999</width>
+                     <height>999</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color: rgb(0, 0, 0);         
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+                   </property>
+                   <property name="text">
+                    <string>上
+工
+位</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2" stretch="5,1,1,1">
+                 <item>
+                  <widget class="QLabel" name="label_imgDisplay_1">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>999</width>
+                     <height>999</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_createShapemodel_1">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {
     padding: 6px 14px;
     border: 2px solid #CCC;
     border-radius: 4px;
@@ -67,16 +105,16 @@ QPushButton:pressed {
     border-color: #777;
     background-color: #EEE;
 }</string>
-               </property>
-               <property name="text">
-                <string>创建模版</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="ckb_findShapemodel_1">
-               <property name="styleSheet">
-                <string notr="true">QCheckBox {
+                   </property>
+                   <property name="text">
+                    <string>创建模版</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="ckb_findShapemodel_1">
+                   <property name="styleSheet">
+                    <string notr="true">QCheckBox {
     spacing: 8px;
     font-size: 20px;
     font-weight: bold;
@@ -140,16 +178,16 @@ QCheckBox:checked {
     color: #2196F3;
     font-weight: 500;
 }</string>
-               </property>
-               <property name="text">
-                <string>启用</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="ckb_findCode_1">
-               <property name="styleSheet">
-                <string notr="true">QCheckBox {
+                   </property>
+                   <property name="text">
+                    <string>启用</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="ckb_findCode_1">
+                   <property name="styleSheet">
+                    <string notr="true">QCheckBox {
     spacing: 8px;
     font-size: 20px;
     font-weight: bold;
@@ -213,39 +251,77 @@ QCheckBox:checked {
     color: #2196F3;
     font-weight: 500;
 }</string>
-               </property>
-               <property name="text">
-                <string>启用条码</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="0" column="1">
-            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="5,1,1,1">
-             <item>
-              <widget class="QLabel" name="label_imgDisplay_2">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>999</width>
-                 <height>999</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
+                   </property>
+                   <property name="text">
+                    <string>启用条码</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_createShapemodel_2">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
+              <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,9">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_9" stretch="5">
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>999</width>
+                     <height>999</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">QLabel {
+       font-size: 20px;        
+       font-weight: bold;        
+       color: rgb(0, 0, 0);         
+       padding: 5px 5px;     
+       border-bottom: 2px solid #cccccc; 
+    }</string>
+                   </property>
+                   <property name="text">
+                    <string>下
+工
+位</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="5,1,1,1">
+                 <item>
+                  <widget class="QLabel" name="label_imgDisplay_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>999</width>
+                     <height>999</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btn_createShapemodel_2">
+                   <property name="styleSheet">
+                    <string notr="true">QPushButton {
     padding: 6px 14px;
     border: 2px solid #CCC;
     border-radius: 4px;
@@ -263,16 +339,16 @@ QPushButton:pressed {
     border-color: #777;
     background-color: #EEE;
 }</string>
-               </property>
-               <property name="text">
-                <string>创建模版</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="ckb_findShapemodel_2">
-               <property name="styleSheet">
-                <string notr="true">QCheckBox {
+                   </property>
+                   <property name="text">
+                    <string>创建模版</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="ckb_findShapemodel_2">
+                   <property name="styleSheet">
+                    <string notr="true">QCheckBox {
     spacing: 8px;
     font-size: 20px;
     font-weight: bold;
@@ -336,16 +412,16 @@ QCheckBox:checked {
     color: #2196F3;
     font-weight: 500;
 }</string>
-               </property>
-               <property name="text">
-                <string>启用</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="ckb_findCode_2">
-               <property name="styleSheet">
-                <string notr="true">QCheckBox {
+                   </property>
+                   <property name="text">
+                    <string>启用</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="ckb_findCode_2">
+                   <property name="styleSheet">
+                    <string notr="true">QCheckBox {
     spacing: 8px;
     font-size: 20px;
     font-weight: bold;
@@ -409,57 +485,65 @@ QCheckBox:checked {
     color: #2196F3;
     font-weight: 500;
 }</string>
-               </property>
-               <property name="text">
-                <string>启用条码</string>
-               </property>
-              </widget>
+                   </property>
+                   <property name="text">
+                    <string>启用条码</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
-           <item row="1" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_6" stretch="5">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,1">
              <item>
-              <widget class="QLabel" name="label_imgDisplay_3">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>999</width>
-                 <height>999</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_6" stretch="5">
+               <item>
+                <widget class="QLabel" name="label_imgDisplay_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>999</width>
+                   <height>999</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>TextLabel</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-            </layout>
-           </item>
-           <item row="1" column="1">
-            <layout class="QVBoxLayout" name="verticalLayout_7" stretch="5">
              <item>
-              <widget class="QLabel" name="label_imgDisplay_4">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>999</width>
-                 <height>999</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_7" stretch="5">
+               <item>
+                <widget class="QLabel" name="label_imgDisplay_4">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>999</width>
+                   <height>999</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>TextLabel</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -628,7 +712,7 @@ QPushButton:pressed {
     }</string>
                      </property>
                      <property name="text">
-                      <string>1.</string>
+                      <string>上.</string>
                      </property>
                     </widget>
                    </item>
@@ -669,7 +753,7 @@ QPushButton:pressed {
     }</string>
                      </property>
                      <property name="text">
-                      <string>2.</string>
+                      <string>下.</string>
                      </property>
                     </widget>
                    </item>
@@ -706,61 +790,63 @@ QGroupBox::title {
           <property name="title">
            <string/>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,2,1,1,1">
-           <item>
-            <layout class="QHBoxLayout" name="hLayout_info" stretch="0">
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1,1,1">
              <item>
-              <widget class="QLabel" name="label_info">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
+              <layout class="QHBoxLayout" name="hLayout_info" stretch="0">
+               <item>
+                <widget class="QLabel" name="label_info">
+                 <property name="styleSheet">
+                  <string notr="true">QLabel {
        font-size: 24px;        
        font-weight: bold;        
        color:  rgb(141, 141, 141);       
        padding: 5px 5px;     
        border-bottom: 2px solid #cccccc; 
     }</string>
-               </property>
-               <property name="text">
-                <string>统计信息</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-               </property>
-              </widget>
+                 </property>
+                 <property name="text">
+                  <string>统计信息</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="hLayout_info_2" stretch="1,1">
              <item>
-              <widget class="QLabel" name="label_score">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
+              <layout class="QHBoxLayout" name="hLayout_info_2" stretch="1,1">
+               <item>
+                <widget class="QLabel" name="label_score">
+                 <property name="styleSheet">
+                  <string notr="true">QLabel {
        font-size: 24px;        
        font-weight: bold;        
        color:  rgb(141, 141, 141);       
        padding: 5px 5px;     
        border-bottom: 2px solid #cccccc; 
     }</string>
-               </property>
-               <property name="text">
-                <string>识别分数</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pbtn_score">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
+                 </property>
+                 <property name="text">
+                  <string>识别分数</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pbtn_score">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
     padding: 6px 14px;
     border: 2px solid #CCC;
     border-radius: 4px;
@@ -778,20 +864,20 @@ QPushButton:pressed {
     border-color: #777;
     background-color: #EEE;
 }</string>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
+                 </property>
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
-              <widget class="QRadioButton" name="rbtn_debug">
-               <property name="styleSheet">
-                <string notr="true">QRadioButton {
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QRadioButton" name="rbtn_debug">
+                 <property name="styleSheet">
+                  <string notr="true">QRadioButton {
     spacing: 8px;
     font-size: 20px;
     color: #333;
@@ -847,20 +933,20 @@ QRadioButton::indicator:pressed {
         stop:1 transparent
     );
 }</string>
-               </property>
-               <property name="text">
-                <string>调试模式</string>
-               </property>
-              </widget>
+                 </property>
+                 <property name="text">
+                  <string>调试模式</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="hLayout_remove">
              <item>
-              <widget class="QRadioButton" name="rbtn_removeFunc">
-               <property name="styleSheet">
-                <string notr="true">QRadioButton {
+              <layout class="QHBoxLayout" name="hLayout_remove">
+               <item>
+                <widget class="QRadioButton" name="rbtn_removeFunc">
+                 <property name="styleSheet">
+                  <string notr="true">QRadioButton {
     spacing: 8px;
     font-size: 20px;
     color: #333;
@@ -922,25 +1008,25 @@ QRadioButton::indicator:pressed {
         stop:1 transparent
     );
 }</string>
-               </property>
-               <property name="text">
-                <string>剔除功能</string>
+                 </property>
+                 <property name="text">
+                  <string>剔除功能</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
               </widget>
              </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="Line" name="line">
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="ckb_saveImg">
-             <property name="styleSheet">
-              <string notr="true">QCheckBox {
+             <item>
+              <widget class="QCheckBox" name="ckb_saveImg">
+               <property name="styleSheet">
+                <string notr="true">QCheckBox {
     spacing: 8px;
     font-size: 20px;
     font-weight: bold;
@@ -1004,11 +1090,13 @@ QCheckBox:checked {
     color: #2196F3;
     font-weight: 500;
 }</string>
-             </property>
-             <property name="text">
-              <string>存图功能</string>
-             </property>
-            </widget>
+               </property>
+               <property name="text">
+                <string>存图功能</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

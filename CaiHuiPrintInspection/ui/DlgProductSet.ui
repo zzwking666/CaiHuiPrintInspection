@@ -989,7 +989,7 @@ QTabBar::tab:hover {
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>一相机</string>
+         <string>上工位相机</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
@@ -2679,7 +2679,7 @@ QPushButton:pressed {
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
-         <string>二相机</string>
+         <string>下工位相机</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_7">
          <item row="0" column="0">
