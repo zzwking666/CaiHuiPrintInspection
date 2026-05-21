@@ -82,10 +82,7 @@ void CaiHuiPrintInspection::build_connect()
 		this, &CaiHuiPrintInspection::ckb_findShapemodel_2_checked);
 	QObject::connect(ui->pbtn_score, &QPushButton::clicked,
 		this, &CaiHuiPrintInspection::pbtn_score_clicked);
-	QObject::connect(ui->pbtn_cover, &QPushButton::clicked,
-		this, &CaiHuiPrintInspection::pbtn_cover_clicked);
-	QObject::connect(ui->btn_greediness, &QPushButton::clicked,
-		this, &CaiHuiPrintInspection::btn_greediness_clicked);
+	
 
 	QObject::connect(ui->btn_createShapemodel_1, &QPushButton::clicked, this, [this]() {
      Dlg_createshapemodel dlg(1, this);
@@ -128,8 +125,7 @@ void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
     ui->ckb_findShapemodel_1->setChecked(false);
 	ui->ckb_findShapemodel_2->setChecked(false);
 	ui->pbtn_score->setText(QString::number(setConfig.shapemodelScore));
-	ui->pbtn_cover->setText(QString::number(setConfig.shapemodelMaxOverlap));
-	ui->btn_greediness->setText(QString::number(setConfig.shapemodelGreediness));
+	
 
 	ui->rbtn_removeFunc->setChecked(maiLiDingZiConfig.isDefect);
 	
@@ -531,44 +527,3 @@ void CaiHuiPrintInspection::pbtn_score_clicked()
 	Modules::getInstance().configManagerModule.setConfig.shapemodelScore = value;
 }
 
-void CaiHuiPrintInspection::pbtn_cover_clicked()
-{
-	NumberKeyboard numKeyBord;
-	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	if (numKeyBord.exec() != QDialog::Accepted)
-	{
-		return;
-	}
-
-	const auto valueText = numKeyBord.getValue();
-	const double value = valueText.toDouble();
-	if (value < 0.0 || value > 1.0)
-	{
-		QMessageBox::warning(this, tr("提示"), tr("请输入0到1之间的数值"));
-		return;
-	}
-
-	ui->pbtn_cover->setText(valueText);
-	Modules::getInstance().configManagerModule.setConfig.shapemodelMaxOverlap = value;
-}
-
-void CaiHuiPrintInspection::btn_greediness_clicked()
-{
-	NumberKeyboard numKeyBord;
-	numKeyBord.setWindowFlags(Qt::Window | Qt::CustomizeWindowHint);
-	if (numKeyBord.exec() != QDialog::Accepted)
-	{
-		return;
-	}
-
-	const auto valueText = numKeyBord.getValue();
-	const double value = valueText.toDouble();
-	if (value < 0.0 || value > 1.0)
-	{
-		QMessageBox::warning(this, tr("提示"), tr("请输入0到1之间的数值"));
-		return;
-	}
-
-	ui->btn_greediness->setText(valueText);
-	Modules::getInstance().configManagerModule.setConfig.shapemodelGreediness = value;
-}

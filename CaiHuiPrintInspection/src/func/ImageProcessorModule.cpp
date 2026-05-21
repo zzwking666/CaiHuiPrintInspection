@@ -144,45 +144,40 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 	try
 	{
 		auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
-		if (halconDatas.isEmpty())
-		{
-			if (shouldEmitError)
-			{
-				run_OpenRemoveFunc_emitErrorInfo(true);
-			}
-			return;
-		}
 
 		int halconIndex = -1;
 		if (frame.index > 0)
 		{
 			halconIndex = static_cast<int>(frame.index) - 1;
 		}
-		if (halconIndex < 0 || halconIndex >= halconDatas.size())
+		if (halconIndex < 0)
 		{
 			halconIndex = imageProcessingModuleIndex - 1;
 		}
-		if (halconIndex < 0 || halconIndex >= halconDatas.size())
-		{
-			if (shouldEmitError)
-			{
-				run_OpenRemoveFunc_emitErrorInfo(true);
-			}
-			return;
-		}
 
-		auto& halconData = halconDatas[halconIndex];
+		HalconData* halconDataPtr = nullptr;
+		if (halconIndex >= 0)
+		{
+			if (halconDatas.size() <= halconIndex)
+			{
+				halconDatas.resize(halconIndex + 1);
+			}
+			halconDataPtr = &halconDatas[halconIndex];
+		}
 
 		HalconCpp::HObject hoImage = rw::rqw::HalconDisplay::matToHObject(frame.image);
 		HalconCpp::HObject copiedImage;
 		HalconCpp::CopyImage(hoImage, &copiedImage);
-		halconData.processImage = copiedImage;
-
-		if (!halconData.ckb_findShapemodel)
+		if (halconDataPtr)
 		{
-			isMatched = true;
+			halconDataPtr->processImage = copiedImage;
 		}
-		else if (halconData.hv_ModelID.TupleLength() > 0)
+
+		if (!halconDataPtr || !halconDataPtr->ckb_findShapemodel)
+		{
+			isMatched = halconDataPtr != nullptr;
+		}
+		else if (halconDataPtr->hv_ModelID.TupleLength() > 0)
 		{
 			using namespace HalconCpp;
 
@@ -206,11 +201,11 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 					Union1(concatRegions, outUnion);
 				};
 
-          HObject imageForMatch = hoImage;
+			HObject imageForMatch = hoImage;
 
-			if (halconData.isMeaning)
+			if (halconDataPtr->isMeaning)
 			{
-				int meanSize = static_cast<int>(std::round(halconData.meaning));
+				int meanSize = static_cast<int>(std::round(halconDataPtr->meaning));
 				if (meanSize < 1)
 				{
 					meanSize = 1;
@@ -230,15 +225,15 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 			HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
             const auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
 			FindShapeModel(imageForMatch,
-				halconData.hv_ModelID,
+				halconDataPtr->hv_ModelID,
 				-3.1415926,
 				6.2831852,
 				setConfig.shapemodelScore,
 				1,
-				setConfig.shapemodelMaxOverlap,
+				0.5,
 				"least_squares",
 				0,
-				setConfig.shapemodelGreediness,
+				0.9,
 				&hvFindRow,
 				&hvFindCol,
 				&hvFindAngle,
@@ -249,7 +244,7 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 			if (isMatched)
 			{
 				HObject modelContours;
-				GetShapeModelContours(&modelContours, halconData.hv_ModelID, 1);
+				GetShapeModelContours(&modelContours, halconDataPtr->hv_ModelID, 1);
 
 				const int matchCount = static_cast<int>(hvFindRow.TupleLength());
 				for (int matchIdx = 0; matchIdx < matchCount; ++matchIdx)
