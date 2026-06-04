@@ -14,6 +14,9 @@
 #include "rqw_ImageSaveEngine.h"
 #include "Utilty.hpp"
 
+class HalconData;
+namespace HalconCpp { class HObject; }
+
 
 class ImageProcessor : public QThread
 {
@@ -35,6 +38,13 @@ private:
 	void run_OpenRemoveFunc(MatInfo& frame);	// 开启剔废功能时的处理模式
 
 	void run_OpenRemoveFunc_emitErrorInfo(bool isbad);
+
+	// 对一个相机对应的所有模板做匹配，只有全部匹配上才返回 true，
+	// 任一模板未匹配上即返回 false；匹配成功的模板会在 image 上绘制绿色矩形框。
+	// 未启用形状匹配（ckb_findShapemodel 为 false）时视为合格，返回 true。
+	bool matchAllShapeModels(HalconData* halconDataPtr,
+		const HalconCpp::HObject& hoImage,
+		cv::Mat& image);
 signals:
 	void imageReady(size_t index, QPixmap image);
 private:

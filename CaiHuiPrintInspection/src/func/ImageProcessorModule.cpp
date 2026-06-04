@@ -118,6 +118,15 @@ void ImageProcessor::run_debug(MatInfo& frame)
 			HalconCpp::HObject copiedImage;
 			HalconCpp::CopyImage(hoImage, &copiedImage);
 			halconDatas[halconIndex].processImage = copiedImage;
+
+			// 调试模式同样进行印刷检测：一个相机对应多个模板，只有所有模板都匹配
+			// 上才算合格品，匹配上的模板会在图像上绘制绿色框，便于观察检测结果。
+			HalconData* halconDataPtr = &halconDatas[halconIndex];
+			if (halconDataPtr->ckb_findShapemodel)
+			{
+				const bool isMatched = matchAllShapeModels(halconDataPtr, hoImage, frame.image);
+				qDebug() << "run_debug match result: " << isMatched;
+			}
 		}
 	}
 	catch (...)
@@ -177,135 +186,9 @@ void ImageProcessor::run_OpenRemoveFunc(MatInfo& frame)
 		{
 			isMatched = halconDataPtr != nullptr;
 		}
-		else if (halconDataPtr->hv_ModelID.TupleLength() > 0)
+		else
 		{
-			using namespace HalconCpp;
-
-			auto buildUnionFromRegions = [](const QVector<HObject>& regions, HObject* outUnion)
-				{
-					HObject concatRegions;
-					GenEmptyObj(&concatRegions);
-
-					for (const auto& region : regions)
-					{
-						if (!region.IsInitialized())
-						{
-							continue;
-						}
-
-						HObject tmp;
-						ConcatObj(concatRegions, region, &tmp);
-						concatRegions = tmp;
-					}
-
-					Union1(concatRegions, outUnion);
-				};
-
-			HObject imageForMatch = hoImage;
-
-			if (halconDataPtr->isMeaning)
-			{
-				int meanSize = static_cast<int>(std::round(halconDataPtr->meaning));
-				if (meanSize < 1)
-				{
-					meanSize = 1;
-				}
-				if (meanSize % 2 == 0)
-				{
-					++meanSize;
-				}
-
-				HObject meanImage;
-				MeanImage(imageForMatch, &meanImage, meanSize, meanSize);
-				imageForMatch = meanImage;
-			}
-
-			// 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain
-
-			HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
-            const auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
-			FindShapeModel(imageForMatch,
-				halconDataPtr->hv_ModelID,
-				-3.1415926,
-				6.2831852,
-				setConfig.shapemodelScore,
-				1,
-				0.5,
-				"least_squares",
-				0,
-				0.9,
-				&hvFindRow,
-				&hvFindCol,
-				&hvFindAngle,
-				&hvFindScore);
-
-			isMatched = hvFindRow.TupleLength() > 0;
-			qDebug() << "FindShapeModel result: " << isMatched << " matches found.";
-			if (isMatched)
-			{
-				HObject modelContours;
-				GetShapeModelContours(&modelContours, halconDataPtr->hv_ModelID, 1);
-
-				const int matchCount = static_cast<int>(hvFindRow.TupleLength());
-				for (int matchIdx = 0; matchIdx < matchCount; ++matchIdx)
-				{
-					HTuple hvHomMat2D;
-					VectorAngleToRigid(
-						0.0,
-						0.0,
-						0.0,
-						hvFindRow[matchIdx],
-						hvFindCol[matchIdx],
-						hvFindAngle[matchIdx],
-						&hvHomMat2D);
-
-					HObject transContours;
-					AffineTransContourXld(modelContours, &transContours, hvHomMat2D);
-
-					HTuple hvContourCount;
-					CountObj(transContours, &hvContourCount);
-					const int contourCount = hvContourCount.TupleLength() > 0 ? hvContourCount[0].I() : 0;
-
-					double minCol = std::numeric_limits<double>::max();
-					double minRow = std::numeric_limits<double>::max();
-					double maxCol = std::numeric_limits<double>::lowest();
-					double maxRow = std::numeric_limits<double>::lowest();
-					bool hasPoint = false;
-
-					for (int contourIdx = 1; contourIdx <= contourCount; ++contourIdx)
-					{
-						HObject oneContour;
-						SelectObj(transContours, &oneContour, contourIdx);
-
-						HTuple hvRows, hvCols;
-						GetContourXld(oneContour, &hvRows, &hvCols);
-
-						const int pointCount = static_cast<int>(hvRows.TupleLength());
-						if (pointCount < 2)
-						{
-							continue;
-						}
-
-						for (int pointIdx = 0; pointIdx < pointCount; ++pointIdx)
-						{
-							const double col = hvCols[pointIdx].D();
-							const double row = hvRows[pointIdx].D();
-							minCol = std::min(minCol, col);
-							minRow = std::min(minRow, row);
-							maxCol = std::max(maxCol, col);
-							maxRow = std::max(maxRow, row);
-							hasPoint = true;
-						}
-					}
-
-					if (hasPoint)
-					{
-						const cv::Point topLeft(cvRound(minCol), cvRound(minRow));
-						const cv::Point bottomRight(cvRound(maxCol), cvRound(maxRow));
-						cv::rectangle(frame.image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 5, cv::LINE_AA);
-					}
-				}
-			}
+			isMatched = matchAllShapeModels(halconDataPtr, hoImage, frame.image);
 		}
 
 		if (shouldEmitError)
@@ -367,9 +250,148 @@ void ImageProcessor::save_image(rw::rqw::ImageInfo& imageInfo, const QImage& ima
 	save_image_work(imageInfo, image);
 }
 
+bool ImageProcessor::matchAllShapeModels(HalconData* halconDataPtr,
+	const HalconCpp::HObject& hoImage,
+	cv::Mat& image)
+{
+	if (!halconDataPtr || halconDataPtr->hv_ModelIDs.isEmpty())
+	{
+		// 没有可用模板时无法判定为合格，直接视为不合格
+		return false;
+	}
+
+	using namespace HalconCpp;
+
+	HObject imageForMatch = hoImage;
+
+	if (halconDataPtr->isMeaning)
+	{
+		int meanSize = static_cast<int>(std::round(halconDataPtr->meaning));
+		if (meanSize < 1)
+		{
+			meanSize = 1;
+		}
+		if (meanSize % 2 == 0)
+		{
+			++meanSize;
+		}
+
+		HObject meanImage;
+		MeanImage(imageForMatch, &meanImage, meanSize, meanSize);
+		imageForMatch = meanImage;
+	}
+
+	// 运行态匹配改为全图匹配，不再按绘制区域 ReduceDomain。
+	// 一个相机对应多个模板，只有所有模板都匹配上才算合格品，
+	// 只要有一个没有匹配上就是 bad 品。
+	const auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
+
+	bool allMatched = true;
+	const int modelCount = halconDataPtr->hv_ModelIDs.size();
+	for (int modelIdx = 0; modelIdx < modelCount; ++modelIdx)
+	{
+		const HTuple& modelID = halconDataPtr->hv_ModelIDs[modelIdx];
+		if (modelID.TupleLength() <= 0)
+		{
+			allMatched = false;
+			continue;
+		}
+
+		HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
+		FindShapeModel(imageForMatch,
+			modelID,
+			-3.1415926,
+			6.2831852,
+			setConfig.shapemodelScore,
+			1,
+			0.5,
+			"least_squares",
+			0,
+			0.9,
+			&hvFindRow,
+			&hvFindCol,
+			&hvFindAngle,
+			&hvFindScore);
+
+		const bool currentMatched = hvFindRow.TupleLength() > 0;
+		if (!currentMatched)
+		{
+			allMatched = false;
+			continue;
+		}
+
+		// MATCH_DRAW_PLACEHOLDER
+		HObject modelContours;
+		GetShapeModelContours(&modelContours, modelID, 1);
+
+		const int matchCount = static_cast<int>(hvFindRow.TupleLength());
+		for (int matchIdx = 0; matchIdx < matchCount; ++matchIdx)
+		{
+			HTuple hvHomMat2D;
+			VectorAngleToRigid(
+				0.0,
+				0.0,
+				0.0,
+				hvFindRow[matchIdx],
+				hvFindCol[matchIdx],
+				hvFindAngle[matchIdx],
+				&hvHomMat2D);
+
+			HObject transContours;
+			AffineTransContourXld(modelContours, &transContours, hvHomMat2D);
+
+			HTuple hvContourCount;
+			CountObj(transContours, &hvContourCount);
+			const int contourCount = hvContourCount.TupleLength() > 0 ? hvContourCount[0].I() : 0;
+
+			double minCol = std::numeric_limits<double>::max();
+			double minRow = std::numeric_limits<double>::max();
+			double maxCol = std::numeric_limits<double>::lowest();
+			double maxRow = std::numeric_limits<double>::lowest();
+			bool hasPoint = false;
+
+			for (int contourIdx = 1; contourIdx <= contourCount; ++contourIdx)
+			{
+				HObject oneContour;
+				SelectObj(transContours, &oneContour, contourIdx);
+
+				HTuple hvRows, hvCols;
+				GetContourXld(oneContour, &hvRows, &hvCols);
+
+				const int pointCount = static_cast<int>(hvRows.TupleLength());
+				if (pointCount < 2)
+				{
+					continue;
+				}
+
+				for (int pointIdx = 0; pointIdx < pointCount; ++pointIdx)
+				{
+					const double col = hvCols[pointIdx].D();
+					const double row = hvRows[pointIdx].D();
+					minCol = std::min(minCol, col);
+					minRow = std::min(minRow, row);
+					maxCol = std::max(maxCol, col);
+					maxRow = std::max(maxRow, row);
+					hasPoint = true;
+				}
+			}
+
+			if (hasPoint)
+			{
+				const cv::Point topLeft(cvRound(minCol), cvRound(minRow));
+				const cv::Point bottomRight(cvRound(maxCol), cvRound(maxRow));
+				cv::rectangle(image, topLeft, bottomRight, cv::Scalar(0, 255, 0), 5, cv::LINE_AA);
+			}
+		}
+	}
+
+	qDebug() << "FindShapeModel result: " << allMatched << " (" << modelCount << " models, all matched required).";
+	return allMatched;
+}
+
 void ImageProcessor::save_image_work(rw::rqw::ImageInfo& imageInfo, const QImage& image)
 {
- 
+
 }
 
 void ImageProcessor::buildObbModelEngine(const QString& enginePath)

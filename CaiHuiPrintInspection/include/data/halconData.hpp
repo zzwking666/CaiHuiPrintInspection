@@ -11,7 +11,8 @@ public:
 public:
 
 	HalconCpp::HObject processImage;
-	HalconCpp::HTuple hv_ModelID;
+	// 每个创建的感兴趣区域对应一个独立模板，一个相机可能对应多个模板
+	QVector<HalconCpp::HTuple> hv_ModelIDs;
 	double baoguang = 1000;
 	double zengyi = 1;
 	bool isMeaning = false;

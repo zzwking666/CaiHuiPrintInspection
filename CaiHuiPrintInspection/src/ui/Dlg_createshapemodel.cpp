@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QtGlobal>
 #include <algorithm>
+#include <stdexcept>
 #include <halconcpp/HalconCpp.h>
 #include "NumberKeyboard.h"
 
@@ -300,29 +301,16 @@ void Dlg_createshapemodel::btn_createShapeModel_clicked()
                 Union1(concatRegions, outUnion);
             };
 
-        HObject createUnion;
-        buildUnionFromRegions(_halconData.createRegions, &createUnion);
-
-        HObject modelRegion = createUnion;
-        if (!_halconData.shieldRegions.isEmpty())
+        // 屏蔽区域对所有创建区域统一生效，先合并一次
+        HObject shieldUnion;
+        const bool hasShield = !_halconData.shieldRegions.isEmpty();
+        if (hasShield)
         {
-            HObject shieldUnion;
             buildUnionFromRegions(_halconData.shieldRegions, &shieldUnion);
-
-            HObject diffRegion;
-            Difference(createUnion, shieldUnion, &diffRegion);
-            modelRegion = diffRegion;
         }
 
-        HTuple hvArea, hvRow, hvCol;
-        AreaCenter(modelRegion, &hvArea, &hvRow, &hvCol);
-        if (hvArea.TupleLength() <= 0 || hvArea.TupleSum().D() <= 0.0)
-        {
-            QMessageBox::warning(this, tr("提示"), tr("有效建模区域为空，请检查创建/屏蔽区域"));
-            return;
-        }
-
-        HObject imageForModel = _halconData.processImage;
+        // 预先计算用于建模的图像（均值滤波只需做一次，再对每个区域分别 ReduceDomain）
+        HObject baseImage = _halconData.processImage;
         if (_halconData.isMeaning)
         {
             int meanSize = static_cast<int>(std::round(_halconData.meaning));
@@ -336,78 +324,137 @@ void Dlg_createshapemodel::btn_createShapeModel_clicked()
             }
 
             HObject meanImage;
-            MeanImage(imageForModel, &meanImage, meanSize, meanSize);
-            imageForModel = meanImage;
+            MeanImage(baseImage, &meanImage, meanSize, meanSize);
+            baseImage = meanImage;
         }
 
-        HObject reducedImage;
-        ReduceDomain(imageForModel, modelRegion, &reducedImage);
-        imageForModel = reducedImage;
-
-        if (_halconData.hv_ModelID.TupleLength() > 0)
+        // 释放旧模板
+        for (auto& modelID : _halconData.hv_ModelIDs)
         {
-            try
+            if (modelID.TupleLength() > 0)
             {
-                ClearShapeModel(_halconData.hv_ModelID);
+                try
+                {
+                    ClearShapeModel(modelID);
+                }
+                catch (...)
+                {
+                }
             }
-            catch (...)
-            {
-            }
-            _halconData.hv_ModelID = HTuple();
         }
+        _halconData.hv_ModelIDs.clear();
 
-        HTuple hvModelID;
-        if (_halconData.isContrast)
+        QVector<HTuple> createdModelIDs;
+        HObject allModelContours;
+        GenEmptyObj(&allModelContours);
+        bool hasAnyContour = false;
+
+        // 每个创建区域各自生成一个独立模板
+        const int regionCount = _halconData.createRegions.size();
+        for (int regionIdx = 0; regionIdx < regionCount; ++regionIdx)
         {
-            CreateShapeModel(imageForModel,
-                "auto",
+            const HObject& createRegion = _halconData.createRegions[regionIdx];
+            if (!createRegion.IsInitialized())
+            {
+                continue;
+            }
+
+            HObject modelRegion = createRegion;
+            if (hasShield)
+            {
+                HObject diffRegion;
+                Difference(createRegion, shieldUnion, &diffRegion);
+                modelRegion = diffRegion;
+            }
+
+            HTuple hvArea, hvRow, hvCol;
+            AreaCenter(modelRegion, &hvArea, &hvRow, &hvCol);
+            if (hvArea.TupleLength() <= 0 || hvArea.TupleSum().D() <= 0.0)
+            {
+                throw std::runtime_error(
+                    tr("第 %1 个创建区域的有效建模区域为空，请检查创建/屏蔽区域")
+                    .arg(regionIdx + 1).toStdString());
+            }
+
+            HObject reducedImage;
+            ReduceDomain(baseImage, modelRegion, &reducedImage);
+
+            HTuple hvModelID;
+            if (_halconData.isContrast)
+            {
+                CreateShapeModel(reducedImage,
+                    "auto",
+                    -3.1415926,
+                    6.2831852,
+                    "auto",
+                    "auto",
+                    "use_polarity",
+                    _halconData.maxcontrast,
+                    _halconData.mincontrast,
+                    &hvModelID);
+            }
+            else
+            {
+                CreateShapeModel(reducedImage,
+                    "auto",
+                    -3.1415926,
+                    6.2831852,
+                    "auto",
+                    "auto",
+                    "use_polarity",
+                    "auto",
+                    "auto",
+                    &hvModelID);
+            }
+
+            HObject modelContours;
+            GetShapeModelContours(&modelContours, hvModelID, 1);
+
+            HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
+            FindShapeModel(reducedImage,
+                hvModelID,
                 -3.1415926,
                 6.2831852,
-                "auto",
-                "auto",
-                "use_polarity",
-                _halconData.maxcontrast,
-                _halconData.mincontrast,
-                &hvModelID);
-        }
-        else
-        {
-            CreateShapeModel(imageForModel,
-                "auto",
-                -3.1415926,
-                6.2831852,
-                "auto",
-                "auto",
-                "use_polarity",
-                "auto",
-                "auto",
-                &hvModelID);
-        }
+                0.1,
+                1,
+                0.5,
+                "least_squares",
+                0,
+                0.7,
+                &hvFindRow,
+                &hvFindCol,
+                &hvFindAngle,
+                &hvFindScore);
 
-        _halconData.hv_ModelID = hvModelID;
+            if (hvFindRow.TupleLength() <= 0)
+            {
+                try
+                {
+                    ClearShapeModel(hvModelID);
+                }
+                catch (...)
+                {
+                }
 
-        HObject modelContours;
-        GetShapeModelContours(&modelContours, hvModelID, 1);
+                // 已成功创建的模板一并释放，避免残留半套模板
+                for (auto& createdID : createdModelIDs)
+                {
+                    try
+                    {
+                        ClearShapeModel(createdID);
+                    }
+                    catch (...)
+                    {
+                    }
+                }
 
-        HTuple hvFindRow, hvFindCol, hvFindAngle, hvFindScore;
-        FindShapeModel(imageForModel,
-            hvModelID,
-            -3.1415926,
-            6.2831852,
-            0.1,
-            1,
-            0.5,
-            "least_squares",
-            0,
-            0.7,
-            &hvFindRow,
-            &hvFindCol,
-            &hvFindAngle,
-            &hvFindScore);
+                throw std::runtime_error(
+                    tr("第 %1 个创建区域未找到匹配轮廓，模板创建失败")
+                    .arg(regionIdx + 1).toStdString());
+            }
 
-        _modelContours.Clear();
-        if (hvFindRow.TupleLength() > 0)
-        {
+            createdModelIDs.push_back(hvModelID);
+
             HTuple hvHomMat2D;
             VectorAngleToRigid(0.0, 0.0, 0.0,
                 hvFindRow[0].D(), hvFindCol[0].D(), hvFindAngle[0].D(),
@@ -415,39 +462,49 @@ void Dlg_createshapemodel::btn_createShapeModel_clicked()
 
             HObject foundContours;
             AffineTransContourXld(modelContours, &foundContours, hvHomMat2D);
-            _modelContours = foundContours;
 
-            auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
-            const int index = _templateIndex - 1;
-            if (index >= 0)
-            {
-                if (halconDatas.size() <= index)
-                {
-                    halconDatas.resize(index + 1);
-                }
-                halconDatas[index] = _halconData;
-            }
-
-            QMessageBox::information(this, tr("提示"), tr("模板创建成功"));
-            refresh_display_with_regions();
+            HObject concatContours;
+            ConcatObj(allModelContours, foundContours, &concatContours);
+            allModelContours = concatContours;
+            hasAnyContour = true;
         }
-        else
+
+        if (createdModelIDs.isEmpty())
         {
-            _halconData.hv_ModelID = HalconCpp::HTuple();
-            try
-            {
-                HalconCpp::ClearShapeModel(hvModelID);
-            }
-            catch (...)
-            {
-            }
-            QMessageBox::warning(this, tr("提示"), tr("创建模板失败: 未找到匹配轮廓"));
+            QMessageBox::warning(this, tr("提示"), tr("没有可用的创建区域，模板创建失败"));
             return;
         }
+
+        _halconData.hv_ModelIDs = createdModelIDs;
+
+        _modelContours.Clear();
+        if (hasAnyContour)
+        {
+            _modelContours = allModelContours;
+        }
+
+        auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
+        const int index = _templateIndex - 1;
+        if (index >= 0)
+        {
+            if (halconDatas.size() <= index)
+            {
+                halconDatas.resize(index + 1);
+            }
+            halconDatas[index] = _halconData;
+        }
+
+        QMessageBox::information(this, tr("提示"),
+            tr("模板创建成功，共 %1 个模板").arg(createdModelIDs.size()));
+        refresh_display_with_regions();
     }
     catch (const HalconCpp::HException& e)
     {
         QMessageBox::warning(this, tr("提示"), tr("创建模板失败: %1").arg(QString::fromStdString(e.ErrorMessage().Text())));
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::warning(this, tr("提示"), QString::fromStdString(e.what()));
     }
     catch (...)
     {
