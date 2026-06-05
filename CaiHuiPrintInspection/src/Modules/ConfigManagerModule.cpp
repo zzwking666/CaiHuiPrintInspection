@@ -42,3 +42,8 @@ void ConfigManagerModule::stop()
 {
 
 }
+
+void ConfigManagerModule::saveSetConfig()
+{
+	storeContext->saveSafe(setConfig, globalPath.setConfigPath.toStdString());
+}

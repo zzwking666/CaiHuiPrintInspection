@@ -177,6 +177,7 @@ void DlgProductSet::changeLanguage(int index)
 
 void DlgProductSet::btn_close_clicked()
 {
+	Modules::getInstance().configManagerModule.saveSetConfig();
 	emit paramsChanged();
 	this->close();
 }

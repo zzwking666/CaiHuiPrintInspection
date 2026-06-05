@@ -17,6 +17,8 @@ public:
 	void start() override;
 	void stop() override;
 public:
+	void saveSetConfig();
+public:
 	std::unique_ptr<rw::oso::StorageContext> storeContext{ nullptr };
 public:
 	cdm::MaiLiDingZiConfig maiLiDingZiConfig{};
