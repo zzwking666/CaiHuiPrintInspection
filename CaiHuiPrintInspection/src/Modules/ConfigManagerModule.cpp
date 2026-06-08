@@ -1,5 +1,6 @@
 #include "ConfigManagerModule.hpp"
 
+#include "CaiHuiPrintInspection.h"
 #include "Modules.hpp"
 #include "Utilty.hpp"
 
@@ -7,28 +8,15 @@ bool ConfigManagerModule::build()
 {
 	storeContext = std::make_unique<rw::oso::StorageContext>(rw::oso::StorageType::Xml);
 
-#pragma region readHandleScannerCfg
-	auto loadMainWindowConfig = storeContext->loadSafe(globalPath.CaiHuiPrintInspectionConfigPath.toStdString());
-	if (loadMainWindowConfig)
-	{
-		maiLiDingZiConfig = *loadMainWindowConfig;
-	}
-#pragma endregion
-
-#pragma region readsetCfg
-	loadMainWindowConfig = storeContext->loadSafe(globalPath.setConfigPath.toStdString());
-	if (loadMainWindowConfig)
-	{
-		setConfig = *loadMainWindowConfig;
-	}
-#pragma endregion
+	loadConfigSafe(globalPath.CaiHuiPrintInspectionConfigPath, caihuiPrintInspectionConfig, "主窗体参数");
+	loadConfigSafe(globalPath.setConfigPath, setConfig, "设置窗体参数");
 
 	return true;
 }
 
 void ConfigManagerModule::destroy()
 {
-	storeContext->saveSafe(maiLiDingZiConfig, globalPath.CaiHuiPrintInspectionConfigPath.toStdString());
+	storeContext->saveSafe(caihuiPrintInspectionConfig, globalPath.CaiHuiPrintInspectionConfigPath.toStdString());
 	storeContext->saveSafe(setConfig, globalPath.setConfigPath.toStdString());
 	storeContext.reset();
 }

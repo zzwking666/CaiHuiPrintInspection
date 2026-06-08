@@ -115,7 +115,7 @@ void CaiHuiPrintInspection::build_connect()
 
 void CaiHuiPrintInspection::build_CaiHuiPrintInspectionData()
 {
-	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
+	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.caihuiPrintInspectionConfig;
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
 	auto& halconDatas = Modules::getInstance().configManagerModule.halconDatas;
 	maiLiDingZiConfig.isDebug = false;
@@ -484,7 +484,7 @@ void CaiHuiPrintInspection::pbtn_resetProduct_clicked()
 
 void CaiHuiPrintInspection::ckb_saveImg_checked(bool checked)
 {
-	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
+	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.caihuiPrintInspectionConfig;
 	maiLiDingZiConfig.isSaveImg = checked;
 }
 

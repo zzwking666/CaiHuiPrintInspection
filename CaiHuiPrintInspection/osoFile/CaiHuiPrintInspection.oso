@@ -1,7 +1,7 @@
 #include <string>
 
 namespace cdm {
-	class MaiLiDingZiConfig
+	class CaiHuiPrintInspectionConfig
 	{
 	public:
 		totalDefectiveVolume : int :default = 0;

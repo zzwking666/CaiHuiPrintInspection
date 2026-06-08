@@ -5,7 +5,7 @@
 
 #include "DlgProductSet.h"
 #include "CaiHuiPrintInspection.h"
-#include "MaiLiDingZi.hpp"
+#include "CaiHuiPrintInspection.hpp"
 #include "rqw_RunEnvCheck.hpp"
 #include "SetConfig.hpp"
 #include "Utilty.hpp"
@@ -201,7 +201,7 @@ bool Modules::check()
 #pragma region check config format and exist
 	rw::oso::StorageContext storageContext(rw::oso::StorageType::Xml);
 
-	checkFileExistAndFormat<cdm::MaiLiDingZiConfig>(globalPath.CaiHuiPrintInspectionConfigPath, storageContext);
+	checkFileExistAndFormat<cdm::CaiHuiPrintInspectionConfig>(globalPath.CaiHuiPrintInspectionConfigPath, storageContext);
 	checkFileExistAndFormat<cdm::SetConfig>(globalPath.setConfigPath, storageContext);
 #pragma endregion
 

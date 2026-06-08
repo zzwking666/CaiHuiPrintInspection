@@ -38,7 +38,7 @@ void ImgProModule::buildImgProContext()
 void ImgProModule::buildImgProContextPreProcess()
 {
 	auto& runningState = Modules::getInstance().runtimeInfoModule.runningState;
-	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.maiLiDingZiConfig;
+	auto& maiLiDingZiConfig = Modules::getInstance().configManagerModule.caihuiPrintInspectionConfig;
 	auto& setConfig = Modules::getInstance().configManagerModule.setConfig;
 
 #pragma region  build base

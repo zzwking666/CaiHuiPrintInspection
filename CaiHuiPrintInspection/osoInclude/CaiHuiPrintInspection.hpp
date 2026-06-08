@@ -4,19 +4,19 @@
 #include <string>
 
 namespace cdm {
-    class MaiLiDingZiConfig
+    class CaiHuiPrintInspectionConfig
     {
     public:
-        MaiLiDingZiConfig() = default;
-        ~MaiLiDingZiConfig() = default;
+        CaiHuiPrintInspectionConfig() = default;
+        ~CaiHuiPrintInspectionConfig() = default;
 
-        MaiLiDingZiConfig(const rw::oso::ObjectStoreAssembly& assembly);
-        MaiLiDingZiConfig(const MaiLiDingZiConfig& obj);
+        CaiHuiPrintInspectionConfig(const rw::oso::ObjectStoreAssembly& assembly);
+        CaiHuiPrintInspectionConfig(const CaiHuiPrintInspectionConfig& obj);
 
-        MaiLiDingZiConfig& operator=(const MaiLiDingZiConfig& obj);
+        CaiHuiPrintInspectionConfig& operator=(const CaiHuiPrintInspectionConfig& obj);
         operator rw::oso::ObjectStoreAssembly() const;
-        bool operator==(const MaiLiDingZiConfig& obj) const;
-        bool operator!=(const MaiLiDingZiConfig& obj) const;
+        bool operator==(const CaiHuiPrintInspectionConfig& obj) const;
+        bool operator!=(const CaiHuiPrintInspectionConfig& obj) const;
 
     public:
         int totalDefectiveVolume{ 0 };
@@ -25,12 +25,12 @@ namespace cdm {
         bool isSaveImg{ false };
     };
 
-    inline MaiLiDingZiConfig::MaiLiDingZiConfig(const rw::oso::ObjectStoreAssembly& assembly)
+    inline CaiHuiPrintInspectionConfig::CaiHuiPrintInspectionConfig(const rw::oso::ObjectStoreAssembly& assembly)
     {
         auto isAccountAssembly = assembly.getName();
-        if (isAccountAssembly != "$class$MaiLiDingZiConfig$")
+        if (isAccountAssembly != "$class$CaiHuiPrintInspectionConfig$")
         {
-            throw std::runtime_error("Assembly is not $class$MaiLiDingZiConfig$");
+            throw std::runtime_error("Assembly is not $class$CaiHuiPrintInspectionConfig$");
         }
         auto totalDefectiveVolumeItem = rw::oso::ObjectStoreCoreToItem(assembly.getItem("$variable$totalDefectiveVolume$"));
         if (!totalDefectiveVolumeItem) {
@@ -54,7 +54,7 @@ namespace cdm {
         isSaveImg = isSaveImgItem->getValueAsBool();
     }
 
-    inline MaiLiDingZiConfig::MaiLiDingZiConfig(const MaiLiDingZiConfig& obj)
+    inline CaiHuiPrintInspectionConfig::CaiHuiPrintInspectionConfig(const CaiHuiPrintInspectionConfig& obj)
     {
         totalDefectiveVolume = obj.totalDefectiveVolume;
         isDebug = obj.isDebug;
@@ -62,7 +62,7 @@ namespace cdm {
         isSaveImg = obj.isSaveImg;
     }
 
-    inline MaiLiDingZiConfig& MaiLiDingZiConfig::operator=(const MaiLiDingZiConfig& obj)
+    inline CaiHuiPrintInspectionConfig& CaiHuiPrintInspectionConfig::operator=(const CaiHuiPrintInspectionConfig& obj)
     {
         if (this != &obj) {
             totalDefectiveVolume = obj.totalDefectiveVolume;
@@ -73,10 +73,10 @@ namespace cdm {
         return *this;
     }
 
-    inline MaiLiDingZiConfig::operator rw::oso::ObjectStoreAssembly() const
+    inline CaiHuiPrintInspectionConfig::operator rw::oso::ObjectStoreAssembly() const
     {
         rw::oso::ObjectStoreAssembly assembly;
-        assembly.setName("$class$MaiLiDingZiConfig$");
+        assembly.setName("$class$CaiHuiPrintInspectionConfig$");
         auto totalDefectiveVolumeItem = std::make_shared<rw::oso::ObjectStoreItem>();
         totalDefectiveVolumeItem->setName("$variable$totalDefectiveVolume$");
         totalDefectiveVolumeItem->setValueFromInt(totalDefectiveVolume);
@@ -96,12 +96,12 @@ namespace cdm {
         return assembly;
     }
 
-    inline bool MaiLiDingZiConfig::operator==(const MaiLiDingZiConfig& obj) const
+    inline bool CaiHuiPrintInspectionConfig::operator==(const CaiHuiPrintInspectionConfig& obj) const
     {
         return totalDefectiveVolume == obj.totalDefectiveVolume && isDebug == obj.isDebug && isDefect == obj.isDefect && isSaveImg == obj.isSaveImg;
     }
 
-    inline bool MaiLiDingZiConfig::operator!=(const MaiLiDingZiConfig& obj) const
+    inline bool CaiHuiPrintInspectionConfig::operator!=(const CaiHuiPrintInspectionConfig& obj) const
     {
         return !(*this == obj);
     }
