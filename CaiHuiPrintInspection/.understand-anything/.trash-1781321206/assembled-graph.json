@@ -1,0 +1,6280 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "CaiHuiPrintInspection",
+    "languages": [
+      "c",
+      "cpp",
+      "oso",
+      "qrc",
+      "txt",
+      "ui",
+      "unknown"
+    ],
+    "frameworks": [
+      "Halcon",
+      "ONNX Runtime",
+      "OpenCV",
+      "Qt6",
+      "TensorRT"
+    ],
+    "description": "CaiHuiPrintInspection 是一个基于 C++17 和 Qt6 的机器视觉印刷检测桌面应用程序，集成了 OpenCV、Halcon、TensorRT 和 ONNX Runtime，用于高精度图像处理与深度学习推理。",
+    "analyzedAt": "2026-06-13T03:25:34.756400+00:00",
+    "gitCommitHash": "a52b3be6fa3ea995e8c2b626c2c58f6a4f8c2837"
+  },
+  "nodes": [
+    {
+      "id": "file:include/Modules/IModule.hpp",
+      "type": "file",
+      "name": "IModule.hpp",
+      "filePath": "include/Modules/IModule.hpp",
+      "summary": "定义模块基础接口的模板头文件，声明所有模块必须实现的 build/destroy/start/stop 四个纯虚生命周期方法，是整个模块体系的核心契约。",
+      "tags": [
+        "interface",
+        "template",
+        "data-model",
+        "module-system"
+      ],
+      "complexity": "simple",
+      "languageNotes": "C++ 模板类作为模块接口，使用默认模板参数 TBuildError=bool 统一不同模块的构建错误返回类型。"
+    },
+    {
+      "id": "file:include/Modules/CameraModule.hpp",
+      "type": "file",
+      "name": "CameraModule.hpp",
+      "filePath": "include/Modules/CameraModule.hpp",
+      "summary": "相机模块头文件，负责双相机（camera1/camera2）的构建、销毁与启停控制，通过 Qt 信号槽机制传递帧数据，构建错误通过 BuildError 枚举返回。",
+      "tags": [
+        "camera",
+        "qt-signals",
+        "api-handler",
+        "image-capture"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用非标准枚举（非 enum class）定义构建错误位掩码；通过 QObject 多重继承整合 Qt 元对象系统。"
+    },
+    {
+      "id": "file:include/Modules/EliminateModule.hpp",
+      "type": "file",
+      "name": "EliminateModule.hpp",
+      "filePath": "include/Modules/EliminateModule.hpp",
+      "summary": "缺陷剔除模块头文件，管理两个线程安全的产品优先级队列和独立的缺陷检测预处理线程，用于实时产品缺陷的识别与剔除。",
+      "tags": [
+        "defect-detection",
+        "thread-safe",
+        "queue",
+        "quality-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/Modules/ImgSaveModule.hpp",
+      "type": "file",
+      "name": "ImgSaveModule.hpp",
+      "filePath": "include/Modules/ImgSaveModule.hpp",
+      "summary": "图像保存模块头文件，封装多线程图像保存引擎，支持可配置的保存线程数（默认4线程）和 JPEG 压缩质量（默认80）。",
+      "tags": [
+        "image-save",
+        "serialization",
+        "multithreading",
+        "utility"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 static constexpr 定义编译期常量（线程数和 JPEG 质量），构建返回 void 表示无错误机制。"
+    },
+    {
+      "id": "file:include/Modules/RuntimeInfoModule.hpp",
+      "type": "file",
+      "name": "RuntimeInfoModule.hpp",
+      "filePath": "include/Modules/RuntimeInfoModule.hpp",
+      "summary": "运行时信息模块头文件，追踪检测统计数据（废品计数）和系统运行状态（调试/移除功能开启/停止），通过独立工具线程异步更新。",
+      "tags": [
+        "monitoring",
+        "statistics",
+        "runtime",
+        "utility"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 std::atomic 保证多线程环境下的废品计数和运行状态读写安全。"
+    },
+    {
+      "id": "file:include/Modules/UIModule.hpp",
+      "type": "file",
+      "name": "UIModule.hpp",
+      "filePath": "include/Modules/UIModule.hpp",
+      "summary": "UI 模块头文件，作为主窗口（CaiHuiPrintInspection）和产品设置对话框（DlgProductSet）的持有者，通过前向声明解耦 UI 组件与模块系统。",
+      "tags": [
+        "ui",
+        "entry-point",
+        "qt-widgets"
+      ],
+      "complexity": "simple",
+      "languageNotes": "采用前向声明（forward declaration）避免头文件循环依赖，构建返回 void 表示无错误机制。"
+    },
+    {
+      "id": "class:include/Modules/IModule.hpp:IModule",
+      "type": "class",
+      "name": "IModule",
+      "filePath": "include/Modules/IModule.hpp",
+      "lineRange": [
+        6,
+        16
+      ],
+      "summary": "模块基础接口模板类，定义 build()、destroy()、start()、stop() 四个纯虚函数，所有功能模块必须继承并实现此接口。",
+      "tags": [
+        "interface",
+        "template",
+        "module-system",
+        "polymorphism"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "class",
+      "name": "CameraModule",
+      "filePath": "include/Modules/CameraModule.hpp",
+      "lineRange": [
+        14,
+        54
+      ],
+      "summary": "双相机控制模块，同时管理两个 CameraPassiveThread 实例，通过 Qt 信号槽提供帧捕获事件通知（frameCaptured1/frameCaptured2），支持按相机索引构建、销毁和启动操作。",
+      "tags": [
+        "camera",
+        "qt-signals",
+        "image-capture",
+        "thread-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "class",
+      "name": "EliminateModule",
+      "filePath": "include/Modules/EliminateModule.hpp",
+      "lineRange": [
+        7,
+        22
+      ],
+      "summary": "缺陷剔除模块，维护两个 ThreadSafeHeap 优先级队列用于产品排序与剔除决策，通过 DetachDefectThread 在独立线程中执行缺陷检测预处理。",
+      "tags": [
+        "defect-detection",
+        "thread-safe",
+        "queue",
+        "quality-control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "class",
+      "name": "ImgSaveModule",
+      "filePath": "include/Modules/ImgSaveModule.hpp",
+      "lineRange": [
+        8,
+        21
+      ],
+      "summary": "图像保存模块，封装 ImageSaveEngine 实现多线程图像持久化存储，默认使用4个保存线程和 JPEG 质量80的压缩参数。",
+      "tags": [
+        "image-save",
+        "serialization",
+        "multithreading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "class",
+      "name": "RuntimeInfoModule",
+      "filePath": "include/Modules/RuntimeInfoModule.hpp",
+      "lineRange": [
+        16,
+        33
+      ],
+      "summary": "运行时信息模块，通过 StatisticalInfo 内嵌结构体和原子变量追踪废品计数，通过 RunningState 枚举管理调试/移除/停止三种系统运行模式。",
+      "tags": [
+        "monitoring",
+        "statistics",
+        "atomic",
+        "runtime"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "class",
+      "name": "UIModule",
+      "filePath": "include/Modules/UIModule.hpp",
+      "lineRange": [
+        10,
+        24
+      ],
+      "summary": "UI 模块，持有指向主界面 CaiHuiPrintInspection 和产品设置对话框 DlgProductSet 的裸指针，作为 UI 层与模块系统之间的桥梁。",
+      "tags": [
+        "ui",
+        "qt-widgets",
+        "bridge"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/Modules/ConfigManagerModule.hpp",
+      "type": "file",
+      "name": "ConfigManagerModule.hpp",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "summary": "配置管理模块头文件，定义 ConfigManagerModule 类，继承 QObject 和 IModule<bool>，提供配置文件的加载、保存、合并功能，包含模板函数 loadConfigSafe 用于安全的配置反序列化与自动合并默认值。",
+      "tags": [
+        "config",
+        "serialization",
+        "template",
+        "module",
+        "qt"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 C++ 模板实现泛型配置加载，结合 rw::oso 序列化库的 AssemblyMergeTool 进行配置文件字段合并与容错处理。"
+    },
+    {
+      "id": "file:include/Modules/ImgProModule.hpp",
+      "type": "file",
+      "name": "ImgProModule.hpp",
+      "filePath": "include/Modules/ImgProModule.hpp",
+      "summary": "图像处理模块头文件，定义 ImgProModule 类，继承 QObject 和 IModule<bool>，管理图像处理流水线的构建与销毁，包含预处理上下文、多路图像处理器及信号槽驱动的参数更新机制。",
+      "tags": [
+        "image-processing",
+        "module",
+        "pipeline",
+        "qt-signals",
+        "preprocessing"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "通过 Qt 信号槽 (onUpdateImgProContext) 实现图像处理上下文的异步更新，支持双路 ImageProcessingModule 实例并行处理。"
+    },
+    {
+      "id": "file:include/Modules/Modules.hpp",
+      "type": "file",
+      "name": "Modules.hpp",
+      "filePath": "include/Modules/Modules.hpp",
+      "summary": "全局模块编排器头文件，定义 Modules 单例类，继承 IModule<bool>，持有并管理所有子模块（相机、图像处理、UI、配置、剔除等）的生命周期，提供统一构建/销毁/启动/停止接口及配置文件的运行时检查与格式修正功能。",
+      "tags": [
+        "entry-point",
+        "singleton",
+        "orchestration",
+        "module",
+        "lifecycle"
+      ],
+      "complexity": "complex",
+      "languageNotes": "采用 Meyer's Singleton 模式，模板函数 checkFileExistAndFormat 利用 rw::oso::AssemblyMergeTool 实现配置文件运行时格式校验与自动合并升级。"
+    },
+    {
+      "id": "file:include/Modules/ReconnectModule.hpp",
+      "type": "file",
+      "name": "ReconnectModule.hpp",
+      "filePath": "include/Modules/ReconnectModule.hpp",
+      "summary": "重连模块头文件，定义 ReconnectModule 类，继承 QObject 和 IModule<void>，通过后台线程 CameraAndCardStateThread 监控相机与采集卡状态以实现自动重连。",
+      "tags": [
+        "reconnect",
+        "monitoring",
+        "module",
+        "hardware",
+        "thread"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/Modules/TestModule.hpp",
+      "type": "file",
+      "name": "TestModule.hpp",
+      "filePath": "include/Modules/TestModule.hpp",
+      "summary": "测试模块头文件，定义 TestModule 类，继承 QObject 和 IModule<void>，在 BUILD_WITHOUT_HARDWARE 宏定义下启用，通过 TestImgPushThread 提供模拟图像推送功能，用于无硬件环境下的软件测试。",
+      "tags": [
+        "test",
+        "mock",
+        "conditional-compilation",
+        "module"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过 #ifdef BUILD_WITHOUT_HARDWARE 条件编译控制，仅在无硬件环境下编译，用于替代真实相机模块进行联调测试。"
+    },
+    {
+      "id": "file:include/Modules/WarningModule.hpp",
+      "type": "file",
+      "name": "WarningModule.hpp",
+      "filePath": "include/Modules/WarningModule.hpp",
+      "summary": "告警模块头文件（空文件占位），预留用于未来实现告警/通知功能。",
+      "tags": [
+        "stub",
+        "placeholder",
+        "module"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "class",
+      "name": "ConfigManagerModule",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "lineRange": [
+        13,
+        33
+      ],
+      "summary": "配置管理模块类，继承 QObject 和 IModule<bool>，管理应用配置的加载、保存与更新，持有 StorageContext 序列化上下文、CaiHuiPrintInspectionConfig 主配置、SetConfig 设置配置及 HalconData 向量。",
+      "tags": [
+        "config",
+        "serialization",
+        "data-model",
+        "module"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "class",
+      "name": "ImgProModule",
+      "filePath": "include/Modules/ImgProModule.hpp",
+      "lineRange": [
+        8,
+        39
+      ],
+      "summary": "图像处理模块类，继承 QObject 和 IModule<bool>，管理图像预处理上下文和双路 ImageProcessingModule 实例，通过信号槽 onUpdateImgProContext 接收外部参数更新通知并重置处理状态。",
+      "tags": [
+        "image-processing",
+        "module",
+        "pipeline",
+        "qt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/Modules.hpp:Modules",
+      "type": "class",
+      "name": "Modules",
+      "filePath": "include/Modules/Modules.hpp",
+      "lineRange": [
+        18,
+        64
+      ],
+      "summary": "全局模块编排单例类，继承 IModule<bool>，聚合所有子模块实例（Camera/Reconnect/UI/ConfigManager/RuntimeInfo/ImgSave/ImgPro/Eliminate），提供统一的 build/destroy/start/stop/connect 生命周期管理及静态配置检查工具方法。",
+      "tags": [
+        "singleton",
+        "orchestration",
+        "lifecycle",
+        "entry-point",
+        "module"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "class",
+      "name": "ReconnectModule",
+      "filePath": "include/Modules/ReconnectModule.hpp",
+      "lineRange": [
+        8,
+        19
+      ],
+      "summary": "重连模块类，继承 QObject 和 IModule<void>，通过 CameraAndCardStateThread 后台线程持续监控相机与采集卡在线状态，异常断开时自动触发重连。",
+      "tags": [
+        "reconnect",
+        "monitoring",
+        "module",
+        "hardware"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "class",
+      "name": "TestModule",
+      "filePath": "include/Modules/TestModule.hpp",
+      "lineRange": [
+        10,
+        22
+      ],
+      "summary": "测试模块类，继承 QObject 和 IModule<void>，在无硬件编译模式 (BUILD_WITHOUT_HARDWARE) 下启用，通过 TestImgPushThread 控制模拟图像推送，用于软件功能测试与调试。",
+      "tags": [
+        "test",
+        "mock",
+        "module"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:include/Modules/ConfigManagerModule.hpp:loadConfigSafe",
+      "type": "function",
+      "name": "loadConfigSafe",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "lineRange": [
+        35,
+        86
+      ],
+      "summary": "模板函数，泛型安全加载配置文件：检查文件存在性、尝试反序列化，失败时通过 AssemblyMergeTool 合并默认配置字段后重试，实现配置文件的容错加载与自动升级。",
+      "tags": [
+        "template",
+        "config",
+        "serialization",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "function",
+      "name": "checkFileExistAndFormat",
+      "filePath": "include/Modules/Modules.hpp",
+      "lineRange": [
+        67,
+        90
+      ],
+      "summary": "静态模板函数，运行时检查配置文件是否存在且格式正确，若格式不匹配则通过 AssemblyMergeTool 自动合并默认值并重新保存，若文件不存在则创建默认配置文件。",
+      "tags": [
+        "template",
+        "config",
+        "validation",
+        "runtime-check"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 分析工具的忽略规则文件，定义排除分析的文件/目录模式，语法兼容 .gitignore。当前仅包含注释和示例说明，未激活任何排除规则。",
+      "tags": [
+        "configuration",
+        "analysis-tool",
+        "ignore-patterns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CMakeLists.txt",
+      "type": "document",
+      "name": "CMakeLists.txt",
+      "filePath": "CMakeLists.txt",
+      "summary": "项目顶层 CMake 构建配置文件，定义 C++17/Qt6 构建标准，配置 Qt MOC/RCC 自动处理，集成 OpenCV、Halcon、TensorRT、ONNX Runtime 等第三方库，并设置 windeployqt 打包和 DLL 复制后处理步骤。",
+      "tags": [
+        "build-system",
+        "cmake",
+        "configuration",
+        "qt6"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 Qt6 的 AUTOMOC/AUTORCC 机制，通过 oso_wrap_oso 自定义命令从 .oso 文件生成 C++ 序列化代码，POST_BUILD 阶段自动部署 Qt 运行时和 AI 推理 DLL。"
+    },
+    {
+      "id": "file:include/data/halconData.hpp",
+      "type": "file",
+      "name": "halconData.hpp",
+      "filePath": "include/data/halconData.hpp",
+      "summary": "HalconData 数据结构的头文件声明，封装 Halcon 图像处理所需的全部配置数据和运行时状态，包括模板 ID、曝光增益参数、对比度设置和感兴趣区域。",
+      "tags": [
+        "data-model",
+        "halcon",
+        "header",
+        "image-inspection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/halconData.hpp:HalconData",
+      "type": "class",
+      "name": "HalconData",
+      "filePath": "include/data/halconData.hpp",
+      "lineRange": [
+        6,
+        30
+      ],
+      "summary": "Halcon 检测参数的数据载体类，存储每个相机的图像处理对象、形状匹配模板 ID 列表、曝光/增益参数、对比度阈值以及创建/屏蔽区域集合。",
+      "tags": [
+        "data-model",
+        "halcon",
+        "image-inspection",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "type": "file",
+      "name": "osoFIleUtiltyFunc.hpp",
+      "filePath": "include/data/osoFIleUtiltyFunc.hpp",
+      "summary": "ScoreConfigConvert 工具类的头文件，提供评分配置与分类 ID 映射的转换函数声明，用于将评分因子转换为剔废和缺陷判定配置。",
+      "tags": [
+        "utility",
+        "header",
+        "score-config",
+        "defect-detection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "class",
+      "name": "ScoreConfigConvert",
+      "filePath": "include/data/osoFIleUtiltyFunc.hpp",
+      "lineRange": [
+        9,
+        13
+      ],
+      "summary": "评分配置转换工具类，提供静态方法将面积因子和评分因子转换为剔废配置映射（toClassIdWithEliConfigMap）和缺陷判定配置映射（toClassIdWithDefConfigMap）。",
+      "tags": [
+        "utility",
+        "score-config",
+        "conversion",
+        "defect-detection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/data/Utilty.hpp",
+      "type": "file",
+      "name": "Utilty.hpp",
+      "filePath": "include/data/Utilty.hpp",
+      "summary": "全局工具头文件，定义项目路径配置（GlobalPath）、缺陷分类 ID 枚举（ClassId）、相机 IP 配置（Utility）和图像信息载体（MatInfo）四个核心数据结构。",
+      "tags": [
+        "data-model",
+        "header",
+        "configuration",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "class",
+      "name": "GlobalPath",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [
+        6,
+        20
+      ],
+      "summary": "全局路径配置结构体，定义项目根目录、配置文件路径、模型路径和图像保存路径等关键目录，以全局单例 globalPath 实例化。",
+      "tags": [
+        "configuration",
+        "path-management",
+        "singleton",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:ClassId",
+      "type": "class",
+      "name": "ClassId",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [
+        22,
+        33
+      ],
+      "summary": "缺陷分类 ID 枚举结构体，定义分类编号范围（minNum/maxNum）、具体分类常量（如 dingZi）和分类名称映射表，支持扩展新的缺陷类别。",
+      "tags": [
+        "enum",
+        "data-model",
+        "defect-classification",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:Utility",
+      "type": "class",
+      "name": "Utility",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [
+        35,
+        39
+      ],
+      "summary": "相机 IP 配置结构体，静态存储两个工业相机的 IP 地址字符串，供相机连接模块引用。",
+      "tags": [
+        "configuration",
+        "camera",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "class",
+      "name": "MatInfo",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [
+        42,
+        46
+      ],
+      "summary": "图像信息载体结构体，封装 OpenCV Mat 图像数据、拍照时间点位置和相机下标索引，用于在线程间传递图像帧信息。",
+      "tags": [
+        "data-model",
+        "image",
+        "thread-communication"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "type": "file",
+      "name": "CameraAndCardStateThread.h",
+      "filePath": "include/DetachThread/CameraAndCardStateThread.h",
+      "summary": "相机与卡状态监控线程的头文件，声明 CameraAndCardStateThread 类（继承 QThread），负责周期性检测两个相机的连接状态并通过信号更新 UI。",
+      "tags": [
+        "header",
+        "camera",
+        "thread",
+        "monitoring",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "class",
+      "name": "CameraAndCardStateThread",
+      "filePath": "include/DetachThread/CameraAndCardStateThread.h",
+      "lineRange": [
+        6,
+        36
+      ],
+      "summary": "相机与卡状态监控线程类（QThread 子类），提供 startThread/stopThread 控制接口，run 循环中每 2 秒检测相机连接状态，通过信号通知 UI 更新、相机构建/销毁和监控启停。",
+      "tags": [
+        "thread",
+        "camera",
+        "monitoring",
+        "qt",
+        "qthread"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "type": "file",
+      "name": "DetachDefectThreadProcess.h",
+      "filePath": "include/DetachThread/DetachDefectThreadProcess.h",
+      "summary": "缺陷剔废处理线程的头文件，声明 DetachDefectThread 类（继承 QThread），负责从优先级队列中取出剔废结果并执行物理剔废动作。",
+      "tags": [
+        "header",
+        "defect",
+        "thread",
+        "elimination",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "class",
+      "name": "DetachDefectThread",
+      "filePath": "include/DetachThread/DetachDefectThreadProcess.h",
+      "lineRange": [
+        12,
+        34
+      ],
+      "summary": "缺陷剔废处理线程类（QThread 子类），管理 processQueue1/processQueue2 两个队列处理函数，分别对应两个相机的剔废操作，通过 run 循环持续消费优先级队列中的缺陷判定结果。",
+      "tags": [
+        "thread",
+        "defect",
+        "elimination",
+        "queue",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/DetachThread/DetachUtiltyThread.h",
+      "type": "file",
+      "name": "DetachUtiltyThread.h",
+      "filePath": "include/DetachThread/DetachUtiltyThread.h",
+      "summary": "通用工具线程的头文件，声明 DetachUtiltyThread 类（继承 QThread），负责定时发送统计信息更新信号和周期性任务。",
+      "tags": [
+        "header",
+        "utility",
+        "thread",
+        "statistics",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "class",
+      "name": "DetachUtiltyThread",
+      "filePath": "include/DetachThread/DetachUtiltyThread.h",
+      "lineRange": [
+        7,
+        24
+      ],
+      "summary": "通用工具线程类（QThread 子类），每秒触发一次统计信息更新信号，内建 300 秒循环计数器，用于驱动 UI 统计数据刷新等周期性任务。",
+      "tags": [
+        "thread",
+        "utility",
+        "statistics",
+        "timer",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/func/HalconDisplay.hpp",
+      "type": "file",
+      "name": "HalconDisplay.hpp",
+      "filePath": "include/func/HalconDisplay.hpp",
+      "summary": "Halcon 图像显示封装模块的头文件，定义 HalconDisplay 类（继承 QObject），封装 Halcon 窗口的创建、图像显示、缩放平移交互和 OpenCV Mat 互转等全部功能。",
+      "tags": [
+        "header",
+        "halcon",
+        "display",
+        "image-viewer",
+        "wrapper"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 PIMPL 风格封装 Halcon C++ 接口，通过 eventFilter 实现鼠标拖拽平移交互，支持 overlay 绘制器回调实现自定义图形叠加。"
+    },
+    {
+      "id": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "class",
+      "name": "HalconDisplay",
+      "filePath": "include/func/HalconDisplay.hpp",
+      "lineRange": [
+        25,
+        173
+      ],
+      "summary": "Halcon 图像显示封装类，管理 Halcon 窗口生命周期，提供 initialize/closeWindow 窗口管理、displayImage/displayMat 图像显示、setDisplayPart/resetDisplayPart 缩放控制，以及 matToHObject 静态转换方法和交互式平移功能。支持移动语义，禁止拷贝。",
+      "tags": [
+        "halcon",
+        "display",
+        "image-viewer",
+        "wrapper",
+        "interaction"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:include/func/ImageProcessorModule.hpp",
+      "type": "file",
+      "name": "ImageProcessorModule.hpp",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "summary": "图像处理模块的头文件，定义 ImageProcessor（QThread 子类，执行缺陷检测推理）和 ImageProcessingModule（管理多消费者处理管线）两个核心类，构成多线程图像处理框架。",
+      "tags": [
+        "header",
+        "image-processing",
+        "thread",
+        "inference",
+        "pipeline"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "class",
+      "name": "ImageProcessor",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "lineRange": [
+        21,
+        66
+      ],
+      "summary": "图像处理器线程类（QThread 子类），从共享队列消费 MatInfo 帧数据，执行调试模式或剔废模式下的图像处理：调用 matchAllShapeModels 进行 Halcon 形状模板匹配，通过 buildObbModelEngine 加载 ONNX/TensorRT 推理引擎，处理完成后发射 imageReady 信号。",
+      "tags": [
+        "thread",
+        "image-processing",
+        "inference",
+        "halcon",
+        "shape-matching"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "class",
+      "name": "ImageProcessingModule",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "lineRange": [
+        69,
+        102
+      ],
+      "summary": "图像处理管线管理类，通过 BuildModule 初始化指定数量的 ImageProcessor 消费者线程，接收相机回调 onFrameCaptured 将帧推入共享队列，实现生产者-消费者模式的多线程图像处理调度。",
+      "tags": [
+        "pipeline",
+        "producer-consumer",
+        "multi-threading",
+        "image-processing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/NoHardWare/TestImgPushThread.hpp",
+      "type": "file",
+      "name": "TestImgPushThread.hpp",
+      "filePath": "include/NoHardWare/TestImgPushThread.hpp",
+      "summary": "无硬件测试模式下的图像推送线程头文件（条件编译 BUILD_WITHOUT_HARDWARE），声明 TestImgPushThread 类，从本地目录预加载测试图像并按指定间隔推送到处理管线。",
+      "tags": [
+        "header",
+        "test",
+        "image-source",
+        "simulation",
+        "conditional-compilation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/NoHardWare/TestImgPushThread.hpp:TestImgPushThread",
+      "type": "class",
+      "name": "TestImgPushThread",
+      "filePath": "include/NoHardWare/TestImgPushThread.hpp",
+      "lineRange": [
+        10,
+        47
+      ],
+      "summary": "测试图像推送线程类（QThread 子类，仅在 BUILD_WITHOUT_HARDWARE 宏下编译），预加载两个目录的测试图像到内存缓存，按可配置时间间隔（默认 150ms）通过 imgReady/imgReady2 信号推送图像帧，用于无相机硬件环境下的功能测试。",
+      "tags": [
+        "test",
+        "thread",
+        "image-source",
+        "simulation",
+        "qt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.h",
+      "filePath": "include/ui/CaiHuiPrintInspection.h",
+      "summary": "主窗口类的头文件，声明 CaiHuiPrintInspection（继承 QMainWindow），作为应用程序的顶层 UI 控制器，管理相机显示、Halcon 窗口、语言切换、产品设置和调试模式等全部界面交互。",
+      "tags": [
+        "header",
+        "ui",
+        "main-window",
+        "entry-point",
+        "qt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/CaiHuiPrintInspection.h:CaiHuiPrintInspection",
+      "type": "class",
+      "name": "CaiHuiPrintInspection",
+      "filePath": "include/ui/CaiHuiPrintInspection.h",
+      "lineRange": [
+        18,
+        81
+      ],
+      "summary": "应用程序主窗口类（QMainWindow 子类），负责构建整体 UI 布局、初始化相机和 Halcon 显示组件、处理四路相机图像刷新显示，并提供语言切换、调试模式、剔废功能、图像保存和产品设置等完整的用户交互接口。",
+      "tags": [
+        "main-window",
+        "ui",
+        "entry-point",
+        "camera-display",
+        "qt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/ui/Dlg_createshapemodel.h",
+      "type": "file",
+      "name": "Dlg_createshapemodel.h",
+      "filePath": "include/ui/Dlg_createshapemodel.h",
+      "summary": "形状模板创建对话框的头文件，声明 Dlg_createshapemodel 类（继承 QDialog），提供 Halcon 形状模板的交互式创建功能，包括区域绘制、模板生成和参数配置。",
+      "tags": [
+        "header",
+        "ui",
+        "dialog",
+        "shape-model",
+        "halcon"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/Dlg_createshapemodel.h:Dlg_createshapemodel",
+      "type": "class",
+      "name": "Dlg_createshapemodel",
+      "filePath": "include/ui/Dlg_createshapemodel.h",
+      "lineRange": [
+        16,
+        75
+      ],
+      "summary": "Halcon 形状模板创建对话框类（QDialog 子类），嵌入 HalconDisplay 显示控件，提供读取图像、绘制/屏蔽区域、创建形状模板/XLD 轮廓、设置对比度/曝光/增益参数等完整交互功能，按模板索引（_templateIndex）区分不同相机的模板配置。",
+      "tags": [
+        "dialog",
+        "shape-model",
+        "halcon",
+        "template-creation",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/ui/DlgProductSet.h",
+      "type": "file",
+      "name": "DlgProductSet.h",
+      "filePath": "include/ui/DlgProductSet.h",
+      "summary": "产品参数设置对话框的头文件，声明 DlgProductSet 类（继承 QDialog），提供光电传感器时序、输出信号配置和双相机限位/曝光/增益等参数的可视化编辑界面。",
+      "tags": [
+        "header",
+        "ui",
+        "dialog",
+        "configuration",
+        "camera"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/DlgProductSet.h:DlgProductSet",
+      "type": "class",
+      "name": "DlgProductSet",
+      "filePath": "include/ui/DlgProductSet.h",
+      "lineRange": [
+        10,
+        58
+      ],
+      "summary": "产品参数设置对话框类（QDialog 子类），管理光电屏蔽时间、输出信号延时/持续时间的编辑，以及两个相机各自的上/下/左/右限位、曝光、增益和像素当量参数配置，支持测试触发和参数变更通知信号。",
+      "tags": [
+        "dialog",
+        "configuration",
+        "camera",
+        "parameter-editor",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:osoFile/CaiHuiPrintInspection.oso",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.oso",
+      "filePath": "osoFile/CaiHuiPrintInspection.oso",
+      "summary": "Object Store Object 格式的数据模型定义文件，描述 CaiHuiPrintInspectionConfig 类的序列化结构（totalDefectiveVolume、isDebug、isDefect、isSaveImg 四个字段），由 CMake 构建时通过 oso_wrap_oso 生成对应的 C++ 头文件。",
+      "tags": [
+        "schema-definition",
+        "oso",
+        "data-model",
+        "serialization",
+        "code-generation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "OSO (Object Store Object) 是一种自定义的跨语言数据序列化格式，语法类似 C# 属性声明（类型:名称:默认值），由项目自有的 oso_wrap_oso 工具编译为 C++ 代码。"
+    },
+    {
+      "id": "file:osoFile/SetConfig.oso",
+      "type": "file",
+      "name": "SetConfig.oso",
+      "filePath": "osoFile/SetConfig.oso",
+      "summary": "Object Store Object 格式的配置模型定义文件，描述 SetConfig 类的序列化结构，包含双相机限位/曝光/增益参数（各 7 项）、语言索引和形状匹配评分参数等共 22 个字段。",
+      "tags": [
+        "schema-definition",
+        "oso",
+        "configuration",
+        "serialization",
+        "code-generation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过 OSO 格式定义数据模型可自动生成 C++ 的序列化/反序列化代码（operator ObjectStoreAssembly）和比较运算符（operator==/!=），减少手写样板代码。"
+    },
+    {
+      "id": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.hpp",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "summary": "由 osoFile/CaiHuiPrintInspection.oso 自动生成的 C++ 头文件，定义 CaiHuiPrintInspectionConfig 类的完整实现，包括从 ObjectStoreAssembly 反序列化的构造函数和序列化转换运算符。",
+      "tags": [
+        "auto-generated",
+        "oso",
+        "serialization",
+        "configuration",
+        "header"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "自动生成代码遵循 OSO 反序列化模式：按名称匹配 assembly 中的 item，逐字段调用 getValueAsInt/getValueAsBool 提取值，反序列化失败时抛出 runtime_error。"
+    },
+    {
+      "id": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "class",
+      "name": "CaiHuiPrintInspectionConfig",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [
+        7,
+        26
+      ],
+      "summary": "打印检测主配置类（OSO 自动生成），包含 totalDefectiveVolume（缺陷总数阈值）、isDebug（调试模式开关）、isDefect（剔废功能开关）和 isSaveImg（图像保存开关）四个运行时配置字段。",
+      "tags": [
+        "configuration",
+        "auto-generated",
+        "oso",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "function",
+      "name": "CaiHuiPrintInspectionConfig(assembly)",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [
+        28,
+        55
+      ],
+      "summary": "从 ObjectStoreAssembly 反序列化构造 CaiHuiPrintInspectionConfig，逐字段取出 totalDefectiveVolume（int）、isDebug（bool）、isDefect（bool）和 isSaveImg（bool），字段缺失时抛出 runtime_error。",
+      "tags": [
+        "constructor",
+        "deserialization",
+        "oso",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "function",
+      "name": "oso::ObjectStoreAssembly()",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [
+        76,
+        97
+      ],
+      "summary": "将 CaiHuiPrintInspectionConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加四个配置项（int/bool），用于持久化保存配置到 XML 文件。",
+      "tags": [
+        "serialization",
+        "oso",
+        "conversion-operator",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:osoInclude/SetConfig.hpp",
+      "type": "file",
+      "name": "SetConfig.hpp",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "summary": "由 osoFile/SetConfig.oso 自动生成的 C++ 头文件，定义 SetConfig 类的完整实现，包含 22 个产品参数字段的序列化/反序列化逻辑，是本项目最大的自动生成文件（314 行）。",
+      "tags": [
+        "auto-generated",
+        "oso",
+        "serialization",
+        "configuration",
+        "header"
+      ],
+      "complexity": "complex",
+      "languageNotes": "22 个字段的反序列化构造函数采用高度重复的 try-getItem-getValue 模式（112 行），序列化方法同样重复构造 22 个 ObjectStoreItem（89 行），典型的自动代码生成风格。"
+    },
+    {
+      "id": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "class",
+      "name": "SetConfig",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [
+        7,
+        43
+      ],
+      "summary": "产品参数配置类（OSO 自动生成），管理光电传感器时序、双相机限位/曝光/增益/像素当量（各 7 个参数）、语言切换索引和形状匹配评分参数（Score/MaxOverlap/Greediness），共 22 个可持久化字段。",
+      "tags": [
+        "configuration",
+        "auto-generated",
+        "oso",
+        "camera",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "function",
+      "name": "SetConfig(assembly)",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [
+        45,
+        157
+      ],
+      "summary": "从 ObjectStoreAssembly 反序列化构造 SetConfig，逐字段提取 22 个配置参数（15 个 double 类型限位/曝光/增益/像素当量参数、1 个 int 语言索引、3 个 double 形状匹配参数等），每个字段缺失时抛出明确的 runtime_error。",
+      "tags": [
+        "constructor",
+        "deserialization",
+        "oso",
+        "configuration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "function",
+      "name": "SetConfig(obj)",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [
+        159,
+        182
+      ],
+      "summary": "SetConfig 拷贝构造函数，逐字段复制全部 22 个配置参数，确保深拷贝语义。",
+      "tags": [
+        "constructor",
+        "copy",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "function",
+      "name": "oso::ObjectStoreAssembly()",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [
+        212,
+        301
+      ],
+      "summary": "将 SetConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加 22 个配置项（double/int），用于持久化保存产品参数配置到 XML 文件。",
+      "tags": [
+        "serialization",
+        "oso",
+        "conversion-operator",
+        "configuration"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "type": "file",
+      "name": "QiXinShiJinDanXiangJi.qrc",
+      "filePath": "qrc/QiXinShiJinDanXiangJi.qrc",
+      "summary": "Qt 资源集合文件，将 icons 目录下的 closeBlack.png 和 closeGray.png 两个图标嵌入应用程序二进制资源中，供 UI 界面引用。",
+      "tags": [
+        "resource",
+        "qt",
+        "icons",
+        "qrc"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/halconData.cpp",
+      "type": "file",
+      "name": "halconData.cpp",
+      "filePath": "src/data/halconData.cpp",
+      "summary": "HalconData 类的实现文件，包含默认构造函数和析构函数的空实现，实际数据成员均为值类型无需特殊资源管理。",
+      "tags": [
+        "implementation",
+        "data-model",
+        "halcon"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "type": "file",
+      "name": "osoFIleUtiltyFunc.cpp",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "summary": "ScoreConfigConvert 工具类的实现文件，提供 toClassIdWithEliConfigMap 和 toClassIdWithDefConfigMap 两个静态方法的具体逻辑，构建分类 ID 与剔废/缺陷判定配置的映射表。",
+      "tags": [
+        "implementation",
+        "utility",
+        "score-config",
+        "defect-detection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "function",
+      "name": "toClassIdWithEliConfigMap",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "lineRange": [
+        5,
+        27
+      ],
+      "summary": "构建分类 ID 到剔废配置的映射表，遍历所有 ClassId 设置基于面积和评分的通用剔废阈值配置，并对特定类别（如钉子）自定义仅启用评分判定、关闭面积判定。",
+      "tags": [
+        "defect-detection",
+        "configuration",
+        "score",
+        "mapping"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "function",
+      "name": "toClassIdWithDefConfigMap",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "lineRange": [
+        29,
+        43
+      ],
+      "summary": "构建分类 ID 到缺陷判定配置的映射表，默认所有类别禁用缺陷检测（isEnable=false），仅对特定类别（如钉子）启用缺陷判定功能。",
+      "tags": [
+        "defect-detection",
+        "configuration",
+        "mapping"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/Utilty.cpp",
+      "type": "file",
+      "name": "Utilty.cpp",
+      "filePath": "src/data/Utilty.cpp",
+      "summary": "Utilty.hpp 中声明的静态成员变量初始化文件，设置两个相机的默认 IP 地址和 ClassId 的分类名称映射表与分类 ID 列表。",
+      "tags": [
+        "implementation",
+        "configuration",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "type": "file",
+      "name": "CameraAndCardStateThread.cpp",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "summary": "CameraAndCardStateThread 类的实现文件，包含线程生命周期管理和两个相机状态检测逻辑的完整实现（105 行）。",
+      "tags": [
+        "implementation",
+        "camera",
+        "thread",
+        "monitoring"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [
+        29,
+        41
+      ],
+      "summary": "线程主循环，每 2 秒调用一次 check_cameraState 执行相机状态检测，内建 4 次循环计数器（runtimeCounts）用于控制检测频率。",
+      "tags": [
+        "thread-loop",
+        "camera",
+        "monitoring"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "function",
+      "name": "check_cameraState1",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [
+        49,
+        76
+      ],
+      "summary": "检测相机 1 的连接状态，仅在 runtimeCounts==0 时执行，根据相机对象是否存在和连接状态发送 updateCameraLabelState、buildCamera、destroyCamera、startMonitor 信号。",
+      "tags": [
+        "camera",
+        "state-detection",
+        "signal"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "function",
+      "name": "check_cameraState2",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [
+        78,
+        105
+      ],
+      "summary": "检测相机 2 的连接状态，逻辑与 check_cameraState1 对称，针对 camera2 执行相同的连接检测和信号发射流程。",
+      "tags": [
+        "camera",
+        "state-detection",
+        "signal"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "type": "file",
+      "name": "DetachDefectThreadProcess.cpp",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "summary": "DetachDefectThread 类的实现文件，包含线程生命周期管理和双队列剔废处理逻辑的完整实现（107 行），集成相机模块和配置模块执行物理剔废动作。",
+      "tags": [
+        "implementation",
+        "defect",
+        "thread",
+        "elimination"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "function",
+      "name": "processQueue1",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [
+        30,
+        61
+      ],
+      "summary": "处理相机 1 的缺陷剔废队列，从优先级队列取出剔废标记，若为缺陷则根据 SetConfig 的输出延时和持续时间配置，通过 camera1 的 outTrigger 接口执行物理剔废动作。",
+      "tags": [
+        "defect",
+        "elimination",
+        "queue",
+        "camera",
+        "trigger"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "function",
+      "name": "processQueue2",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [
+        63,
+        94
+      ],
+      "summary": "处理相机 2 的缺陷剔废队列，逻辑与 processQueue1 对称，通过 camera2 执行剔废动作，配置相同的输出触发参数（lineSelector=2, lineMode=8, lineSource=5）。",
+      "tags": [
+        "defect",
+        "elimination",
+        "queue",
+        "camera",
+        "trigger"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [
+        96,
+        107
+      ],
+      "summary": "线程主循环，每 1ms 从 Modules 单例获取两个优先级队列，依次调用 processQueue1 和 processQueue2 处理待剔废项。",
+      "tags": [
+        "thread-loop",
+        "defect",
+        "queue",
+        "elimination"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "type": "file",
+      "name": "DetachUtiltyThread.cpp",
+      "filePath": "src/DetachThread/DetachUtiltyThread.cpp",
+      "summary": "DetachUtiltyThread 类的实现文件，包含线程生命周期管理和定时统计信息更新的完整实现（38 行）。",
+      "tags": [
+        "implementation",
+        "utility",
+        "thread",
+        "statistics"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/DetachUtiltyThread.cpp",
+      "lineRange": [
+        27,
+        39
+      ],
+      "summary": "线程主循环，每秒休眠后发射 updateStatisticalInfo 信号驱动 UI 统计数据刷新，内建 300 秒循环计数器。",
+      "tags": [
+        "thread-loop",
+        "statistics",
+        "signal",
+        "timer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/func/HalconDisplay.cpp",
+      "type": "file",
+      "name": "HalconDisplay.cpp",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "summary": "封装 Halcon 图像显示窗口的 Qt 组件，提供图像显示、缩放平移事件处理、OpenCV cv::Mat 到 Halcon HObject 转换等核心显示功能。",
+      "tags": [
+        "halcon-display",
+        "image-rendering",
+        "qt-widget",
+        "event-handling",
+        "opencv-conversion"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 Halcon C++ API 进行图像显示，通过 QWidget::eventFilter 实现鼠标滚轮缩放和拖拽平移交互"
+    },
+    {
+      "id": "file:src/func/ImageProcessorModule.cpp",
+      "type": "file",
+      "name": "ImageProcessorModule.cpp",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "summary": "图像处理模块核心实现，包含生产者-消费者队列处理管线、模板匹配（matchAllShapeModels）、调试模式和剔除模式等多种图像处理流程。",
+      "tags": [
+        "image-processing",
+        "producer-consumer",
+        "template-matching",
+        "pipeline",
+        "halcon"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 QThread + QMutex + QWaitCondition 实现多线程生产者-消费者模型，集成 Halcon ShapeModel 匹配算法"
+    },
+    {
+      "id": "file:src/main.cpp",
+      "type": "file",
+      "name": "main.cpp",
+      "filePath": "src/main.cpp",
+      "summary": "应用程序入口点，负责初始化 Qt 应用、创建 Modules 实例、构建连接、启动主窗口并以全屏模式运行。",
+      "tags": [
+        "entry-point",
+        "application-bootstrap",
+        "qt-application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/CameraModule.cpp",
+      "type": "file",
+      "name": "CameraModule.cpp",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "summary": "相机模块实现，管理双相机（camera1/camera2）的构建、销毁、启动、停止全生命周期，并提供相机元数据校验和帧捕获处理。",
+      "tags": [
+        "camera-management",
+        "module",
+        "lifecycle",
+        "hardware-control"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "采用被动采集线程 CameraPassiveThread 进行相机控制，支持触发状态、帧率、曝光时间、增益等参数配置"
+    },
+    {
+      "id": "file:src/Modules/ConfigManagerModule.cpp",
+      "type": "file",
+      "name": "ConfigManagerModule.cpp",
+      "filePath": "src/Modules/ConfigManagerModule.cpp",
+      "summary": "配置管理模块，负责从持久化存储加载应用配置（AppConfig和SetConfig），并在销毁时安全保存。",
+      "tags": [
+        "configuration",
+        "module",
+        "persistence",
+        "serialization"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 rw::oso::StorageContext 进行 JSON 配置的安全读写，支持 loadConfigSafe/saveSafe 原子操作"
+    },
+    {
+      "id": "file:src/Modules/EliminateModule.cpp",
+      "type": "file",
+      "name": "EliminateModule.cpp",
+      "filePath": "src/Modules/EliminateModule.cpp",
+      "summary": "缺陷剔除模块，创建 DetachDefectThread 工作线程和两个最小堆线程安全队列，用于缺陷检测结果的排序和剔除处理。",
+      "tags": [
+        "defect-elimination",
+        "module",
+        "threading",
+        "sorting"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 ThreadSafeHeap<bool, MinHeap> 实现线程安全的最小堆排序，支持缺陷优先级管理"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:initialize",
+      "type": "function",
+      "name": "initialize",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        105,
+        153
+      ],
+      "summary": "初始化 Halcon 显示窗口，通过 winId 获取窗口句柄并调用 OpenWindow 创建 Halcon 图形窗口，安装事件过滤器。",
+      "tags": [
+        "initialization",
+        "halcon",
+        "window-setup"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:closeWindow",
+      "type": "function",
+      "name": "closeWindow",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        155,
+        186
+      ],
+      "summary": "关闭 Halcon 显示窗口，移除事件过滤器并调用 HalconCpp::CloseWindow 释放图形资源。",
+      "tags": [
+        "cleanup",
+        "halcon",
+        "resource-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:displayImage",
+      "type": "function",
+      "name": "displayImage",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        193,
+        278
+      ],
+      "summary": "在 Halcon 窗口中显示图像，支持自适应窗口（fitToWindow）和手动设置显示区域，包含缩放比计算和 SetPart 定位。",
+      "tags": [
+        "image-display",
+        "halcon",
+        "rendering"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:displayImageFromFile",
+      "type": "function",
+      "name": "displayImageFromFile",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        280,
+        300
+      ],
+      "summary": "从文件路径读取图像并调用 displayImage 显示，使用 Halcon ReadImage 加载。",
+      "tags": [
+        "image-display",
+        "file-io",
+        "halcon"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:clearDisplay",
+      "type": "function",
+      "name": "clearDisplay",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        302,
+        314
+      ],
+      "summary": "清除 Halcon 窗口显示内容，调用 HalconCpp::ClearWindow。",
+      "tags": [
+        "image-display",
+        "cleanup",
+        "halcon"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "type": "function",
+      "name": "eventFilter",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        331,
+        431
+      ],
+      "summary": "事件过滤器，处理鼠标滚轮缩放、中键拖拽平移和左键绘制交互，实现图像浏览的平移缩放功能。",
+      "tags": [
+        "event-handling",
+        "zoom",
+        "pan",
+        "interaction"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:isValid",
+      "type": "function",
+      "name": "isValid",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        188,
+        191
+      ],
+      "summary": "检查 Halcon 显示窗口是否有效，返回 _isInitialized 初始化标志与窗口句柄有效性的逻辑与结果，是几乎所有公开方法的前置条件检查。",
+      "tags": [
+        "validation",
+        "halcon-display",
+        "state-check"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:matToHObject",
+      "type": "function",
+      "name": "matToHObject",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        509,
+        579
+      ],
+      "summary": "将 OpenCV cv::Mat 转换为 Halcon HObject，根据图像通道数和类型自动选择 GenImage1 或 GenImage3 进行转换。",
+      "tags": [
+        "format-conversion",
+        "opencv",
+        "halcon",
+        "image-processing"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:displayMat",
+      "type": "function",
+      "name": "displayMat",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        581,
+        609
+      ],
+      "summary": "将 OpenCV cv::Mat 图像通过 matToHObject 转换后用 displayImage 显示，包含异常处理。",
+      "tags": [
+        "image-display",
+        "opencv",
+        "halcon"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:clampAndApplyPart",
+      "type": "function",
+      "name": "clampAndApplyPart",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        457,
+        507
+      ],
+      "summary": "钳位并应用显示区域参数，确保显示范围在有效图像边界内，处理缩放因子和偏移量的约束。",
+      "tags": [
+        "image-display",
+        "boundary-clamping",
+        "halcon"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/HalconDisplay.cpp:refreshDisplay",
+      "type": "function",
+      "name": "refreshDisplay",
+      "filePath": "src/func/HalconDisplay.cpp",
+      "lineRange": [
+        433,
+        455
+      ],
+      "summary": "刷新 Halcon 显示窗口，根据当前窗口尺寸重新设置显示范围并调用覆盖绘制器。",
+      "tags": [
+        "image-display",
+        "refresh",
+        "halcon"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:AllowOncePer",
+      "type": "function",
+      "name": "AllowOncePer",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        27,
+        39
+      ],
+      "summary": "基于原子变量的限流函数，确保操作在指定时间间隔内只执行一次，使用 atomic compare_exchange_strong 实现无锁控制。",
+      "tags": [
+        "rate-limiting",
+        "atomic",
+        "concurrency"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 C++ 原子操作 std::atomic 和 chrono 实现高效的无锁限流机制"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        49,
+        87
+      ],
+      "summary": "图像处理主循环，从队列中取出帧数据，根据工作模式（调试/剔除）分发到不同处理函数。",
+      "tags": [
+        "pipeline",
+        "main-loop",
+        "producer-consumer"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:run_debug",
+      "type": "function",
+      "name": "run_debug",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        89,
+        145
+      ],
+      "summary": "调试模式图像处理流程，执行模板匹配并将结果转换为 QImage/QPixmap 用于界面显示。",
+      "tags": [
+        "debug-mode",
+        "template-matching",
+        "image-display"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc",
+      "type": "function",
+      "name": "run_OpenRemoveFunc",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        147,
+        229
+      ],
+      "summary": "生产剔除模式图像处理流程，执行模板匹配后根据匹配结果将图像分发到合格或不合格队列。",
+      "tags": [
+        "production-mode",
+        "defect-detection",
+        "template-matching",
+        "pipeline"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels",
+      "type": "function",
+      "name": "matchAllShapeModels",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        253,
+        390
+      ],
+      "summary": "对所有形状模板执行匹配，使用 Halcon FindShapeModel、GetShapeModelContours 和 AffineTransContourXld 进行轮廓匹配与变换。",
+      "tags": [
+        "template-matching",
+        "halcon",
+        "shape-model",
+        "contour-analysis"
+      ],
+      "complexity": "complex",
+      "languageNotes": "集成 Halcon ShapeModel 全套流程：FindShapeModel -> GetShapeModelContours -> VectorAngleToRigid -> AffineTransContourXld"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:buildObbModelEngine",
+      "type": "function",
+      "name": "buildObbModelEngine",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        397,
+        411
+      ],
+      "summary": "构建 OBB（定向包围盒）模型引擎，使用 ModelEngineFactory 创建引擎并配置图像处理上下文参数。",
+      "tags": [
+        "model-engine",
+        "factory",
+        "obb"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:BuildModule",
+      "type": "function",
+      "name": "BuildModule",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        413,
+        426
+      ],
+      "summary": "构建图像处理模块，将 ImageProcessor 实例加入线程列表并启动所有工作线程。",
+      "tags": [
+        "module-assembly",
+        "threading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:ImageProcessingModule",
+      "type": "function",
+      "name": "ImageProcessingModule",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        428,
+        432
+      ],
+      "summary": "ImageProcessingModule 构造函数，初始化指定数量的图像处理器（消费者）和同步原语。",
+      "tags": [
+        "constructor",
+        "module"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:~ImageProcessingModule",
+      "type": "function",
+      "name": "~ImageProcessingModule",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        434,
+        454
+      ],
+      "summary": "ImageProcessingModule 析构函数，请求中断所有线程、唤醒等待线程并等待全部完成。",
+      "tags": [
+        "destructor",
+        "cleanup",
+        "threading"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/func/ImageProcessorModule.cpp:onFrameCaptured",
+      "type": "function",
+      "name": "onFrameCaptured",
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "lineRange": [
+        456,
+        488
+      ],
+      "summary": "帧捕获回调，对图像进行预处理（色彩空间转换和类型转换）后加入处理队列并唤醒工作线程。",
+      "tags": [
+        "callback",
+        "frame-capture",
+        "preprocessing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/main.cpp:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "src/main.cpp",
+      "lineRange": [
+        7,
+        45
+      ],
+      "summary": "应用程序主入口，创建 QApplication、构建 Modules、连接信号槽、启动主窗口并进入事件循环。",
+      "tags": [
+        "entry-point",
+        "qt-application",
+        "bootstrap"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        15,
+        28
+      ],
+      "summary": "构建相机模块，依次构建 camera1 和 camera2，收集构建错误并返回。",
+      "tags": [
+        "module",
+        "camera-setup",
+        "build"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        36,
+        46
+      ],
+      "summary": "启动两个摄像头的采集监控，根据相机启用状态调用 startMonitor。",
+      "tags": [
+        "module",
+        "camera-control",
+        "startup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:stop",
+      "type": "function",
+      "name": "stop",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        48,
+        58
+      ],
+      "summary": "停止两个摄像头的采集监控，根据相机启用状态调用 stopMonitor。",
+      "tags": [
+        "module",
+        "camera-control",
+        "shutdown"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:build_camera1",
+      "type": "function",
+      "name": "build_camera1",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        60,
+        92
+      ],
+      "summary": "构建第一个相机（camera1），检查相机列表、验证元数据、创建被动采集线程并配置帧率、曝光、增益等参数。",
+      "tags": [
+        "camera-setup",
+        "hardware-config",
+        "initialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:build_camera2",
+      "type": "function",
+      "name": "build_camera2",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        99,
+        131
+      ],
+      "summary": "构建第二个相机（camera2），逻辑与 build_camera1 相同，使用独立的相机索引和配置。",
+      "tags": [
+        "camera-setup",
+        "hardware-config",
+        "initialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/CameraModule.cpp:onFrameCaptured",
+      "type": "function",
+      "name": "onFrameCaptured",
+      "filePath": "src/Modules/CameraModule.cpp",
+      "lineRange": [
+        216,
+        229
+      ],
+      "summary": "相机帧捕获回调，接收帧数据和相机索引，发射信号通知下游模块处理。",
+      "tags": [
+        "callback",
+        "frame-capture",
+        "signal",
+        "event"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ConfigManagerModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/ConfigManagerModule.cpp",
+      "lineRange": [
+        7,
+        15
+      ],
+      "summary": "构建配置管理器，创建 StorageContext 并加载 AppConfig 和 SetConfig 两份配置。",
+      "tags": [
+        "module",
+        "configuration",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/EliminateModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/EliminateModule.cpp",
+      "lineRange": [
+        3,
+        10
+      ],
+      "summary": "构建清除模块，创建 DetachDefectThread 线程和两个最小堆队列用于缺陷结果优先级排序。",
+      "tags": [
+        "module",
+        "defect-detection",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/EliminateModule.cpp:destroy",
+      "type": "function",
+      "name": "destroy",
+      "filePath": "src/Modules/EliminateModule.cpp",
+      "lineRange": [
+        12,
+        26
+      ],
+      "summary": "销毁清除模块，依次重置工作线程和两个堆队列。",
+      "tags": [
+        "module",
+        "cleanup",
+        "resource-management"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/ImgProModule.cpp",
+      "type": "file",
+      "name": "ImgProModule.cpp",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "summary": "图像处理模块管理器，负责构建图像处理上下文（模板匹配区域、检测区域、剔除区域配置）、创建图像处理前模块和后模块管线。",
+      "tags": [
+        "image-processing",
+        "module",
+        "pipeline",
+        "halcon-template",
+        "context-building"
+      ],
+      "complexity": "complex",
+      "languageNotes": "通过 Modules::getInstance() 获取依赖数据，使用 ScoreConfigConvert 转换评分配置，构建 ImagePainter 绘制检测线"
+    },
+    {
+      "id": "file:src/Modules/ImgSaveModule.cpp",
+      "type": "file",
+      "name": "ImgSaveModule.cpp",
+      "filePath": "src/Modules/ImgSaveModule.cpp",
+      "summary": "图像保存模块，管理图像文件的自动存储和过期清理，按日期组织文件目录并定期删除超出保留天数的旧文件。",
+      "tags": [
+        "image-storage",
+        "file-management",
+        "module",
+        "cleanup"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "使用 QDir 进行文件系统操作，通过 ImageSaveEngine 设置保存格式、质量和策略"
+    },
+    {
+      "id": "file:src/Modules/IModule.cpp",
+      "type": "file",
+      "name": "IModule.cpp",
+      "filePath": "src/Modules/IModule.cpp",
+      "summary": "模块接口定义文件（仅含一行代码），作为所有模块的统一抽象基类接口。",
+      "tags": [
+        "interface",
+        "module",
+        "abstract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/Modules.cpp",
+      "type": "file",
+      "name": "Modules.cpp",
+      "filePath": "src/Modules/Modules.cpp",
+      "summary": "模块管理器核心实现（单例模式），负责所有子模块（相机、图像处理、保存、剔除、UI等）的构建、销毁、启动、停止和信号连接编排。",
+      "tags": [
+        "singleton",
+        "module-manager",
+        "orchestration",
+        "lifecycle",
+        "signal-wiring"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用单例模式 (getInstance) 管理全局模块状态，通过 QObject::connect 编排模块间信号通信"
+    },
+    {
+      "id": "file:src/Modules/ReconnectModule.cpp",
+      "type": "file",
+      "name": "ReconnectModule.cpp",
+      "filePath": "src/Modules/ReconnectModule.cpp",
+      "summary": "重连模块，创建 CameraAndCardStateThread 工作线程监控相机和采集卡状态，支持自动重连。",
+      "tags": [
+        "reconnection",
+        "module",
+        "monitoring",
+        "camera"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/RuntimeInfoModule.cpp",
+      "type": "file",
+      "name": "RuntimeInfoModule.cpp",
+      "filePath": "src/Modules/RuntimeInfoModule.cpp",
+      "summary": "运行时信息模块，创建 DetachUtiltyThread 工作线程用于收集和报告运行时统计信息。",
+      "tags": [
+        "runtime-monitoring",
+        "module",
+        "statistics"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        7,
+        16
+      ],
+      "summary": "构建图像处理模块，依次调用 buildImgProContext 和 buildImageProcessingModule。",
+      "tags": [
+        "module",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:destroy",
+      "type": "function",
+      "name": "destroy",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        18,
+        21
+      ],
+      "summary": "销毁图像处理模块，清理图像处理管线。",
+      "tags": [
+        "module",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "type": "function",
+      "name": "buildImgProContext",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        33,
+        36
+      ],
+      "summary": "构建图像处理上下文，委托给 buildImgProContextPreProcess 完成实际构建。",
+      "tags": [
+        "context-building",
+        "image-processing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:buildImgProContextPreProcess",
+      "type": "function",
+      "name": "buildImgProContextPreProcess",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        38,
+        269
+      ],
+      "summary": "构建图像处理上下文的预处理数据，从配置中读取模板匹配区域、检测区域、剔除区域，配置评分映射，绘制检测辅助线。",
+      "tags": [
+        "context-building",
+        "configuration",
+        "region-setup",
+        "scoring"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule",
+      "type": "function",
+      "name": "buildImageProcessingModule",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        278,
+        281
+      ],
+      "summary": "构建图像处理模块实例，委托给 buildImageProcessingPreModule 创建实际处理器。",
+      "tags": [
+        "module-assembly"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:destroyImageProcessingModule",
+      "type": "function",
+      "name": "destroyImageProcessingModule",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        283,
+        287
+      ],
+      "summary": "销毁图像处理模块实例，释放前后处理模块的资源。",
+      "tags": [
+        "module",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:buildImageProcessingPreModule",
+      "type": "function",
+      "name": "buildImageProcessingPreModule",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        289,
+        300
+      ],
+      "summary": "创建图像处理前后模块实例，构建 ImageProcessingModule 并调用 BuildModule 启动工作线程。",
+      "tags": [
+        "module-assembly",
+        "factory"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext",
+      "type": "function",
+      "name": "onUpdateImgProContext",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        302,
+        306
+      ],
+      "summary": "更新图像处理上下文回调，重新构建图像处理上下文并重置更新标志。",
+      "tags": [
+        "callback",
+        "context-update"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgProModule.cpp:resetImgProIsUpdate",
+      "type": "function",
+      "name": "resetImgProIsUpdate",
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "lineRange": [
+        271,
+        276
+      ],
+      "summary": "重置图像处理上下文的更新状态标志，控制是否需要重新构建上下文。",
+      "tags": [
+        "state-management",
+        "flag"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ImgSaveModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/ImgSaveModule.cpp",
+      "lineRange": [
+        7,
+        73
+      ],
+      "summary": "构建图像保存模块，扫描图像目录、清理过期文件、创建 ImageSaveEngine 并配置保存格式、质量和路径策略。",
+      "tags": [
+        "module",
+        "initialization",
+        "file-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/ImgSaveModule.cpp:destroy",
+      "type": "function",
+      "name": "destroy",
+      "filePath": "src/Modules/ImgSaveModule.cpp",
+      "lineRange": [
+        75,
+        81
+      ],
+      "summary": "销毁图像保存模块，重置引擎并停止保存线程。",
+      "tags": [
+        "module",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        24,
+        55
+      ],
+      "summary": "构建所有子模块，按顺序构建 ConfigManager、Camera、ImgPro、ImgSave、Eliminate、UIModule、Reconnect、RuntimeInfo、TestModule。",
+      "tags": [
+        "orchestration",
+        "module-assembly",
+        "build"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:destroy",
+      "type": "function",
+      "name": "destroy",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        57,
+        70
+      ],
+      "summary": "销毁所有子模块，按构建的逆序清理资源。",
+      "tags": [
+        "orchestration",
+        "cleanup",
+        "resource-management"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        72,
+        86
+      ],
+      "summary": "启动所有子模块，按依赖顺序调用各模块的 start 方法。",
+      "tags": [
+        "orchestration",
+        "startup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:stop",
+      "type": "function",
+      "name": "stop",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        88,
+        101
+      ],
+      "summary": "停止所有子模块，按启动的逆序调用各模块的 stop 方法。",
+      "tags": [
+        "orchestration",
+        "shutdown"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:connect",
+      "type": "function",
+      "name": "connect",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        103,
+        160
+      ],
+      "summary": "连接模块间信号槽，编排相机帧捕获到图像处理、图像显示、缺陷剔除等模块的数据流。",
+      "tags": [
+        "signal-wiring",
+        "orchestration",
+        "qt-signals"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 Qt 信号槽机制实现模块间松耦合通信，连接 CameraModule -> ImageProcessingModule -> EliminateModule 的数据管线"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:check",
+      "type": "function",
+      "name": "check",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        162,
+        209
+      ],
+      "summary": "运行环境检查，验证单实例运行、关键进程状态、必要目录存在性和配置文件完整性。",
+      "tags": [
+        "validation",
+        "environment-check",
+        "startup-guard"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/Modules/Modules.cpp:EnsureDirectoryExists",
+      "type": "function",
+      "name": "EnsureDirectoryExists",
+      "filePath": "src/Modules/Modules.cpp",
+      "lineRange": [
+        211,
+        218
+      ],
+      "summary": "确保目录存在，若不存在则递归创建目录路径。",
+      "tags": [
+        "utility",
+        "filesystem"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ReconnectModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/ReconnectModule.cpp",
+      "lineRange": [
+        3,
+        6
+      ],
+      "summary": "构建重连模块，创建 CameraAndCardStateThread 监控线程。",
+      "tags": [
+        "module",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ReconnectModule.cpp:start",
+      "type": "function",
+      "name": "start",
+      "filePath": "src/Modules/ReconnectModule.cpp",
+      "lineRange": [
+        13,
+        19
+      ],
+      "summary": "启动重连模块，启动相机和采集卡状态监控线程。",
+      "tags": [
+        "module",
+        "startup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/ReconnectModule.cpp:stop",
+      "type": "function",
+      "name": "stop",
+      "filePath": "src/Modules/ReconnectModule.cpp",
+      "lineRange": [
+        21,
+        28
+      ],
+      "summary": "停止重连模块，停止监控线程并等待结束。",
+      "tags": [
+        "module",
+        "shutdown"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/RuntimeInfoModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/RuntimeInfoModule.cpp",
+      "lineRange": [
+        3,
+        7
+      ],
+      "summary": "构建运行时信息模块，创建 DetachUtiltyThread 线程。",
+      "tags": [
+        "module",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/TestModule.cpp",
+      "type": "file",
+      "name": "TestModule.cpp",
+      "filePath": "src/Modules/TestModule.cpp",
+      "summary": "测试模块，创建 TestImgPushThread 线程用于在无硬件环境下模拟图像推送测试。",
+      "tags": [
+        "testing",
+        "module",
+        "simulation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/UIModule.cpp",
+      "type": "file",
+      "name": "UIModule.cpp",
+      "filePath": "src/Modules/UIModule.cpp",
+      "summary": "UI模块管理，负责创建和销毁主窗口 CaiHuiPrintInspection 实例，管理界面生命周期。",
+      "tags": [
+        "ui",
+        "module",
+        "window-management"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/Modules/WarningModule.cpp",
+      "type": "file",
+      "name": "WarningModule.cpp",
+      "filePath": "src/Modules/WarningModule.cpp",
+      "summary": "告警模块占位文件（当前为空实现），预留用于告警功能扩展。",
+      "tags": [
+        "module",
+        "warning",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/NoHardWare/TestImgPushThread.cpp",
+      "type": "file",
+      "name": "TestImgPushThread.cpp",
+      "filePath": "src/NoHardWare/TestImgPushThread.cpp",
+      "summary": "无硬件测试图像推送线程，从本地目录读取图像文件并模拟相机帧推送，用于离线调试和验证图像处理管线。",
+      "tags": [
+        "testing",
+        "simulation",
+        "image-push",
+        "offline-debug"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "在无相机硬件环境下模拟两路图像源（readImg/readImg2），通过 QThread::msleep 控制推送间隔"
+    },
+    {
+      "id": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.cpp",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "summary": "主窗口实现类，管理 Halcon 显示区域（4个QLabel显示区域）、相机状态指示、产品设置/调试模式/剔除模式切换、语言切换和分数阈值设置等完整UI交互。",
+      "tags": [
+        "main-window",
+        "ui",
+        "halcon-display",
+        "camera-status",
+        "mode-switching"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 Qt Designer UI 文件（.ui）定义布局，通过 setupUi 加载，集成 HalconDisplay 自定义组件实现四画面显示"
+    },
+    {
+      "id": "function:src/Modules/UIModule.cpp:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "src/Modules/UIModule.cpp",
+      "lineRange": [
+        6,
+        9
+      ],
+      "summary": "构建UI模块，创建 CaiHuiPrintInspection 主窗口实例。",
+      "tags": [
+        "module",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/Modules/UIModule.cpp:destroy",
+      "type": "function",
+      "name": "destroy",
+      "filePath": "src/Modules/UIModule.cpp",
+      "lineRange": [
+        11,
+        18
+      ],
+      "summary": "销毁UI模块，关闭并删除主窗口实例。",
+      "tags": [
+        "module",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:build_ui",
+      "type": "function",
+      "name": "build_ui",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        52,
+        64
+      ],
+      "summary": "构建UI界面，初始化数据、关闭对话框、设置标题并加载语言翻译。",
+      "tags": [
+        "ui",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:build_connect",
+      "type": "function",
+      "name": "build_connect",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        66,
+        114
+      ],
+      "summary": "连接UI信号槽，绑定所有按钮点击和复选框切换事件到对应的处理函数。",
+      "tags": [
+        "ui",
+        "signal-wiring",
+        "event-binding"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "type": "function",
+      "name": "build_CaiHuiPrintInspectionData",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        116,
+        136
+      ],
+      "summary": "构建主窗口数据，从 Modules 读取应用配置并初始化控件状态（复选框、调试模式、语言等）。",
+      "tags": [
+        "ui",
+        "data-binding",
+        "configuration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:build_halconDisplay",
+      "type": "function",
+      "name": "build_halconDisplay",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        167,
+        187
+      ],
+      "summary": "构建 Halcon 显示界面，设置四个 QLabel 的尺寸、对齐方式和缩放属性，并初始化定时刷新。",
+      "tags": [
+        "ui",
+        "halcon-display",
+        "layout"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel",
+      "type": "function",
+      "name": "refreshDisplayLabel",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        189,
+        204
+      ],
+      "summary": "刷新单个显示标签，根据 QPixmap 和最小尺寸调整标签大小并设置缩放后的像素图。",
+      "tags": [
+        "ui",
+        "display-refresh",
+        "image-scaling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:onCameraDisplay",
+      "type": "function",
+      "name": "onCameraDisplay",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        338,
+        365
+      ],
+      "summary": "相机显示回调，根据相机索引将捕获图像刷新到对应的四个显示标签区域之一。",
+      "tags": [
+        "ui",
+        "callback",
+        "display",
+        "camera"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:updateCameraLabelState",
+      "type": "function",
+      "name": "updateCameraLabelState",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        275,
+        331
+      ],
+      "summary": "更新相机标签状态指示，根据构建结果设置相机状态文本和颜色样式（成功/失败/未构建）。",
+      "tags": [
+        "ui",
+        "status-indicator",
+        "camera"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:changeLanguage",
+      "type": "function",
+      "name": "changeLanguage",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        235,
+        273
+      ],
+      "summary": "切换界面语言，根据索引设置所有UI控件的文本（支持中英文双语）并更新标签页文本。",
+      "tags": [
+        "ui",
+        "i18n",
+        "language-switching"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_debug_checked",
+      "type": "function",
+      "name": "rbtn_debug_checked",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        402,
+        430
+      ],
+      "summary": "调试模式切换回调，当用户切换调试模式时调整相机触发状态和帧率配置。",
+      "tags": [
+        "ui",
+        "mode-switching",
+        "debug",
+        "camera-config"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_removeFunc_checked",
+      "type": "function",
+      "name": "rbtn_removeFunc_checked",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        432,
+        458
+      ],
+      "summary": "剔除模式切换回调，当用户切换到生产剔除模式时配置相机触发源和帧率。",
+      "tags": [
+        "ui",
+        "mode-switching",
+        "production",
+        "camera-config"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_resetProduct_clicked",
+      "type": "function",
+      "name": "pbtn_resetProduct_clicked",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        460,
+        483
+      ],
+      "summary": "重置产品按钮回调，打开文件对话框选择产品配置文件并刷新显示区域。",
+      "tags": [
+        "ui",
+        "file-dialog",
+        "product-config"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_set_clicked",
+      "type": "function",
+      "name": "pbtn_set_clicked",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        394,
+        400
+      ],
+      "summary": "设置按钮回调，打开 DlgProductSet 产品设置对话框。",
+      "tags": [
+        "ui",
+        "dialog",
+        "settings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_score_clicked",
+      "type": "function",
+      "name": "pbtn_score_clicked",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        509,
+        528
+      ],
+      "summary": "分数设置按钮回调，打开数值输入对话框配置检测分数阈值并保存到模块配置。",
+      "tags": [
+        "ui",
+        "score-config",
+        "dialog"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "type": "function",
+      "name": "initializeComponents",
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "lineRange": [
+        154,
+        165
+      ],
+      "summary": "初始化所有UI组件，依次调用 build_ui、build_halconDisplay、build_camera 和 build_connect。",
+      "tags": [
+        "ui",
+        "initialization",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/ui/Dlg_createshapemodel.cpp",
+      "type": "file",
+      "name": "Dlg_createshapemodel.cpp",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "summary": "形状模板创建对话框实现，提供 Halcon 图像读取、ROI区域绘制（模板区域/屏蔽区域）、形状模板创建（CreateShapeModel）及 XLD 轮廓匹配验证的完整交互流程。",
+      "tags": [
+        "shape-model",
+        "halcon",
+        "dialog",
+        "roi-drawing",
+        "template-creation"
+      ],
+      "complexity": "complex",
+      "languageNotes": "深度集成 Halcon CreateShapeModel/FindShapeModel/GetShapeModelContours/AffineTransContourXld API 实现形状模板的创建、验证和可视化"
+    },
+    {
+      "id": "file:src/ui/DlgProductSet.cpp",
+      "type": "file",
+      "name": "DlgProductSet.cpp",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "summary": "产品设置对话框实现，提供双相机参数配置界面，包括光电屏蔽时间、输出信号延迟/持续时间、限位值、曝光时间、增益和像素当量等完整相机参数设置。",
+      "tags": [
+        "product-settings",
+        "dialog",
+        "camera-config",
+        "parameter-tuning"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 QInputDialog 进行数值输入，通过 Modules::getInstance() 读写配置，支持相机触发信号配置（setOutTriggerConfig/outTrigger）"
+    },
+    {
+      "id": "file:ui/CaiHuiPrintInspection.ui",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.ui",
+      "filePath": "ui/CaiHuiPrintInspection.ui",
+      "summary": "主窗口 Qt Designer UI 布局文件，定义主界面的控件树结构，包括显示区域、相机状态标签、调试/剔除模式单选按钮、按钮组和选项卡布局。",
+      "tags": [
+        "ui-layout",
+        "qt-designer",
+        "main-window",
+        "xml"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:ui/Dlg_createshapemodel.ui",
+      "type": "file",
+      "name": "Dlg_createshapemodel.ui",
+      "filePath": "ui/Dlg_createshapemodel.ui",
+      "summary": "形状模板创建对话框 Qt Designer UI 布局文件，定义模板参数输入控件（角度、缩放、对比度、最小长度等）和操作按钮的界面布局。",
+      "tags": [
+        "ui-layout",
+        "qt-designer",
+        "shape-model-dialog",
+        "xml"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ui/DlgProductSet.ui",
+      "type": "file",
+      "name": "DlgProductSet.ui",
+      "filePath": "ui/DlgProductSet.ui",
+      "summary": "产品设置对话框 Qt Designer UI 布局文件，定义双相机参数配置选项卡界面，包含光电屏蔽、信号输出、限位值、曝光增益等参数输入控件。",
+      "tags": [
+        "ui-layout",
+        "qt-designer",
+        "product-settings-dialog",
+        "xml"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:build_ui",
+      "type": "function",
+      "name": "build_ui",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        40,
+        99
+      ],
+      "summary": "构建对话框UI，创建 HalconDisplay 显示组件、初始化覆盖绘制器、设置绘制颜色/线宽并加载模板区域数据。",
+      "tags": [
+        "ui",
+        "initialization",
+        "halcon-display",
+        "overlay"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data",
+      "type": "function",
+      "name": "refresh_ui_from_data",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        101,
+        140
+      ],
+      "summary": "从 HalconData 刷新UI数据，填充模板创建参数（角度范围、缩放范围、对比度等）到对应输入控件。",
+      "tags": [
+        "ui",
+        "data-binding",
+        "template-parameters"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:build_connect",
+      "type": "function",
+      "name": "build_connect",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        154,
+        192
+      ],
+      "summary": "连接对话框信号槽，绑定所有按钮点击、单选按钮切换、复选框状态变化等事件。",
+      "tags": [
+        "ui",
+        "signal-wiring",
+        "event-binding"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_createShapeModel_clicked",
+      "type": "function",
+      "name": "btn_createShapeModel_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        266,
+        513
+      ],
+      "summary": "创建形状模板核心函数，读取用户参数、构建模板区域和屏蔽区域、调用 Halcon CreateShapeModel 创建模板并进行 FindShapeModel 验证。",
+      "tags": [
+        "template-creation",
+        "halcon",
+        "core-logic"
+      ],
+      "complexity": "complex",
+      "languageNotes": "完整实现 Halcon 模板创建流程：GenEmptyObj -> ConcatObj -> Union1 -> ReduceDomain -> CreateShapeModel -> FindShapeModel -> GetShapeModelContours"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:drawRectangleAndStore",
+      "type": "function",
+      "name": "drawRectangleAndStore",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        700,
+        769
+      ],
+      "summary": "交互式绘制矩形并存储区域，通过 Halcon draw_rectangle1 在显示窗口绘制矩形 ROI，支持模板区域和屏蔽区域两种模式。",
+      "tags": [
+        "roi-drawing",
+        "halcon",
+        "interaction",
+        "rectangle"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "function",
+      "name": "refresh_display_with_regions",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        771,
+        829
+      ],
+      "summary": "刷新显示并叠加所有区域，在 Halcon 窗口中绘制模板区域、屏蔽区域以及形状模型 XLD 轮廓。",
+      "tags": [
+        "ui",
+        "display-refresh",
+        "overlay",
+        "halcon"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_exit_clicked",
+      "type": "function",
+      "name": "btn_exit_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        194,
+        232
+      ],
+      "summary": "退出按钮回调，保存用户输入的模板参数到 HalconData 并关闭对话框。",
+      "tags": [
+        "ui",
+        "save",
+        "dialog-close"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_readImage_clicked",
+      "type": "function",
+      "name": "btn_readImage_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        234,
+        265
+      ],
+      "summary": "读取图像按钮回调，打开文件对话框选择图像文件并用 Halcon ReadImage 加载显示。",
+      "tags": [
+        "ui",
+        "file-dialog",
+        "image-loading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_mincontrast_clicked",
+      "type": "function",
+      "name": "btn_mincontrast_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        594,
+        611
+      ],
+      "summary": "最小对比度设置回调，通过数值输入对话框设置 Halcon 模板创建的最小对比度参数。",
+      "tags": [
+        "ui",
+        "parameter-input",
+        "contrast"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_mean_clicked",
+      "type": "function",
+      "name": "btn_mean_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        676,
+        693
+      ],
+      "summary": "均值滤波参数设置回调，通过数值输入对话框设置 MeanImage 滤波的掩码大小参数。",
+      "tags": [
+        "ui",
+        "parameter-input",
+        "filter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:showEvent",
+      "type": "function",
+      "name": "showEvent",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        142,
+        152
+      ],
+      "summary": "对话框显示事件，刷新数据、初始化 Halcon 显示并重新绘制区域。",
+      "tags": [
+        "ui",
+        "event-handling",
+        "refresh"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion_clicked",
+      "type": "function",
+      "name": "btn_clearRegion_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        526,
+        538
+      ],
+      "summary": "清除绘制区域回调，清空模板区域和屏蔽区域数据并刷新显示。",
+      "tags": [
+        "ui",
+        "region-clear",
+        "roi"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion2_clicked",
+      "type": "function",
+      "name": "btn_clearRegion2_clicked",
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "lineRange": [
+        632,
+        658
+      ],
+      "summary": "撤销上一个区域回调，从模板区域和屏蔽区域栈中移除最近添加的区域并刷新显示。",
+      "tags": [
+        "ui",
+        "region-undo",
+        "roi"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:build_ui",
+      "type": "function",
+      "name": "build_ui",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        26,
+        29
+      ],
+      "summary": "构建产品设置对话框UI，调用 read_config 读取并填充配置数据。",
+      "tags": [
+        "ui",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:read_config",
+      "type": "function",
+      "name": "read_config",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        31,
+        61
+      ],
+      "summary": "读取产品配置数据，从 Modules 获取 SetConfig 并将参数填充到界面控件。",
+      "tags": [
+        "configuration",
+        "data-binding",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:build_connect",
+      "type": "function",
+      "name": "build_connect",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        63,
+        88
+      ],
+      "summary": "连接产品设置对话框的所有信号槽，绑定23个按钮点击和下拉框切换事件。",
+      "tags": [
+        "ui",
+        "signal-wiring",
+        "event-binding"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:changeLanguage",
+      "type": "function",
+      "name": "changeLanguage",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        90,
+        176
+      ],
+      "summary": "切换产品设置对话框语言，设置所有标签、按钮、选项卡文本的中英文显示。",
+      "tags": [
+        "ui",
+        "i18n",
+        "language-switching"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_baoguang1_clicked",
+      "type": "function",
+      "name": "btn_baoguang1_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        390,
+        412
+      ],
+      "summary": "相机1曝光时间设置回调，通过数值对话框输入并调用 setExposureTime 更新硬件参数。",
+      "tags": [
+        "ui",
+        "camera-config",
+        "exposure"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_zengyi1_clicked",
+      "type": "function",
+      "name": "btn_zengyi1_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        414,
+        436
+      ],
+      "summary": "相机1增益设置回调，通过数值对话框输入并调用 setGain 更新硬件参数。",
+      "tags": [
+        "ui",
+        "camera-config",
+        "gain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_baoguang2_clicked",
+      "type": "function",
+      "name": "btn_baoguang2_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        533,
+        555
+      ],
+      "summary": "相机2曝光时间设置回调，逻辑与相机1相同。",
+      "tags": [
+        "ui",
+        "camera-config",
+        "exposure"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_zengyi2_clicked",
+      "type": "function",
+      "name": "btn_zengyi2_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        557,
+        579
+      ],
+      "summary": "相机2增益设置回调，逻辑与相机1相同。",
+      "tags": [
+        "ui",
+        "camera-config",
+        "gain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_testTrigger1_1_clicked",
+      "type": "function",
+      "name": "btn_testTrigger1_1_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        242,
+        258
+      ],
+      "summary": "相机1触发信号1测试回调，配置输出触发参数并执行触发操作。",
+      "tags": [
+        "ui",
+        "trigger-test",
+        "camera"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/ui/DlgProductSet.cpp:btn_close_clicked",
+      "type": "function",
+      "name": "btn_close_clicked",
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "lineRange": [
+        178,
+        183
+      ],
+      "summary": "关闭按钮回调，保存设置配置到持久化存储后关闭对话框。",
+      "tags": [
+        "ui",
+        "save",
+        "dialog-close"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/IModule.hpp",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/IModule.hpp",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/UIModule.hpp:UIModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/CameraModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ConfigManagerModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/EliminateModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ImgProModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ImgSaveModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ReconnectModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/RuntimeInfoModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/TestModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/UIModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/WarningModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "function:include/Modules/ConfigManagerModule.hpp:loadConfigSafe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "class:include/Modules/Modules.hpp:Modules",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/TestModule.hpp",
+      "target": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/TestModule.hpp:TestModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "class:include/Modules/Modules.hpp:Modules",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/data/halconData.hpp",
+      "target": "class:include/data/halconData.hpp:HalconData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/halconData.hpp",
+      "target": "class:include/data/halconData.hpp:HalconData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "target": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "target": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:ClassId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:ClassId",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:Utility",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:Utility",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "target": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "target": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "target": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "target": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/DetachUtiltyThread.h",
+      "target": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/DetachUtiltyThread.h",
+      "target": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/HalconDisplay.hpp",
+      "target": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/HalconDisplay.hpp",
+      "target": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/NoHardWare/TestImgPushThread.hpp",
+      "target": "class:include/NoHardWare/TestImgPushThread.hpp:TestImgPushThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/CaiHuiPrintInspection.h",
+      "target": "class:include/ui/CaiHuiPrintInspection.h:CaiHuiPrintInspection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "class:include/ui/Dlg_createshapemodel.h:Dlg_createshapemodel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/DlgProductSet.h",
+      "target": "class:include/ui/DlgProductSet.h:DlgProductSet",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/halconData.cpp",
+      "target": "file:include/data/halconData.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/data/Utilty.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "file:include/DetachThread/DetachUtiltyThread.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:osoFile/CaiHuiPrintInspection.oso",
+      "target": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoFile/SetConfig.oso",
+      "target": "file:osoInclude/SetConfig.hpp",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "file:include/data/halconData.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "file:include/func/HalconDisplay.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "file:include/data/halconData.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/data/Utilty.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:CMakeLists.txt",
+      "target": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CMakeLists.txt",
+      "target": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "target": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:osoFile/CaiHuiPrintInspection.oso",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoFile/SetConfig.oso",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:initialize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:closeWindow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayImage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayImageFromFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:clearDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:matToHObject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayMat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:clampAndApplyPart",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:refreshDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:isValid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:initialize",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:closeWindow",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayImage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayImageFromFile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:clearDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:matToHObject",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:displayMat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:clampAndApplyPart",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:refreshDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/HalconDisplay.cpp",
+      "target": "function:src/func/HalconDisplay.cpp:isValid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:AllowOncePer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_debug",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:buildObbModelEngine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:BuildModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:ImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:~ImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:onFrameCaptured",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:AllowOncePer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_debug",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:buildObbModelEngine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:BuildModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:ImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:~ImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "function:src/func/ImageProcessorModule.cpp:onFrameCaptured",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/main.cpp",
+      "target": "function:src/main.cpp:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/main.cpp",
+      "target": "function:src/main.cpp:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:stop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera1",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera2",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:onFrameCaptured",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:stop",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera1",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera2",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "function:src/Modules/CameraModule.cpp:onFrameCaptured",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ConfigManagerModule.cpp",
+      "target": "function:src/Modules/ConfigManagerModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ConfigManagerModule.cpp",
+      "target": "function:src/Modules/ConfigManagerModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/EliminateModule.cpp",
+      "target": "function:src/Modules/EliminateModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/EliminateModule.cpp",
+      "target": "function:src/Modules/EliminateModule.cpp:destroy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/EliminateModule.cpp",
+      "target": "function:src/Modules/EliminateModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/EliminateModule.cpp",
+      "target": "function:src/Modules/EliminateModule.cpp:destroy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/ImageProcessorModule.cpp:run",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_debug",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/ImageProcessorModule.cpp:run",
+      "target": "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/ImageProcessorModule.cpp:run_debug",
+      "target": "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc",
+      "target": "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/ImageProcessorModule.cpp:onFrameCaptured",
+      "target": "function:src/func/ImageProcessorModule.cpp:AllowOncePer",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:displayMat",
+      "target": "function:src/func/HalconDisplay.cpp:matToHObject",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:displayMat",
+      "target": "function:src/func/HalconDisplay.cpp:displayImage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:displayImageFromFile",
+      "target": "function:src/func/HalconDisplay.cpp:displayImage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "target": "function:src/func/HalconDisplay.cpp:clampAndApplyPart",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "target": "function:src/func/HalconDisplay.cpp:clearDisplay",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:eventFilter",
+      "target": "function:src/func/HalconDisplay.cpp:refreshDisplay",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/func/HalconDisplay.cpp:refreshDisplay",
+      "target": "function:src/func/HalconDisplay.cpp:isValid",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/CameraModule.cpp:build",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera1",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/CameraModule.cpp:build",
+      "target": "function:src/Modules/CameraModule.cpp:build_camera2",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/main.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/main.cpp",
+      "target": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/CameraModule.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/func/ImageProcessorModule.cpp",
+      "target": "file:src/func/HalconDisplay.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:destroy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContextPreProcess",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:destroyImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingPreModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:resetImgProIsUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:destroy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContextPreProcess",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:destroyImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingPreModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "function:src/Modules/ImgProModule.cpp:resetImgProIsUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgSaveModule.cpp",
+      "target": "function:src/Modules/ImgSaveModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgSaveModule.cpp",
+      "target": "function:src/Modules/ImgSaveModule.cpp:destroy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ImgSaveModule.cpp",
+      "target": "function:src/Modules/ImgSaveModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgSaveModule.cpp",
+      "target": "function:src/Modules/ImgSaveModule.cpp:destroy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:destroy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:stop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:check",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:EnsureDirectoryExists",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:destroy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:stop",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:connect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:check",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "function:src/Modules/Modules.cpp:EnsureDirectoryExists",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:stop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ReconnectModule.cpp",
+      "target": "function:src/Modules/ReconnectModule.cpp:stop",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/RuntimeInfoModule.cpp",
+      "target": "function:src/Modules/RuntimeInfoModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/RuntimeInfoModule.cpp",
+      "target": "function:src/Modules/RuntimeInfoModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:build",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:build",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:destroy",
+      "target": "function:src/Modules/ImgProModule.cpp:destroyImageProcessingModule",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContextPreProcess",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImageProcessingPreModule",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext",
+      "target": "function:src/Modules/ImgProModule.cpp:buildImgProContext",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext",
+      "target": "function:src/Modules/ImgProModule.cpp:resetImgProIsUpdate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/Modules/Modules.cpp:check",
+      "target": "function:src/Modules/Modules.cpp:EnsureDirectoryExists",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/CameraModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/ImgProModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/ImgSaveModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/EliminateModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/ConfigManagerModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/ReconnectModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/RuntimeInfoModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/UIModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/Modules.cpp",
+      "target": "file:src/Modules/TestModule.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/ImgProModule.cpp",
+      "target": "file:src/func/ImageProcessorModule.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/UIModule.cpp",
+      "target": "function:src/Modules/UIModule.cpp:build",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/UIModule.cpp",
+      "target": "function:src/Modules/UIModule.cpp:destroy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/Modules/UIModule.cpp",
+      "target": "function:src/Modules/UIModule.cpp:build",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/UIModule.cpp",
+      "target": "function:src/Modules/UIModule.cpp:destroy",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_ui",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_halconDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:onCameraDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:updateCameraLabelState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:changeLanguage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_debug_checked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_removeFunc_checked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_resetProduct_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_set_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_score_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_ui",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_connect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_halconDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:onCameraDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:updateCameraLabelState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:changeLanguage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_debug_checked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_removeFunc_checked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_resetProduct_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_set_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_score_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_ui",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_halconDisplay",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_connect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:build_ui",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:changeLanguage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_removeFunc_checked",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:onCameraDisplay",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_resetProduct_clicked",
+      "target": "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "file:src/ui/DlgProductSet.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/Modules/UIModule.cpp",
+      "target": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "target": "file:ui/CaiHuiPrintInspection.ui",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/NoHardWare/TestImgPushThread.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/Modules/TestModule.cpp",
+      "target": "file:src/NoHardWare/TestImgPushThread.cpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:build_ui",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:build_connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_createShapeModel_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:drawRectangleAndStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_exit_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_readImage_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_mincontrast_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_mean_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:showEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion2_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:build_ui",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:build_connect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_createShapeModel_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:drawRectangleAndStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_exit_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_readImage_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_mincontrast_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_mean_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:showEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion2_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:build_ui",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:read_config",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:build_connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:changeLanguage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_baoguang1_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_zengyi1_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_baoguang2_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_zengyi2_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_testTrigger1_1_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_close_clicked",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:build_ui",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:read_config",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:build_connect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:changeLanguage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_baoguang1_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_zengyi1_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_baoguang2_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_zengyi2_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_testTrigger1_1_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "function:src/ui/DlgProductSet.cpp:btn_close_clicked",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:build_ui",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:build_ui",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:showEvent",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:showEvent",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:btn_createShapeModel_clicked",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:btn_readImage_clicked",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:drawRectangleAndStore",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion_clicked",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion2_clicked",
+      "target": "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/DlgProductSet.cpp:build_ui",
+      "target": "function:src/ui/DlgProductSet.cpp:read_config",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/ui/DlgProductSet.cpp:read_config",
+      "target": "function:src/ui/DlgProductSet.cpp:changeLanguage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "file:src/func/HalconDisplay.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/Dlg_createshapemodel.cpp",
+      "target": "file:ui/Dlg_createshapemodel.ui",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "file:src/Modules/Modules.cpp",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/ui/DlgProductSet.cpp",
+      "target": "file:ui/DlgProductSet.ui",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:ui/CaiHuiPrintInspection.ui",
+      "target": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:ui/Dlg_createshapemodel.ui",
+      "target": "file:src/ui/Dlg_createshapemodel.cpp",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:ui/DlgProductSet.ui",
+      "target": "file:src/ui/DlgProductSet.cpp",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:core-modules",
+      "name": "核心模块层",
+      "description": "基于 IModule 接口的插件式业务模块体系，包含模块编排器（Modules 单例）和相机控制、图像处理调度、缺陷剔除、图像保存、配置管理、重连监控、运行时统计、UI 桥接、告警占位等全部业务模块的头文件与实现，是应用程序的核心骨架。",
+      "nodeIds": [
+        "file:include/Modules/IModule.hpp",
+        "file:include/Modules/CameraModule.hpp",
+        "file:include/Modules/EliminateModule.hpp",
+        "file:include/Modules/ImgSaveModule.hpp",
+        "file:include/Modules/RuntimeInfoModule.hpp",
+        "file:include/Modules/UIModule.hpp",
+        "file:include/Modules/ConfigManagerModule.hpp",
+        "file:include/Modules/ImgProModule.hpp",
+        "file:include/Modules/Modules.hpp",
+        "file:include/Modules/ReconnectModule.hpp",
+        "file:include/Modules/TestModule.hpp",
+        "file:include/Modules/WarningModule.hpp",
+        "file:src/Modules/IModule.cpp",
+        "file:src/Modules/CameraModule.cpp",
+        "file:src/Modules/ConfigManagerModule.cpp",
+        "file:src/Modules/EliminateModule.cpp",
+        "file:src/Modules/ImgProModule.cpp",
+        "file:src/Modules/ImgSaveModule.cpp",
+        "file:src/Modules/Modules.cpp",
+        "file:src/Modules/ReconnectModule.cpp",
+        "file:src/Modules/RuntimeInfoModule.cpp",
+        "file:src/Modules/TestModule.cpp",
+        "file:src/Modules/UIModule.cpp",
+        "file:src/Modules/WarningModule.cpp"
+      ]
+    },
+    {
+      "id": "layer:image-processing",
+      "name": "图像处理引擎层",
+      "description": "Halcon 图像显示封装与多线程图像处理管线，包含 HalconDisplay（图像显示/缩放/平移/OpenCV 互转）和 ImageProcessingModule（生产者-消费者模式的多路形状模板匹配与 ONNX/TensorRT 推理引擎），是印刷缺陷检测的核心算法执行层。",
+      "nodeIds": [
+        "file:include/func/HalconDisplay.hpp",
+        "file:src/func/HalconDisplay.cpp",
+        "file:include/func/ImageProcessorModule.hpp",
+        "file:src/func/ImageProcessorModule.cpp"
+      ]
+    },
+    {
+      "id": "layer:data",
+      "name": "数据模型与序列化层",
+      "description": "Halcon 检测参数载体（HalconData）、全局路径与缺陷分类配置（GlobalPath/ClassId/Utility）、评分转换工具（ScoreConfigConvert）等数据结构定义，以及 OSO 格式的序列化模型定义文件（.oso）和自动生成的 C++ 序列化代码（osoInclude），构成应用的数据底座。",
+      "nodeIds": [
+        "file:include/data/halconData.hpp",
+        "file:src/data/halconData.cpp",
+        "file:include/data/Utilty.hpp",
+        "file:src/data/Utilty.cpp",
+        "file:include/data/osoFIleUtiltyFunc.hpp",
+        "file:src/data/osoFIleUtiltyFunc.cpp",
+        "file:osoFile/CaiHuiPrintInspection.oso",
+        "file:osoFile/SetConfig.oso",
+        "file:osoInclude/CaiHuiPrintInspection.hpp",
+        "file:osoInclude/SetConfig.hpp"
+      ]
+    },
+    {
+      "id": "layer:ui",
+      "name": "用户界面层",
+      "description": "Qt6 主窗口（CaiHuiPrintInspection）、产品参数设置对话框（DlgProductSet）和 Halcon 形状模板创建对话框（Dlg_createshapemodel）的头文件、实现及对应的 Qt Designer XML 布局文件（.ui），支持中英文双语切换、相机状态指示和实时图像四画面显示。",
+      "nodeIds": [
+        "file:include/ui/CaiHuiPrintInspection.h",
+        "file:src/ui/CaiHuiPrintInspection.cpp",
+        "file:include/ui/DlgProductSet.h",
+        "file:src/ui/DlgProductSet.cpp",
+        "file:include/ui/Dlg_createshapemodel.h",
+        "file:src/ui/Dlg_createshapemodel.cpp",
+        "file:ui/CaiHuiPrintInspection.ui",
+        "file:ui/DlgProductSet.ui",
+        "file:ui/Dlg_createshapemodel.ui"
+      ]
+    },
+    {
+      "id": "layer:worker-threads",
+      "name": "后台工作线程层",
+      "description": "基于 QThread 的独立工作线程集合，包括相机与采集卡状态监控线程（CameraAndCardStateThread）、缺陷剔废处理线程（DetachDefectThread）和运行时统计更新线程（DetachUtiltyThread），以及在无硬件编译模式下的测试图像推送线程（TestImgPushThread），均通过 Qt 信号槽与主线程异步通信。",
+      "nodeIds": [
+        "file:include/DetachThread/CameraAndCardStateThread.h",
+        "file:src/DetachThread/CameraAndCardStateThread.cpp",
+        "file:include/DetachThread/DetachDefectThreadProcess.h",
+        "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+        "file:include/DetachThread/DetachUtiltyThread.h",
+        "file:src/DetachThread/DetachUtiltyThread.cpp",
+        "file:include/NoHardWare/TestImgPushThread.hpp",
+        "file:src/NoHardWare/TestImgPushThread.cpp"
+      ]
+    },
+    {
+      "id": "layer:entry-config",
+      "name": "应用入口与构建配置",
+      "description": "程序主入口（main.cpp）负责 Qt 应用初始化、模块构建和主窗口启动；CMakeLists.txt 定义 C++17/Qt6 构建标准、第三方库集成（OpenCV/Halcon/TensorRT/ONNX Runtime）和部署打包规则；qrc 资源文件嵌入应用图标；项目分析工具忽略配置。",
+      "nodeIds": [
+        "file:src/main.cpp",
+        "document:CMakeLists.txt",
+        "file:qrc/QiXinShiJinDanXiangJi.qrc",
+        "file:.understand-anything/.understandignore"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "应用入口与启动流程",
+      "description": "main.cpp 是整个应用程序的启动入口，负责初始化 Qt 应用实例、创建全局模块编排器 Modules 单例，依次执行环境检查、模块构建和信号槽连接，最后创建主窗口并以全屏模式进入 Qt 事件循环。理解此文件即可把握应用从启动到运行的完整生命周期。",
+      "nodeIds": [
+        "file:src/main.cpp"
+      ],
+      "languageLesson": "C++ Qt 应用的标准启动模式：QApplication 管理事件循环，QObject::connect 建立信号槽绑定，QMainWindow::showFullScreen() 以全屏模式启动。Meyer's Singleton（局部静态变量）保证了 Modules 单例的线程安全初始化。"
+    },
+    {
+      "order": 2,
+      "title": "模块系统架构——IModule 接口与 Modules 编排器",
+      "description": "IModule.hpp 定义了整个模块体系的核心契约——所有功能模块必须实现 build/destroy/start/stop 四个纯虚生命周期方法，构成了插件式架构的基石。Modules 单例（Modules.hpp/cpp）持有并管理相机、图像处理、UI、配置、剔除等全部子模块实例，提供统一的构建/销毁/启动/停止接口，并通过 Qt 信号槽编排模块间的数据流。该文件是整个应用依赖最集中的节点（fan-in 排名第一），是理解系统架构的关键。",
+      "nodeIds": [
+        "file:include/Modules/IModule.hpp",
+        "file:include/Modules/Modules.hpp",
+        "file:src/Modules/Modules.cpp"
+      ],
+      "languageLesson": "C++ CRTP（Curiously Recurring Template Pattern）风格的模板接口设计：IModule<TBuildError> 使用默认模板参数（=bool）统一不同模块的构建错误返回类型。Modules 采用 Meyer's Singleton 模式（C++11 起线程安全），通过前向声明（forward declaration）解耦头文件依赖。"
+    },
+    {
+      "order": 3,
+      "title": "数据模型与配置序列化体系",
+      "description": "Utilty.hpp 定义了全局路径配置（GlobalPath）、缺陷分类 ID 枚举（ClassId）、相机 IP（Utility）和图像信息载体（MatInfo）四个核心数据结构，构成应用的静态数据底座。halconData.hpp 封装 Halcon 检测所需的全部动态配置——模板 ID、曝光增益、对比度阈值和感兴趣区域。OSO 自定义序列化格式（osoFile/*.oso）通过 CMake 构建时自动生成 C++ 序列化代码（osoInclude/*.hpp），将 CaiHuiPrintInspectionConfig（4 字段）和 SetConfig（22 字段）两类配置持久化为 XML 文件。ConfigManagerModule 则负责运行时安全加载、合并默认值和保存配置。",
+      "nodeIds": [
+        "file:include/data/Utilty.hpp",
+        "file:include/data/halconData.hpp",
+        "file:osoFile/CaiHuiPrintInspection.oso",
+        "file:osoFile/SetConfig.oso",
+        "file:include/Modules/ConfigManagerModule.hpp"
+      ],
+      "languageLesson": "OSO (Object Store Object) 是一种自定义跨语言序列化格式，语法类似 C# 属性声明（类型:名称:默认值）。项目通过 oso_wrap_oso 工具在 CMake 构建时将 .oso 文件编译为 C++ 序列化/反序列化代码，自动生成 operator ObjectStoreAssembly 转换运算符和 operator==/!= 比较运算符，减少手写样板代码。模板函数 loadConfigSafe 实现了配置文件容错加载——反序列化失败时自动通过 AssemblyMergeTool 合并默认值。"
+    },
+    {
+      "order": 4,
+      "title": "双相机采集与硬件控制",
+      "description": "CameraModule 负责管理两个工业相机的完整生命周期——构建时检查相机列表、验证元数据、创建被动采集线程（CameraPassiveThread）并配置帧率、曝光、增益等参数；启动/停止时控制采集监控的启停。帧数据通过 Qt 信号槽（frameCaptured1/frameCaptured2）异步传递给下游图像处理模块，实现了硬件层与处理层的松耦合分离。",
+      "nodeIds": [
+        "file:include/Modules/CameraModule.hpp",
+        "file:src/Modules/CameraModule.cpp"
+      ],
+      "languageLesson": "使用非标准枚举（非 enum class）定义 BuildError 位掩码，允许多个错误状态同时存在。通过 QObject 多重继承整合 Qt 元对象系统，使得相机模块既能实现 IModule 业务接口又能发射 Qt 信号。CameraPassiveThread 采用被动采集模式，通过外部触发信号控制帧捕获时机。"
+    },
+    {
+      "order": 5,
+      "title": "图像处理管线——生产者-消费者多线程架构",
+      "description": "图像处理是整个检测系统的核心引擎。ImgProModule（门面模块）负责从配置中构建图像处理上下文（模板匹配区域、检测区域、剔除区域），并创建前后两组 ImageProcessingModule 管线实例。ImageProcessor 作为消费者线程从共享队列读取帧数据，根据工作模式（调试/生产剔除）分发到不同处理函数：matchAllShapeModels 执行 Halcon 形状模板匹配，buildObbModelEngine 加载 ONNX/TensorRT 推理引擎进行深度学习缺陷检测。CameraModule（生产者）通过 onFrameCaptured 回调将预处理后的帧推入队列，形成完整的生产者-消费者流水线。",
+      "nodeIds": [
+        "file:include/Modules/ImgProModule.hpp",
+        "file:src/Modules/ImgProModule.cpp",
+        "file:include/func/ImageProcessorModule.hpp",
+        "file:src/func/ImageProcessorModule.cpp"
+      ],
+      "languageLesson": "使用 QThread + QMutex + QWaitCondition 实现经典的生产者-消费者模式：生产者线程在队列满时等待，消费者线程在队列空时等待。matchAllShapeModels 完整实现了 Halcon 模板匹配流程：FindShapeModel -> GetShapeModelContours -> VectorAngleToRigid -> AffineTransContourXld。AllowOncePer 使用 std::atomic 的 compare_exchange_strong 实现无锁限流，避免重复处理同一帧。"
+    },
+    {
+      "order": 6,
+      "title": "Halcon 图像显示与交互",
+      "description": "HalconDisplay 封装了 Halcon C++ API，以 Qt 组件的形式提供图像显示、窗口管理、鼠标滚轮缩放和中键拖拽平移等完整交互功能。核心方法 displayImage 支持自适应窗口和手动设置显示区域，matToHObject 静态方法完成 OpenCV cv::Mat 到 Halcon HObject 的自动转换（根据通道数选择 GenImage1/GenImage3）。eventFilter 通过截获 Qt 鼠标事件驱动图像缩放平移，支持 overlay 绘制器回调实现自定义图形叠加（如检测线、ROI 框等）。",
+      "nodeIds": [
+        "file:include/func/HalconDisplay.hpp",
+        "file:src/func/HalconDisplay.cpp"
+      ],
+      "languageLesson": "PIMPL（Pointer to Implementation）风格封装 Halcon 句柄，隐藏第三方库实现细节并降低编译依赖。使用 QWidget::eventFilter 实现鼠标交互而非子类化，更灵活地控制事件传播。clampAndApplyPart 通过边界钳位确保显示范围始终在有效图像区域内。移动语义（move semantics）支持高效的所有权转移，禁止拷贝以避免 Halcon 资源双重释放。"
+    },
+    {
+      "order": 7,
+      "title": "缺陷剔废处理流程",
+      "description": "EliminateModule 管理两个 ThreadSafeHeap 最小堆优先级队列（对应两个相机），用于缺陷检测结果的排序与剔除决策。DetachDefectThread 后台线程以 1ms 周期持续消费队列中的缺陷判定结果，通过 Modules 单例获取相机对象，根据 SetConfig 中的输出延时和持续时间配置，调用相机硬件的 outTrigger 接口执行物理剔废动作（如吹气剔除）。两个 processQueue1/processQueue2 函数分别处理相机 1 和相机 2 的剔废逻辑，使用相同的信号配置参数（lineSelector=2, lineMode=8, lineSource=5）。",
+      "nodeIds": [
+        "file:include/Modules/EliminateModule.hpp",
+        "file:src/Modules/EliminateModule.cpp",
+        "file:include/DetachThread/DetachDefectThreadProcess.h",
+        "file:src/DetachThread/DetachDefectThreadProcess.cpp"
+      ],
+      "languageLesson": "ThreadSafeHeap<bool, MinHeap> 实现线程安全的最小堆排序，通过互斥锁保护 push/pop 操作。缺陷判定采用基于面积因子和评分因子的双重判定机制，可在 ScoreConfigConvert 中对特定类别（如「钉子」）自定义评定策略。outTrigger 的配置参数（lineSelector/lineMode/lineSource）来自工业相机 SDK 的输出触发协议。"
+    },
+    {
+      "order": 8,
+      "title": "主窗口 UI 与用户交互",
+      "description": "CaiHuiPrintInspection 是应用程序的主窗口（继承 QMainWindow），由 UIModule 负责创建和销毁。主窗口通过 Qt Designer UI 文件（.ui）定义布局，集成了四个 QLabel 作为 Halcon 图像显示区域、相机状态指示标签（成功/失败/未构建）、以及调试模式/生产剔除模式的切换控件。onCameraDisplay 回调根据相机索引将处理后的图像分配至对应显示区域，updateCameraLabelState 根据相机构建结果动态更新状态文本和颜色样式。支持中英文双语切换和检测分数阈值设置。",
+      "nodeIds": [
+        "file:include/ui/CaiHuiPrintInspection.h",
+        "file:src/ui/CaiHuiPrintInspection.cpp",
+        "file:ui/CaiHuiPrintInspection.ui",
+        "file:include/Modules/UIModule.hpp"
+      ],
+      "languageLesson": "Qt Designer .ui 文件通过 setupUi() 自动生成 UI 控件树，与手写业务逻辑分离。QMainWindow 提供菜单栏、状态栏和中心部件的预定义布局。UIModule 采用前向声明（forward declaration）解耦 UI 类与模块系统，避免头文件循环依赖。语言切换通过手动设置所有控件的 text 属性实现，而非 Qt Linguist 标准的 .ts/.qm 翻译文件机制。"
+    },
+    {
+      "order": 9,
+      "title": "产品参数配置对话框",
+      "description": "DlgProductSet 提供双相机参数的可视化配置界面，包括光电屏蔽时间、输出信号延时/持续时间、相机限位值（上/下/左/右）、曝光时间、增益和像素当量等全部可调参数，共 22 个持久化字段（对应 SetConfig 数据模型）。Dlg_createshapemodel 是 Halcon 形状模板的交互式创建工具，用户可读取图像、绘制/屏蔽 ROI 区域、设置对比度和滤波参数后调用 CreateShapeModel 生成模板，并通过 FindShapeModel + GetShapeModelContours 即时验证匹配效果。两个对话框均从 Modules 单例读取/保存配置数据，通过 Qt 信号槽与主窗口通信。",
+      "nodeIds": [
+        "file:include/ui/DlgProductSet.h",
+        "file:src/ui/DlgProductSet.cpp",
+        "file:ui/DlgProductSet.ui",
+        "file:include/ui/Dlg_createshapemodel.h",
+        "file:src/ui/Dlg_createshapemodel.cpp"
+      ],
+      "languageLesson": "QDialog 作为模态对话框的标准模式：exec() 阻塞事件循环直到 accept()/reject() 被调用。Dlg_createshapemodel 完整实现了 Halcon 形状模板创建流程：GenEmptyObj -> ConcatObj -> Union1 -> ReduceDomain -> CreateShapeModel -> FindShapeModel -> GetShapeModelContours -> AffineTransContourXld。draw_rectangle1 交互式绘制矩形 ROI，ConcatObj 合并多个区域形成复合模板区域。"
+    },
+    {
+      "order": 10,
+      "title": "后台监控线程",
+      "description": "三个 QThread 子类构成应用的后台监控体系：CameraAndCardStateThread 每 2 秒检测两个相机的连接状态，异常断开时自动触发销毁和重新构建流程；DetachUtiltyThread 每秒发射统计信息更新信号驱动 UI 数据显示，内建 300 秒循环计数器；DetachDefectThread 负责从优先级队列中消费剔废判定结果并执行物理剔废（已在步骤 7 详述）。此外，TestImgPushThread 在 BUILD_WITHOUT_HARDWARE 条件编译模式下，从本地目录预加载测试图像并按 150ms 间隔推送帧数据，用于无硬件环境的离线调试。",
+      "nodeIds": [
+        "file:include/DetachThread/CameraAndCardStateThread.h",
+        "file:src/DetachThread/CameraAndCardStateThread.cpp",
+        "file:include/DetachThread/DetachUtiltyThread.h",
+        "file:src/DetachThread/DetachUtiltyThread.cpp"
+      ],
+      "languageLesson": "QThread 的正确用法：将工作逻辑放在 run() 虚函数中（而非继承 QThread 后添加槽函数），使用 QThread::msleep 实现非阻塞等待。通过 #ifdef BUILD_WITHOUT_HARDWARE 条件编译控制测试模块的参与，保证了生产环境和测试环境的代码统一。std::atomic<bool> 用于线程间状态标志传递，避免数据竞争。"
+    },
+    {
+      "order": 11,
+      "title": "辅助支持模块",
+      "description": "ImgSaveModule 封装多线程图像保存引擎（ImageSaveEngine），支持可配置的保存线程数（默认 4 线程）和 JPEG 压缩质量（默认 80），按日期自动组织文件目录并定期清理超出保留天数的旧图像。RuntimeInfoModule 通过 std::atomic 原子变量追踪废品计数和运行状态（调试/移除/停止），由 DetachUtiltyThread 异步更新。ReconnectModule 创建 CameraAndCardStateThread 监控线程实现相机与采集卡的自动重连。TestModule（条件编译）和 WarningModule（空占位）为测试和未来扩展预留了接口。",
+      "nodeIds": [
+        "file:include/Modules/ImgSaveModule.hpp",
+        "file:include/Modules/RuntimeInfoModule.hpp",
+        "file:include/Modules/ReconnectModule.hpp",
+        "file:include/Modules/TestModule.hpp",
+        "file:include/Modules/WarningModule.hpp"
+      ],
+      "languageLesson": "static constexpr 定义编译期常量（线程数、JPEG 质量），避免运行时常量占用内存。使用 QDir 进行跨平台文件系统操作，通过 ImageSaveEngine 的保存策略（按时间/数量）实现灵活的持久化控制。std::atomic 保证多线程环境下统计计数的读写安全性，无需额外使用互斥锁。"
+    },
+    {
+      "order": 12,
+      "title": "构建系统与项目配置",
+      "description": "CMakeLists.txt 是项目的顶层构建配置文件，定义了 C++17/Qt6 编译标准，通过 AUTOMOC/AUTORCC 自动处理 Qt 元对象编译和资源嵌入。CMake 集成 OpenCV、Halcon、TensorRT 和 ONNX Runtime 四大第三方库，通过自定义命令 oso_wrap_oso 将 .oso 数据模型文件编译为 C++ 序列化代码，并在 POST_BUILD 阶段自动调用 windeployqt 部署 Qt 运行时和 AI 推理 DLL。.qrc 资源文件将应用图标嵌入二进制，.understandignore 定义了分析工具的排除规则。",
+      "nodeIds": [
+        "document:CMakeLists.txt",
+        "file:qrc/QiXinShiJinDanXiangJi.qrc",
+        "file:osoInclude/CaiHuiPrintInspection.hpp",
+        "file:osoInclude/SetConfig.hpp"
+      ],
+      "languageLesson": "Qt6 的 AUTOMOC/AUTORCC 机制自动扫描头文件中的 Q_OBJECT 宏并生成 MOC 中间代码，无需手动调用 moc 工具。oso_wrap_oso 自定义构建命令将声明式数据模型转换为类型安全的 C++ 类，保证了序列化格式与代码的一致性。windeployqt 是 Qt 的 Windows 平台部署工具，自动分析可执行文件依赖并复制所需的 DLL 和插件。TensorRT 的 DLL 需要手动复制因为 windeployqt 无法识别非 Qt 的动态库依赖。"
+    }
+  ]
+}

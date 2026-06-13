@@ -1,0 +1,435 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "include/Modules/ConfigManagerModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 86,
+      "nonEmptyLines": 78,
+      "classes": [
+        {
+          "name": "ConfigManagerModule",
+          "startLine": 13,
+          "endLine": 33,
+          "methods": [
+            "destroy",
+            "start",
+            "stop",
+            "saveSetConfig"
+          ],
+          "properties": [
+            "public",
+            "storeContext",
+            "caihuiPrintInspectionConfig",
+            "setConfig",
+            "halconDatas"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "saveSetConfig",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ConfigManagerModule",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "loadConfigSafe",
+          "callee": "QFile::exists",
+          "lineNumber": 38
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qWarning",
+          "lineNumber": 40
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "loadSafe",
+          "lineNumber": 44
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "toStdString",
+          "lineNumber": 44
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qWarning",
+          "lineNumber": 47
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "QFile::remove",
+          "lineNumber": 48
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "ConfigType",
+          "lineNumber": 54
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qWarning",
+          "lineNumber": 59
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "ConfigType",
+          "lineNumber": 62
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "rw::oso::AssemblyMergeTool::Merge",
+          "lineNumber": 63
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "saveSafe",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "toStdString",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qDebug",
+          "lineNumber": 67
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "ConfigType",
+          "lineNumber": 72
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qWarning",
+          "lineNumber": 77
+        },
+        {
+          "caller": "loadConfigSafe",
+          "callee": "qWarning",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/ImgProModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "ImgProModule",
+          "startLine": 8,
+          "endLine": 39,
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "buildImgProContext",
+            "buildImgProContextPreProcess",
+            "resetImgProIsUpdate",
+            "buildImageProcessingModule",
+            "destroyImageProcessingModule",
+            "buildImageProcessingPreModule",
+            "onUpdateImgProContext"
+          ],
+          "properties": [
+            "private",
+            "imageProcessContext_PreProcess",
+            "imgProIsUpdate",
+            "imageProcessingModule1",
+            "imageProcessingModule2"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "build",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "destroy",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "start",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "stop",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "onUpdateImgProContext",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "ImgProModule",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/Modules.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 91,
+      "nonEmptyLines": 80,
+      "functions": [
+        {
+          "name": "Modules",
+          "startLine": 30,
+          "endLine": 30,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Modules",
+          "startLine": 18,
+          "endLine": 64,
+          "methods": [
+            "Modules",
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "connect",
+            "check",
+            "EnsureDirectoryExists"
+          ],
+          "properties": [
+            "cameraModule",
+            "reconnectModule",
+            "uiModule",
+            "configManagerModule",
+            "runtimeInfoModule",
+            "imgSaveModule",
+            "imgProModule",
+            "eliminateModule"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Modules",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "build",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "destroy",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "start",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "stop",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "connect",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "check",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "EnsureDirectoryExists",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Modules",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "rw::rqw::RunEnvCheck::isFileExist",
+          "lineNumber": 69
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "rw::rqw::RunEnvCheck::isFileFormatCorrectWithSafe<TypeCanToAssembly>",
+          "lineNumber": 71
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "load",
+          "lineNumber": 73
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "toStdString",
+          "lineNumber": 73
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "rw::oso::AssemblyMergeTool::Merge",
+          "lineNumber": 75
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "TypeCanToAssembly",
+          "lineNumber": 75
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "saveSafe",
+          "lineNumber": 78
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "toStdString",
+          "lineNumber": 78
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "saveSafe",
+          "lineNumber": 82
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "TypeCanToAssembly",
+          "lineNumber": 82
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "toStdString",
+          "lineNumber": 82
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "saveSafe",
+          "lineNumber": 88
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "TypeCanToAssembly",
+          "lineNumber": 88
+        },
+        {
+          "caller": "checkFileExistAndFormat",
+          "callee": "toStdString",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 11,
+        "exportCount": 9,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/ReconnectModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "classes": [
+        {
+          "name": "ReconnectModule",
+          "startLine": 8,
+          "endLine": 19,
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "monitorCameraAndCardStateThread"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReconnectModule",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/TestModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 19,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "include/Modules/WarningModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

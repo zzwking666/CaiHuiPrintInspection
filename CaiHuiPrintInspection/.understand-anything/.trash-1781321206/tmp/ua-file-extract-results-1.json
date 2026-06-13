@@ -1,0 +1,330 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "include/Modules/CameraModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 48,
+      "functions": [
+        {
+          "name": "getBuildResults",
+          "startLine": 36,
+          "endLine": 36,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "CameraModule",
+          "startLine": 14,
+          "endLine": 54,
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "build_camera1",
+            "destroy_camera1",
+            "build_camera2",
+            "destroy_camera2",
+            "getBuildResults",
+            "isTargetCamera",
+            "cameraMetaDataCheck",
+            "onBuildCamera",
+            "onDestroyCamera",
+            "onStartCamera",
+            "onFrameCaptured",
+            "frameCaptured1",
+            "frameCaptured2"
+          ],
+          "properties": [
+            "public",
+            "_buildResults",
+            "camera1",
+            "camera2"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "build",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "destroy",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "start",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "stop",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "getBuildResults",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "onBuildCamera",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "onDestroyCamera",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "onStartCamera",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "onFrameCaptured",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "frameCaptured1",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "frameCaptured2",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "CameraModule",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 12,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/EliminateModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "EliminateModule",
+          "startLine": 7,
+          "endLine": 22,
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "productPriorityQueue1",
+            "productPriorityQueue2",
+            "detachDefectThreadPreProcess"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EliminateModule",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/IModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "include/Modules/ImgSaveModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "ImgSaveModule",
+          "startLine": 8,
+          "endLine": 21,
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "private",
+            "cimgSaveQuality",
+            "imageSaveEngine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "build",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "destroy",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "start",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "stop",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ImgSaveModule",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/RuntimeInfoModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "RuntimeInfoModule",
+          "startLine": 16,
+          "endLine": 33,
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "statisticalInfo",
+            "runningState",
+            "detachUtiltyThread"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RuntimeInfoModule",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "include/Modules/UIModule.hpp",
+      "language": "cpp",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "CaiHuiPrintInspection",
+          "startLine": 7,
+          "endLine": 7,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "DlgProductSet",
+          "startLine": 8,
+          "endLine": 8,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "UIModule",
+          "startLine": 10,
+          "endLine": 24,
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "_dlgProductSet",
+            "_caiHuiPrintInspection"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CaiHuiPrintInspection",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "DlgProductSet",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "UIModule",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    }
+  ]
+}

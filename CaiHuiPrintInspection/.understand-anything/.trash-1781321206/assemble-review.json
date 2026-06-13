@@ -1,0 +1,14 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 1,
+  "edgesRestored": 1,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "恢复了一个因 LLM 分析遗漏而被丢弃的节点：function:src/func/HalconDisplay.cpp:isValid（Halcon 显示窗口有效性检查函数，源文件 line 188-191）。该函数被 refreshDisplay 调用，在 batch-4-part-1.json 中仅以边（calls）形式引用而缺少对应的节点定义。",
+    "为恢复的 isValid 节点补充了 contains 和 exports 结构边，使文件节点与函数节点的关系与其他 HalconDisplay 函数一致（从 195 nodes / 393 edges 变为 196 nodes / 396 edges）。",
+    "交叉批次的 import 边检查：所有 import map 中记录的关键导入关系均已存在于合并图中，无需额外添加 cross-batch edges。",
+    "合并脚本的自动修复未报告异常模式（无 Fixed 部分输出），节点和边的规模适中，数据质量整体良好。"
+  ]
+}

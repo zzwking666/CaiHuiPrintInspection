@@ -1,0 +1,19 @@
+{
+  "projectRoot": "D:/Projects/CaiHuiPrintInspection/CaiHuiPrintInspection",
+  "batchFiles": [
+    {"path": "include/Modules/ConfigManagerModule.hpp", "language": "cpp", "sizeLines": 86, "fileCategory": "code"},
+    {"path": "include/Modules/ImgProModule.hpp", "language": "cpp", "sizeLines": 38, "fileCategory": "code"},
+    {"path": "include/Modules/Modules.hpp", "language": "cpp", "sizeLines": 91, "fileCategory": "code"},
+    {"path": "include/Modules/ReconnectModule.hpp", "language": "cpp", "sizeLines": 19, "fileCategory": "code"},
+    {"path": "include/Modules/TestModule.hpp", "language": "cpp", "sizeLines": 24, "fileCategory": "code"},
+    {"path": "include/Modules/WarningModule.hpp", "language": "cpp", "sizeLines": 0, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "include/Modules/ConfigManagerModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/ImgProModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/Modules.hpp": ["include/Modules/CameraModule.hpp", "include/Modules/ConfigManagerModule.hpp", "include/Modules/EliminateModule.hpp", "include/Modules/ImgProModule.hpp", "include/Modules/ImgSaveModule.hpp", "include/Modules/IModule.hpp", "include/Modules/ReconnectModule.hpp", "include/Modules/RuntimeInfoModule.hpp", "include/Modules/TestModule.hpp", "include/Modules/UIModule.hpp", "include/Modules/WarningModule.hpp"],
+    "include/Modules/ReconnectModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/TestModule.hpp": [],
+    "include/Modules/WarningModule.hpp": []
+  }
+}

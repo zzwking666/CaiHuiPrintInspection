@@ -1,0 +1,103 @@
+[
+  {
+    "id": "layer:core-modules",
+    "name": "核心模块层",
+    "description": "基于 IModule 接口的插件式业务模块体系，包含模块编排器（Modules 单例）和相机控制、图像处理调度、缺陷剔除、图像保存、配置管理、重连监控、运行时统计、UI 桥接、告警占位等全部业务模块的头文件与实现，是应用程序的核心骨架。",
+    "nodeIds": [
+      "file:include/Modules/IModule.hpp",
+      "file:include/Modules/CameraModule.hpp",
+      "file:include/Modules/EliminateModule.hpp",
+      "file:include/Modules/ImgSaveModule.hpp",
+      "file:include/Modules/RuntimeInfoModule.hpp",
+      "file:include/Modules/UIModule.hpp",
+      "file:include/Modules/ConfigManagerModule.hpp",
+      "file:include/Modules/ImgProModule.hpp",
+      "file:include/Modules/Modules.hpp",
+      "file:include/Modules/ReconnectModule.hpp",
+      "file:include/Modules/TestModule.hpp",
+      "file:include/Modules/WarningModule.hpp",
+      "file:src/Modules/IModule.cpp",
+      "file:src/Modules/CameraModule.cpp",
+      "file:src/Modules/ConfigManagerModule.cpp",
+      "file:src/Modules/EliminateModule.cpp",
+      "file:src/Modules/ImgProModule.cpp",
+      "file:src/Modules/ImgSaveModule.cpp",
+      "file:src/Modules/Modules.cpp",
+      "file:src/Modules/ReconnectModule.cpp",
+      "file:src/Modules/RuntimeInfoModule.cpp",
+      "file:src/Modules/TestModule.cpp",
+      "file:src/Modules/UIModule.cpp",
+      "file:src/Modules/WarningModule.cpp"
+    ]
+  },
+  {
+    "id": "layer:image-processing",
+    "name": "图像处理引擎层",
+    "description": "Halcon 图像显示封装与多线程图像处理管线，包含 HalconDisplay（图像显示/缩放/平移/OpenCV 互转）和 ImageProcessingModule（生产者-消费者模式的多路形状模板匹配与 ONNX/TensorRT 推理引擎），是印刷缺陷检测的核心算法执行层。",
+    "nodeIds": [
+      "file:include/func/HalconDisplay.hpp",
+      "file:src/func/HalconDisplay.cpp",
+      "file:include/func/ImageProcessorModule.hpp",
+      "file:src/func/ImageProcessorModule.cpp"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "数据模型与序列化层",
+    "description": "Halcon 检测参数载体（HalconData）、全局路径与缺陷分类配置（GlobalPath/ClassId/Utility）、评分转换工具（ScoreConfigConvert）等数据结构定义，以及 OSO 格式的序列化模型定义文件（.oso）和自动生成的 C++ 序列化代码（osoInclude），构成应用的数据底座。",
+    "nodeIds": [
+      "file:include/data/halconData.hpp",
+      "file:src/data/halconData.cpp",
+      "file:include/data/Utilty.hpp",
+      "file:src/data/Utilty.cpp",
+      "file:include/data/osoFIleUtiltyFunc.hpp",
+      "file:src/data/osoFIleUtiltyFunc.cpp",
+      "file:osoFile/CaiHuiPrintInspection.oso",
+      "file:osoFile/SetConfig.oso",
+      "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "file:osoInclude/SetConfig.hpp"
+    ]
+  },
+  {
+    "id": "layer:ui",
+    "name": "用户界面层",
+    "description": "Qt6 主窗口（CaiHuiPrintInspection）、产品参数设置对话框（DlgProductSet）和 Halcon 形状模板创建对话框（Dlg_createshapemodel）的头文件、实现及对应的 Qt Designer XML 布局文件（.ui），支持中英文双语切换、相机状态指示和实时图像四画面显示。",
+    "nodeIds": [
+      "file:include/ui/CaiHuiPrintInspection.h",
+      "file:src/ui/CaiHuiPrintInspection.cpp",
+      "file:include/ui/DlgProductSet.h",
+      "file:src/ui/DlgProductSet.cpp",
+      "file:include/ui/Dlg_createshapemodel.h",
+      "file:src/ui/Dlg_createshapemodel.cpp",
+      "file:ui/CaiHuiPrintInspection.ui",
+      "file:ui/DlgProductSet.ui",
+      "file:ui/Dlg_createshapemodel.ui"
+    ]
+  },
+  {
+    "id": "layer:worker-threads",
+    "name": "后台工作线程层",
+    "description": "基于 QThread 的独立工作线程集合，包括相机与采集卡状态监控线程（CameraAndCardStateThread）、缺陷剔废处理线程（DetachDefectThread）和运行时统计更新线程（DetachUtiltyThread），以及在无硬件编译模式下的测试图像推送线程（TestImgPushThread），均通过 Qt 信号槽与主线程异步通信。",
+    "nodeIds": [
+      "file:include/DetachThread/CameraAndCardStateThread.h",
+      "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "file:include/DetachThread/DetachUtiltyThread.h",
+      "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "file:include/NoHardWare/TestImgPushThread.hpp",
+      "file:src/NoHardWare/TestImgPushThread.cpp"
+    ]
+  },
+  {
+    "id": "layer:entry-config",
+    "name": "应用入口与构建配置",
+    "description": "程序主入口（main.cpp）负责 Qt 应用初始化、模块构建和主窗口启动；CMakeLists.txt 定义 C++17/Qt6 构建标准、第三方库集成（OpenCV/Halcon/TensorRT/ONNX Runtime）和部署打包规则；qrc 资源文件嵌入应用图标；项目分析工具忽略配置。",
+    "nodeIds": [
+      "file:src/main.cpp",
+      "document:CMakeLists.txt",
+      "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "file:.understand-anything/.understandignore"
+    ]
+  }
+]

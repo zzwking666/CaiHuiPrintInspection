@@ -1,0 +1,1110 @@
+{
+  "nodes": [
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-Anything 分析工具的忽略规则文件，定义排除分析的文件/目录模式，语法兼容 .gitignore。当前仅包含注释和示例说明，未激活任何排除规则。",
+      "tags": ["configuration", "analysis-tool", "ignore-patterns"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:CMakeLists.txt",
+      "type": "document",
+      "name": "CMakeLists.txt",
+      "filePath": "CMakeLists.txt",
+      "summary": "项目顶层 CMake 构建配置文件，定义 C++17/Qt6 构建标准，配置 Qt MOC/RCC 自动处理，集成 OpenCV、Halcon、TensorRT、ONNX Runtime 等第三方库，并设置 windeployqt 打包和 DLL 复制后处理步骤。",
+      "tags": ["build-system", "cmake", "configuration", "qt6"],
+      "complexity": "moderate",
+      "languageNotes": "使用 Qt6 的 AUTOMOC/AUTORCC 机制，通过 oso_wrap_oso 自定义命令从 .oso 文件生成 C++ 序列化代码，POST_BUILD 阶段自动部署 Qt 运行时和 AI 推理 DLL。"
+    },
+    {
+      "id": "file:include/data/halconData.hpp",
+      "type": "file",
+      "name": "halconData.hpp",
+      "filePath": "include/data/halconData.hpp",
+      "summary": "HalconData 数据结构的头文件声明，封装 Halcon 图像处理所需的全部配置数据和运行时状态，包括模板 ID、曝光增益参数、对比度设置和感兴趣区域。",
+      "tags": ["data-model", "halcon", "header", "image-inspection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/halconData.hpp:HalconData",
+      "type": "class",
+      "name": "HalconData",
+      "filePath": "include/data/halconData.hpp",
+      "lineRange": [6, 30],
+      "summary": "Halcon 检测参数的数据载体类，存储每个相机的图像处理对象、形状匹配模板 ID 列表、曝光/增益参数、对比度阈值以及创建/屏蔽区域集合。",
+      "tags": ["data-model", "halcon", "image-inspection", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "type": "file",
+      "name": "osoFIleUtiltyFunc.hpp",
+      "filePath": "include/data/osoFIleUtiltyFunc.hpp",
+      "summary": "ScoreConfigConvert 工具类的头文件，提供评分配置与分类 ID 映射的转换函数声明，用于将评分因子转换为剔废和缺陷判定配置。",
+      "tags": ["utility", "header", "score-config", "defect-detection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "class",
+      "name": "ScoreConfigConvert",
+      "filePath": "include/data/osoFIleUtiltyFunc.hpp",
+      "lineRange": [9, 13],
+      "summary": "评分配置转换工具类，提供静态方法将面积因子和评分因子转换为剔废配置映射（toClassIdWithEliConfigMap）和缺陷判定配置映射（toClassIdWithDefConfigMap）。",
+      "tags": ["utility", "score-config", "conversion", "defect-detection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/data/Utilty.hpp",
+      "type": "file",
+      "name": "Utilty.hpp",
+      "filePath": "include/data/Utilty.hpp",
+      "summary": "全局工具头文件，定义项目路径配置（GlobalPath）、缺陷分类 ID 枚举（ClassId）、相机 IP 配置（Utility）和图像信息载体（MatInfo）四个核心数据结构。",
+      "tags": ["data-model", "header", "configuration", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "class",
+      "name": "GlobalPath",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [6, 20],
+      "summary": "全局路径配置结构体，定义项目根目录、配置文件路径、模型路径和图像保存路径等关键目录，以全局单例 globalPath 实例化。",
+      "tags": ["configuration", "path-management", "singleton", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:ClassId",
+      "type": "class",
+      "name": "ClassId",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [22, 33],
+      "summary": "缺陷分类 ID 枚举结构体，定义分类编号范围（minNum/maxNum）、具体分类常量（如 dingZi）和分类名称映射表，支持扩展新的缺陷类别。",
+      "tags": ["enum", "data-model", "defect-classification", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:Utility",
+      "type": "class",
+      "name": "Utility",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [35, 39],
+      "summary": "相机 IP 配置结构体，静态存储两个工业相机的 IP 地址字符串，供相机连接模块引用。",
+      "tags": ["configuration", "camera", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "class",
+      "name": "MatInfo",
+      "filePath": "include/data/Utilty.hpp",
+      "lineRange": [42, 46],
+      "summary": "图像信息载体结构体，封装 OpenCV Mat 图像数据、拍照时间点位置和相机下标索引，用于在线程间传递图像帧信息。",
+      "tags": ["data-model", "image", "thread-communication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "type": "file",
+      "name": "CameraAndCardStateThread.h",
+      "filePath": "include/DetachThread/CameraAndCardStateThread.h",
+      "summary": "相机与卡状态监控线程的头文件，声明 CameraAndCardStateThread 类（继承 QThread），负责周期性检测两个相机的连接状态并通过信号更新 UI。",
+      "tags": ["header", "camera", "thread", "monitoring", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "class",
+      "name": "CameraAndCardStateThread",
+      "filePath": "include/DetachThread/CameraAndCardStateThread.h",
+      "lineRange": [6, 36],
+      "summary": "相机与卡状态监控线程类（QThread 子类），提供 startThread/stopThread 控制接口，run 循环中每 2 秒检测相机连接状态，通过信号通知 UI 更新、相机构建/销毁和监控启停。",
+      "tags": ["thread", "camera", "monitoring", "qt", "qthread"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "type": "file",
+      "name": "DetachDefectThreadProcess.h",
+      "filePath": "include/DetachThread/DetachDefectThreadProcess.h",
+      "summary": "缺陷剔废处理线程的头文件，声明 DetachDefectThread 类（继承 QThread），负责从优先级队列中取出剔废结果并执行物理剔废动作。",
+      "tags": ["header", "defect", "thread", "elimination", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "class",
+      "name": "DetachDefectThread",
+      "filePath": "include/DetachThread/DetachDefectThreadProcess.h",
+      "lineRange": [12, 34],
+      "summary": "缺陷剔废处理线程类（QThread 子类），管理 processQueue1/processQueue2 两个队列处理函数，分别对应两个相机的剔废操作，通过 run 循环持续消费优先级队列中的缺陷判定结果。",
+      "tags": ["thread", "defect", "elimination", "queue", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/DetachThread/DetachUtiltyThread.h",
+      "type": "file",
+      "name": "DetachUtiltyThread.h",
+      "filePath": "include/DetachThread/DetachUtiltyThread.h",
+      "summary": "通用工具线程的头文件，声明 DetachUtiltyThread 类（继承 QThread），负责定时发送统计信息更新信号和周期性任务。",
+      "tags": ["header", "utility", "thread", "statistics", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "class",
+      "name": "DetachUtiltyThread",
+      "filePath": "include/DetachThread/DetachUtiltyThread.h",
+      "lineRange": [7, 24],
+      "summary": "通用工具线程类（QThread 子类），每秒触发一次统计信息更新信号，内建 300 秒循环计数器，用于驱动 UI 统计数据刷新等周期性任务。",
+      "tags": ["thread", "utility", "statistics", "timer", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/func/HalconDisplay.hpp",
+      "type": "file",
+      "name": "HalconDisplay.hpp",
+      "filePath": "include/func/HalconDisplay.hpp",
+      "summary": "Halcon 图像显示封装模块的头文件，定义 HalconDisplay 类（继承 QObject），封装 Halcon 窗口的创建、图像显示、缩放平移交互和 OpenCV Mat 互转等全部功能。",
+      "tags": ["header", "halcon", "display", "image-viewer", "wrapper"],
+      "complexity": "moderate",
+      "languageNotes": "使用 PIMPL 风格封装 Halcon C++ 接口，通过 eventFilter 实现鼠标拖拽平移交互，支持 overlay 绘制器回调实现自定义图形叠加。"
+    },
+    {
+      "id": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "class",
+      "name": "HalconDisplay",
+      "filePath": "include/func/HalconDisplay.hpp",
+      "lineRange": [25, 173],
+      "summary": "Halcon 图像显示封装类，管理 Halcon 窗口生命周期，提供 initialize/closeWindow 窗口管理、displayImage/displayMat 图像显示、setDisplayPart/resetDisplayPart 缩放控制，以及 matToHObject 静态转换方法和交互式平移功能。支持移动语义，禁止拷贝。",
+      "tags": ["halcon", "display", "image-viewer", "wrapper", "interaction"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:include/func/ImageProcessorModule.hpp",
+      "type": "file",
+      "name": "ImageProcessorModule.hpp",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "summary": "图像处理模块的头文件，定义 ImageProcessor（QThread 子类，执行缺陷检测推理）和 ImageProcessingModule（管理多消费者处理管线）两个核心类，构成多线程图像处理框架。",
+      "tags": ["header", "image-processing", "thread", "inference", "pipeline"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "class",
+      "name": "ImageProcessor",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "lineRange": [21, 66],
+      "summary": "图像处理器线程类（QThread 子类），从共享队列消费 MatInfo 帧数据，执行调试模式或剔废模式下的图像处理：调用 matchAllShapeModels 进行 Halcon 形状模板匹配，通过 buildObbModelEngine 加载 ONNX/TensorRT 推理引擎，处理完成后发射 imageReady 信号。",
+      "tags": ["thread", "image-processing", "inference", "halcon", "shape-matching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "class",
+      "name": "ImageProcessingModule",
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "lineRange": [69, 102],
+      "summary": "图像处理管线管理类，通过 BuildModule 初始化指定数量的 ImageProcessor 消费者线程，接收相机回调 onFrameCaptured 将帧推入共享队列，实现生产者-消费者模式的多线程图像处理调度。",
+      "tags": ["pipeline", "producer-consumer", "multi-threading", "image-processing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/NoHardWare/TestImgPushThread.hpp",
+      "type": "file",
+      "name": "TestImgPushThread.hpp",
+      "filePath": "include/NoHardWare/TestImgPushThread.hpp",
+      "summary": "无硬件测试模式下的图像推送线程头文件（条件编译 BUILD_WITHOUT_HARDWARE），声明 TestImgPushThread 类，从本地目录预加载测试图像并按指定间隔推送到处理管线。",
+      "tags": ["header", "test", "image-source", "simulation", "conditional-compilation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/NoHardWare/TestImgPushThread.hpp:TestImgPushThread",
+      "type": "class",
+      "name": "TestImgPushThread",
+      "filePath": "include/NoHardWare/TestImgPushThread.hpp",
+      "lineRange": [10, 47],
+      "summary": "测试图像推送线程类（QThread 子类，仅在 BUILD_WITHOUT_HARDWARE 宏下编译），预加载两个目录的测试图像到内存缓存，按可配置时间间隔（默认 150ms）通过 imgReady/imgReady2 信号推送图像帧，用于无相机硬件环境下的功能测试。",
+      "tags": ["test", "thread", "image-source", "simulation", "qt"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.h",
+      "filePath": "include/ui/CaiHuiPrintInspection.h",
+      "summary": "主窗口类的头文件，声明 CaiHuiPrintInspection（继承 QMainWindow），作为应用程序的顶层 UI 控制器，管理相机显示、Halcon 窗口、语言切换、产品设置和调试模式等全部界面交互。",
+      "tags": ["header", "ui", "main-window", "entry-point", "qt"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/CaiHuiPrintInspection.h:CaiHuiPrintInspection",
+      "type": "class",
+      "name": "CaiHuiPrintInspection",
+      "filePath": "include/ui/CaiHuiPrintInspection.h",
+      "lineRange": [18, 81],
+      "summary": "应用程序主窗口类（QMainWindow 子类），负责构建整体 UI 布局、初始化相机和 Halcon 显示组件、处理四路相机图像刷新显示，并提供语言切换、调试模式、剔废功能、图像保存和产品设置等完整的用户交互接口。",
+      "tags": ["main-window", "ui", "entry-point", "camera-display", "qt"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/ui/Dlg_createshapemodel.h",
+      "type": "file",
+      "name": "Dlg_createshapemodel.h",
+      "filePath": "include/ui/Dlg_createshapemodel.h",
+      "summary": "形状模板创建对话框的头文件，声明 Dlg_createshapemodel 类（继承 QDialog），提供 Halcon 形状模板的交互式创建功能，包括区域绘制、模板生成和参数配置。",
+      "tags": ["header", "ui", "dialog", "shape-model", "halcon"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/Dlg_createshapemodel.h:Dlg_createshapemodel",
+      "type": "class",
+      "name": "Dlg_createshapemodel",
+      "filePath": "include/ui/Dlg_createshapemodel.h",
+      "lineRange": [16, 75],
+      "summary": "Halcon 形状模板创建对话框类（QDialog 子类），嵌入 HalconDisplay 显示控件，提供读取图像、绘制/屏蔽区域、创建形状模板/XLD 轮廓、设置对比度/曝光/增益参数等完整交互功能，按模板索引（_templateIndex）区分不同相机的模板配置。",
+      "tags": ["dialog", "shape-model", "halcon", "template-creation", "ui"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:include/ui/DlgProductSet.h",
+      "type": "file",
+      "name": "DlgProductSet.h",
+      "filePath": "include/ui/DlgProductSet.h",
+      "summary": "产品参数设置对话框的头文件，声明 DlgProductSet 类（继承 QDialog），提供光电传感器时序、输出信号配置和双相机限位/曝光/增益等参数的可视化编辑界面。",
+      "tags": ["header", "ui", "dialog", "configuration", "camera"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/ui/DlgProductSet.h:DlgProductSet",
+      "type": "class",
+      "name": "DlgProductSet",
+      "filePath": "include/ui/DlgProductSet.h",
+      "lineRange": [10, 58],
+      "summary": "产品参数设置对话框类（QDialog 子类），管理光电屏蔽时间、输出信号延时/持续时间的编辑，以及两个相机各自的上/下/左/右限位、曝光、增益和像素当量参数配置，支持测试触发和参数变更通知信号。",
+      "tags": ["dialog", "configuration", "camera", "parameter-editor", "ui"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:osoFile/CaiHuiPrintInspection.oso",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.oso",
+      "filePath": "osoFile/CaiHuiPrintInspection.oso",
+      "summary": "Object Store Object 格式的数据模型定义文件，描述 CaiHuiPrintInspectionConfig 类的序列化结构（totalDefectiveVolume、isDebug、isDefect、isSaveImg 四个字段），由 CMake 构建时通过 oso_wrap_oso 生成对应的 C++ 头文件。",
+      "tags": ["schema-definition", "oso", "data-model", "serialization", "code-generation"],
+      "complexity": "simple",
+      "languageNotes": "OSO (Object Store Object) 是一种自定义的跨语言数据序列化格式，语法类似 C# 属性声明（类型:名称:默认值），由项目自有的 oso_wrap_oso 工具编译为 C++ 代码。"
+    },
+    {
+      "id": "file:osoFile/SetConfig.oso",
+      "type": "file",
+      "name": "SetConfig.oso",
+      "filePath": "osoFile/SetConfig.oso",
+      "summary": "Object Store Object 格式的配置模型定义文件，描述 SetConfig 类的序列化结构，包含双相机限位/曝光/增益参数（各 7 项）、语言索引和形状匹配评分参数等共 22 个字段。",
+      "tags": ["schema-definition", "oso", "configuration", "serialization", "code-generation"],
+      "complexity": "simple",
+      "languageNotes": "通过 OSO 格式定义数据模型可自动生成 C++ 的序列化/反序列化代码（operator ObjectStoreAssembly）和比较运算符（operator==/!=），减少手写样板代码。"
+    },
+    {
+      "id": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "type": "file",
+      "name": "CaiHuiPrintInspection.hpp",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "summary": "由 osoFile/CaiHuiPrintInspection.oso 自动生成的 C++ 头文件，定义 CaiHuiPrintInspectionConfig 类的完整实现，包括从 ObjectStoreAssembly 反序列化的构造函数和序列化转换运算符。",
+      "tags": ["auto-generated", "oso", "serialization", "configuration", "header"],
+      "complexity": "moderate",
+      "languageNotes": "自动生成代码遵循 OSO 反序列化模式：按名称匹配 assembly 中的 item，逐字段调用 getValueAsInt/getValueAsBool 提取值，反序列化失败时抛出 runtime_error。"
+    },
+    {
+      "id": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "class",
+      "name": "CaiHuiPrintInspectionConfig",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [7, 26],
+      "summary": "打印检测主配置类（OSO 自动生成），包含 totalDefectiveVolume（缺陷总数阈值）、isDebug（调试模式开关）、isDefect（剔废功能开关）和 isSaveImg（图像保存开关）四个运行时配置字段。",
+      "tags": ["configuration", "auto-generated", "oso", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "function",
+      "name": "CaiHuiPrintInspectionConfig(assembly)",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [28, 55],
+      "summary": "从 ObjectStoreAssembly 反序列化构造 CaiHuiPrintInspectionConfig，逐字段取出 totalDefectiveVolume（int）、isDebug（bool）、isDefect（bool）和 isSaveImg（bool），字段缺失时抛出 runtime_error。",
+      "tags": ["constructor", "deserialization", "oso", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "function",
+      "name": "oso::ObjectStoreAssembly()",
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "lineRange": [76, 97],
+      "summary": "将 CaiHuiPrintInspectionConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加四个配置项（int/bool），用于持久化保存配置到 XML 文件。",
+      "tags": ["serialization", "oso", "conversion-operator", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:osoInclude/SetConfig.hpp",
+      "type": "file",
+      "name": "SetConfig.hpp",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "summary": "由 osoFile/SetConfig.oso 自动生成的 C++ 头文件，定义 SetConfig 类的完整实现，包含 22 个产品参数字段的序列化/反序列化逻辑，是本项目最大的自动生成文件（314 行）。",
+      "tags": ["auto-generated", "oso", "serialization", "configuration", "header"],
+      "complexity": "complex",
+      "languageNotes": "22 个字段的反序列化构造函数采用高度重复的 try-getItem-getValue 模式（112 行），序列化方法同样重复构造 22 个 ObjectStoreItem（89 行），典型的自动代码生成风格。"
+    },
+    {
+      "id": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "class",
+      "name": "SetConfig",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [7, 43],
+      "summary": "产品参数配置类（OSO 自动生成），管理光电传感器时序、双相机限位/曝光/增益/像素当量（各 7 个参数）、语言切换索引和形状匹配评分参数（Score/MaxOverlap/Greediness），共 22 个可持久化字段。",
+      "tags": ["configuration", "auto-generated", "oso", "camera", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "function",
+      "name": "SetConfig(assembly)",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [45, 157],
+      "summary": "从 ObjectStoreAssembly 反序列化构造 SetConfig，逐字段提取 22 个配置参数（15 个 double 类型限位/曝光/增益/像素当量参数、1 个 int 语言索引、3 个 double 形状匹配参数等），每个字段缺失时抛出明确的 runtime_error。",
+      "tags": ["constructor", "deserialization", "oso", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "function",
+      "name": "SetConfig(obj)",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [159, 182],
+      "summary": "SetConfig 拷贝构造函数，逐字段复制全部 22 个配置参数，确保深拷贝语义。",
+      "tags": ["constructor", "copy", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "function",
+      "name": "oso::ObjectStoreAssembly()",
+      "filePath": "osoInclude/SetConfig.hpp",
+      "lineRange": [212, 301],
+      "summary": "将 SetConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加 22 个配置项（double/int），用于持久化保存产品参数配置到 XML 文件。",
+      "tags": ["serialization", "oso", "conversion-operator", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "type": "file",
+      "name": "QiXinShiJinDanXiangJi.qrc",
+      "filePath": "qrc/QiXinShiJinDanXiangJi.qrc",
+      "summary": "Qt 资源集合文件，将 icons 目录下的 closeBlack.png 和 closeGray.png 两个图标嵌入应用程序二进制资源中，供 UI 界面引用。",
+      "tags": ["resource", "qt", "icons", "qrc"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/halconData.cpp",
+      "type": "file",
+      "name": "halconData.cpp",
+      "filePath": "src/data/halconData.cpp",
+      "summary": "HalconData 类的实现文件，包含默认构造函数和析构函数的空实现，实际数据成员均为值类型无需特殊资源管理。",
+      "tags": ["implementation", "data-model", "halcon"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "type": "file",
+      "name": "osoFIleUtiltyFunc.cpp",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "summary": "ScoreConfigConvert 工具类的实现文件，提供 toClassIdWithEliConfigMap 和 toClassIdWithDefConfigMap 两个静态方法的具体逻辑，构建分类 ID 与剔废/缺陷判定配置的映射表。",
+      "tags": ["implementation", "utility", "score-config", "defect-detection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "function",
+      "name": "toClassIdWithEliConfigMap",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "lineRange": [5, 27],
+      "summary": "构建分类 ID 到剔废配置的映射表，遍历所有 ClassId 设置基于面积和评分的通用剔废阈值配置，并对特定类别（如钉子）自定义仅启用评分判定、关闭面积判定。",
+      "tags": ["defect-detection", "configuration", "score", "mapping"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "function",
+      "name": "toClassIdWithDefConfigMap",
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "lineRange": [29, 43],
+      "summary": "构建分类 ID 到缺陷判定配置的映射表，默认所有类别禁用缺陷检测（isEnable=false），仅对特定类别（如钉子）启用缺陷判定功能。",
+      "tags": ["defect-detection", "configuration", "mapping"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/data/Utilty.cpp",
+      "type": "file",
+      "name": "Utilty.cpp",
+      "filePath": "src/data/Utilty.cpp",
+      "summary": "Utilty.hpp 中声明的静态成员变量初始化文件，设置两个相机的默认 IP 地址和 ClassId 的分类名称映射表与分类 ID 列表。",
+      "tags": ["implementation", "configuration", "initialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "type": "file",
+      "name": "CameraAndCardStateThread.cpp",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "summary": "CameraAndCardStateThread 类的实现文件，包含线程生命周期管理和两个相机状态检测逻辑的完整实现（105 行）。",
+      "tags": ["implementation", "camera", "thread", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [29, 41],
+      "summary": "线程主循环，每 2 秒调用一次 check_cameraState 执行相机状态检测，内建 4 次循环计数器（runtimeCounts）用于控制检测频率。",
+      "tags": ["thread-loop", "camera", "monitoring"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "function",
+      "name": "check_cameraState1",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [49, 76],
+      "summary": "检测相机 1 的连接状态，仅在 runtimeCounts==0 时执行，根据相机对象是否存在和连接状态发送 updateCameraLabelState、buildCamera、destroyCamera、startMonitor 信号。",
+      "tags": ["camera", "state-detection", "signal"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "function",
+      "name": "check_cameraState2",
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "lineRange": [78, 105],
+      "summary": "检测相机 2 的连接状态，逻辑与 check_cameraState1 对称，针对 camera2 执行相同的连接检测和信号发射流程。",
+      "tags": ["camera", "state-detection", "signal"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "type": "file",
+      "name": "DetachDefectThreadProcess.cpp",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "summary": "DetachDefectThread 类的实现文件，包含线程生命周期管理和双队列剔废处理逻辑的完整实现（107 行），集成相机模块和配置模块执行物理剔废动作。",
+      "tags": ["implementation", "defect", "thread", "elimination"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "function",
+      "name": "processQueue1",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [30, 61],
+      "summary": "处理相机 1 的缺陷剔废队列，从优先级队列取出剔废标记，若为缺陷则根据 SetConfig 的输出延时和持续时间配置，通过 camera1 的 outTrigger 接口执行物理剔废动作。",
+      "tags": ["defect", "elimination", "queue", "camera", "trigger"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "function",
+      "name": "processQueue2",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [63, 94],
+      "summary": "处理相机 2 的缺陷剔废队列，逻辑与 processQueue1 对称，通过 camera2 执行剔废动作，配置相同的输出触发参数（lineSelector=2, lineMode=8, lineSource=5）。",
+      "tags": ["defect", "elimination", "queue", "camera", "trigger"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "lineRange": [96, 107],
+      "summary": "线程主循环，每 1ms 从 Modules 单例获取两个优先级队列，依次调用 processQueue1 和 processQueue2 处理待剔废项。",
+      "tags": ["thread-loop", "defect", "queue", "elimination"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "type": "file",
+      "name": "DetachUtiltyThread.cpp",
+      "filePath": "src/DetachThread/DetachUtiltyThread.cpp",
+      "summary": "DetachUtiltyThread 类的实现文件，包含线程生命周期管理和定时统计信息更新的完整实现（38 行）。",
+      "tags": ["implementation", "utility", "thread", "statistics"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src/DetachThread/DetachUtiltyThread.cpp",
+      "lineRange": [27, 39],
+      "summary": "线程主循环，每秒休眠后发射 updateStatisticalInfo 信号驱动 UI 统计数据刷新，内建 300 秒循环计数器。",
+      "tags": ["thread-loop", "statistics", "signal", "timer"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:include/data/halconData.hpp",
+      "target": "class:include/data/halconData.hpp:HalconData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/halconData.hpp",
+      "target": "class:include/data/halconData.hpp:HalconData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "target": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "target": "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:GlobalPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:ClassId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:ClassId",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:Utility",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:Utility",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/data/Utilty.hpp",
+      "target": "class:include/data/Utilty.hpp:MatInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "target": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "target": "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "target": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "target": "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/DetachThread/DetachUtiltyThread.h",
+      "target": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/DetachThread/DetachUtiltyThread.h",
+      "target": "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/HalconDisplay.hpp",
+      "target": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/HalconDisplay.hpp",
+      "target": "class:include/func/HalconDisplay.hpp:HalconDisplay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/NoHardWare/TestImgPushThread.hpp",
+      "target": "class:include/NoHardWare/TestImgPushThread.hpp:TestImgPushThread",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/CaiHuiPrintInspection.h",
+      "target": "class:include/ui/CaiHuiPrintInspection.h:CaiHuiPrintInspection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "class:include/ui/Dlg_createshapemodel.h:Dlg_createshapemodel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/ui/DlgProductSet.h",
+      "target": "class:include/ui/DlgProductSet.h:DlgProductSet",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "target": "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(assembly)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:SetConfig(obj)",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:osoInclude/SetConfig.hpp",
+      "target": "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "function:src/DetachThread/DetachDefectThreadProcess.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "function:src/DetachThread/DetachUtiltyThread.cpp:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/data/halconData.cpp",
+      "target": "file:include/data/halconData.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/data/Utilty.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "target": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "target": "file:include/DetachThread/DetachDefectThreadProcess.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/DetachThread/DetachUtiltyThread.cpp",
+      "target": "file:include/DetachThread/DetachUtiltyThread.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:osoFile/CaiHuiPrintInspection.oso",
+      "target": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoFile/SetConfig.oso",
+      "target": "file:osoInclude/SetConfig.hpp",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "file:include/data/halconData.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/ui/Dlg_createshapemodel.h",
+      "target": "file:include/func/HalconDisplay.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "file:include/data/halconData.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:include/func/ImageProcessorModule.hpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/data/Utilty.cpp",
+      "target": "file:include/data/Utilty.hpp",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:CMakeLists.txt",
+      "target": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:CMakeLists.txt",
+      "target": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:qrc/QiXinShiJinDanXiangJi.qrc",
+      "target": "file:include/ui/CaiHuiPrintInspection.h",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:osoFile/CaiHuiPrintInspection.oso",
+      "target": "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:osoFile/SetConfig.oso",
+      "target": "class:osoInclude/SetConfig.hpp:SetConfig",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 59,
+    "filesWithImports": 9,
+    "totalEdges": 19
+  },
+  "importMap": {
+    ".understand-anything/.understandignore": [],
+    "CMakeLists.txt": [],
+    "include/data/halconData.hpp": [],
+    "include/data/osoFIleUtiltyFunc.hpp": [],
+    "include/data/Utilty.hpp": [],
+    "include/DetachThread/CameraAndCardStateThread.h": [],
+    "include/DetachThread/DetachDefectThreadProcess.h": [],
+    "include/DetachThread/DetachUtiltyThread.h": [],
+    "include/func/HalconDisplay.hpp": [],
+    "include/func/ImageProcessorModule.hpp": [],
+    "include/Modules/CameraModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/ConfigManagerModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/EliminateModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/ImgProModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/ImgSaveModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/IModule.hpp": [],
+    "include/Modules/Modules.hpp": [
+      "include/Modules/CameraModule.hpp",
+      "include/Modules/ConfigManagerModule.hpp",
+      "include/Modules/EliminateModule.hpp",
+      "include/Modules/ImgProModule.hpp",
+      "include/Modules/ImgSaveModule.hpp",
+      "include/Modules/IModule.hpp",
+      "include/Modules/ReconnectModule.hpp",
+      "include/Modules/RuntimeInfoModule.hpp",
+      "include/Modules/TestModule.hpp",
+      "include/Modules/UIModule.hpp",
+      "include/Modules/WarningModule.hpp"
+    ],
+    "include/Modules/ReconnectModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/RuntimeInfoModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/TestModule.hpp": [],
+    "include/Modules/UIModule.hpp": [
+      "include/Modules/IModule.hpp"
+    ],
+    "include/Modules/WarningModule.hpp": [],
+    "include/NoHardWare/TestImgPushThread.hpp": [],
+    "include/ui/CaiHuiPrintInspection.h": [],
+    "include/ui/Dlg_createshapemodel.h": [],
+    "include/ui/DlgProductSet.h": [],
+    "osoFile/CaiHuiPrintInspection.oso": [],
+    "osoFile/SetConfig.oso": [],
+    "osoInclude/CaiHuiPrintInspection.hpp": [],
+    "osoInclude/SetConfig.hpp": [],
+    "qrc/QiXinShiJinDanXiangJi.qrc": [],
+    "src/data/halconData.cpp": [],
+    "src/data/osoFIleUtiltyFunc.cpp": [],
+    "src/data/Utilty.cpp": [],
+    "src/DetachThread/CameraAndCardStateThread.cpp": [],
+    "src/DetachThread/DetachDefectThreadProcess.cpp": [],
+    "src/DetachThread/DetachUtiltyThread.cpp": [],
+    "src/func/HalconDisplay.cpp": [],
+    "src/func/ImageProcessorModule.cpp": [],
+    "src/main.cpp": [],
+    "src/Modules/CameraModule.cpp": [],
+    "src/Modules/ConfigManagerModule.cpp": [],
+    "src/Modules/EliminateModule.cpp": [],
+    "src/Modules/ImgProModule.cpp": [],
+    "src/Modules/ImgSaveModule.cpp": [],
+    "src/Modules/IModule.cpp": [],
+    "src/Modules/Modules.cpp": [],
+    "src/Modules/ReconnectModule.cpp": [],
+    "src/Modules/RuntimeInfoModule.cpp": [],
+    "src/Modules/TestModule.cpp": [],
+    "src/Modules/UIModule.cpp": [],
+    "src/Modules/WarningModule.cpp": [],
+    "src/NoHardWare/TestImgPushThread.cpp": [],
+    "src/ui/CaiHuiPrintInspection.cpp": [],
+    "src/ui/Dlg_createshapemodel.cpp": [],
+    "src/ui/DlgProductSet.cpp": [],
+    "ui/CaiHuiPrintInspection.ui": [],
+    "ui/Dlg_createshapemodel.ui": [],
+    "ui/DlgProductSet.ui": []
+  }
+}

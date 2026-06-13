@@ -1,0 +1,1323 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "file:src/main.cpp",
+      "score": 5,
+      "name": "main.cpp",
+      "summary": "应用程序入口点，负责初始化 Qt 应用、创建 Modules 实例、构建连接、启动主窗口并以全屏模式运行。"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "score": 2,
+      "name": ".understandignore",
+      "summary": "Understand-Anything 分析工具的忽略规则文件，定义排除分析的文件/目录模式，语法兼容 .gitignore。当前仅包含注释和示例说明，未激活任何排除规则。"
+    },
+    {
+      "id": "file:osoFile/CaiHuiPrintInspection.oso",
+      "score": 2,
+      "name": "CaiHuiPrintInspection.oso",
+      "summary": "Object Store Object 格式的数据模型定义文件，描述 CaiHuiPrintInspectionConfig 类的序列化结构（totalDefectiveVolume、isDebug、isDefect、isSaveImg 四个字段），由 CMake 构建时通过 oso_wrap_oso 生成对应的 C++ 头文件。"
+    },
+    {
+      "id": "file:osoFile/SetConfig.oso",
+      "score": 2,
+      "name": "SetConfig.oso",
+      "summary": "Object Store Object 格式的配置模型定义文件，描述 SetConfig 类的序列化结构，包含双相机限位/曝光/增益参数（各 7 项）、语言索引和形状匹配评分参数等共 22 个字段。"
+    },
+    {
+      "id": "file:include/Modules/Modules.hpp",
+      "score": 1,
+      "name": "Modules.hpp",
+      "summary": "全局模块编排器头文件，定义 Modules 单例类，继承 IModule<bool>，持有并管理所有子模块（相机、图像处理、UI、配置、剔除等）的生命周期，提供统一构建/销毁/启动/停止接口及配置文件的运行时检查与格式修正功能。"
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:include/Modules/IModule.hpp",
+      "fanIn": 9,
+      "name": "IModule.hpp"
+    },
+    {
+      "id": "file:src/Modules/Modules.cpp",
+      "fanIn": 8,
+      "name": "Modules.cpp"
+    },
+    {
+      "id": "file:include/data/Utilty.hpp",
+      "fanIn": 4,
+      "name": "Utilty.hpp"
+    },
+    {
+      "id": "file:include/data/halconData.hpp",
+      "fanIn": 3,
+      "name": "halconData.hpp"
+    },
+    {
+      "id": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "fanIn": 3,
+      "name": "CaiHuiPrintInspection.cpp"
+    },
+    {
+      "id": "file:include/ui/CaiHuiPrintInspection.h",
+      "fanIn": 2,
+      "name": "CaiHuiPrintInspection.h"
+    },
+    {
+      "id": "file:src/func/HalconDisplay.cpp",
+      "fanIn": 2,
+      "name": "HalconDisplay.cpp"
+    },
+    {
+      "id": "file:src/ui/DlgProductSet.cpp",
+      "fanIn": 2,
+      "name": "DlgProductSet.cpp"
+    },
+    {
+      "id": "file:include/Modules/CameraModule.hpp",
+      "fanIn": 1,
+      "name": "CameraModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/EliminateModule.hpp",
+      "fanIn": 1,
+      "name": "EliminateModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/ImgSaveModule.hpp",
+      "fanIn": 1,
+      "name": "ImgSaveModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/RuntimeInfoModule.hpp",
+      "fanIn": 1,
+      "name": "RuntimeInfoModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/UIModule.hpp",
+      "fanIn": 1,
+      "name": "UIModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/ConfigManagerModule.hpp",
+      "fanIn": 1,
+      "name": "ConfigManagerModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/ImgProModule.hpp",
+      "fanIn": 1,
+      "name": "ImgProModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/ReconnectModule.hpp",
+      "fanIn": 1,
+      "name": "ReconnectModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/TestModule.hpp",
+      "fanIn": 1,
+      "name": "TestModule.hpp"
+    },
+    {
+      "id": "file:include/Modules/WarningModule.hpp",
+      "fanIn": 1,
+      "name": "WarningModule.hpp"
+    },
+    {
+      "id": "file:include/data/osoFIleUtiltyFunc.hpp",
+      "fanIn": 1,
+      "name": "osoFIleUtiltyFunc.hpp"
+    },
+    {
+      "id": "file:include/DetachThread/CameraAndCardStateThread.h",
+      "fanIn": 1,
+      "name": "CameraAndCardStateThread.h"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:src/ui/CaiHuiPrintInspection.cpp",
+      "fanOut": 31,
+      "name": "CaiHuiPrintInspection.cpp"
+    },
+    {
+      "id": "file:src/ui/Dlg_createshapemodel.cpp",
+      "fanOut": 29,
+      "name": "Dlg_createshapemodel.cpp"
+    },
+    {
+      "id": "file:src/Modules/Modules.cpp",
+      "fanOut": 23,
+      "name": "Modules.cpp"
+    },
+    {
+      "id": "file:src/func/HalconDisplay.cpp",
+      "fanOut": 22,
+      "name": "HalconDisplay.cpp"
+    },
+    {
+      "id": "file:src/func/ImageProcessorModule.cpp",
+      "fanOut": 22,
+      "name": "ImageProcessorModule.cpp"
+    },
+    {
+      "id": "file:src/ui/DlgProductSet.cpp",
+      "fanOut": 22,
+      "name": "DlgProductSet.cpp"
+    },
+    {
+      "id": "file:src/Modules/ImgProModule.cpp",
+      "fanOut": 20,
+      "name": "ImgProModule.cpp"
+    },
+    {
+      "id": "file:include/Modules/Modules.hpp",
+      "fanOut": 15,
+      "name": "Modules.hpp"
+    },
+    {
+      "id": "file:src/Modules/CameraModule.cpp",
+      "fanOut": 13,
+      "name": "CameraModule.cpp"
+    },
+    {
+      "id": "file:include/data/Utilty.hpp",
+      "fanOut": 8,
+      "name": "Utilty.hpp"
+    },
+    {
+      "id": "file:osoInclude/SetConfig.hpp",
+      "fanOut": 8,
+      "name": "SetConfig.hpp"
+    },
+    {
+      "id": "file:src/DetachThread/CameraAndCardStateThread.cpp",
+      "fanOut": 7,
+      "name": "CameraAndCardStateThread.cpp"
+    },
+    {
+      "id": "file:src/DetachThread/DetachDefectThreadProcess.cpp",
+      "fanOut": 7,
+      "name": "DetachDefectThreadProcess.cpp"
+    },
+    {
+      "id": "file:include/func/ImageProcessorModule.hpp",
+      "fanOut": 6,
+      "name": "ImageProcessorModule.hpp"
+    },
+    {
+      "id": "file:osoInclude/CaiHuiPrintInspection.hpp",
+      "fanOut": 6,
+      "name": "CaiHuiPrintInspection.hpp"
+    },
+    {
+      "id": "file:src/data/osoFIleUtiltyFunc.cpp",
+      "fanOut": 6,
+      "name": "osoFIleUtiltyFunc.cpp"
+    },
+    {
+      "id": "file:src/Modules/ReconnectModule.cpp",
+      "fanOut": 6,
+      "name": "ReconnectModule.cpp"
+    },
+    {
+      "id": "file:src/Modules/UIModule.cpp",
+      "fanOut": 5,
+      "name": "UIModule.cpp"
+    },
+    {
+      "id": "file:include/Modules/ConfigManagerModule.hpp",
+      "fanOut": 4,
+      "name": "ConfigManagerModule.hpp"
+    },
+    {
+      "id": "file:src/main.cpp",
+      "fanOut": 4,
+      "name": "main.cpp"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:src/main.cpp",
+    "order": [
+      "file:src/main.cpp",
+      "file:src/Modules/Modules.cpp",
+      "file:src/ui/CaiHuiPrintInspection.cpp",
+      "file:src/Modules/CameraModule.cpp",
+      "file:src/Modules/ImgProModule.cpp",
+      "file:src/Modules/ImgSaveModule.cpp",
+      "file:src/Modules/EliminateModule.cpp",
+      "file:src/Modules/ConfigManagerModule.cpp",
+      "file:src/Modules/ReconnectModule.cpp",
+      "file:src/Modules/RuntimeInfoModule.cpp",
+      "file:src/Modules/UIModule.cpp",
+      "file:src/Modules/TestModule.cpp",
+      "file:src/ui/DlgProductSet.cpp",
+      "file:ui/CaiHuiPrintInspection.ui",
+      "file:src/func/ImageProcessorModule.cpp",
+      "file:src/NoHardWare/TestImgPushThread.cpp",
+      "file:ui/DlgProductSet.ui",
+      "file:src/func/HalconDisplay.cpp"
+    ],
+    "depthMap": {
+      "file:src/main.cpp": 0,
+      "file:src/Modules/Modules.cpp": 1,
+      "file:src/ui/CaiHuiPrintInspection.cpp": 1,
+      "file:src/Modules/CameraModule.cpp": 2,
+      "file:src/Modules/ImgProModule.cpp": 2,
+      "file:src/Modules/ImgSaveModule.cpp": 2,
+      "file:src/Modules/EliminateModule.cpp": 2,
+      "file:src/Modules/ConfigManagerModule.cpp": 2,
+      "file:src/Modules/ReconnectModule.cpp": 2,
+      "file:src/Modules/RuntimeInfoModule.cpp": 2,
+      "file:src/Modules/UIModule.cpp": 2,
+      "file:src/Modules/TestModule.cpp": 2,
+      "file:src/ui/DlgProductSet.cpp": 2,
+      "file:ui/CaiHuiPrintInspection.ui": 2,
+      "file:src/func/ImageProcessorModule.cpp": 3,
+      "file:src/NoHardWare/TestImgPushThread.cpp": 3,
+      "file:ui/DlgProductSet.ui": 3,
+      "file:src/func/HalconDisplay.cpp": 4
+    },
+    "byDepth": {
+      "0": [
+        "file:src/main.cpp"
+      ],
+      "1": [
+        "file:src/Modules/Modules.cpp",
+        "file:src/ui/CaiHuiPrintInspection.cpp"
+      ],
+      "2": [
+        "file:src/Modules/CameraModule.cpp",
+        "file:src/Modules/ImgProModule.cpp",
+        "file:src/Modules/ImgSaveModule.cpp",
+        "file:src/Modules/EliminateModule.cpp",
+        "file:src/Modules/ConfigManagerModule.cpp",
+        "file:src/Modules/ReconnectModule.cpp",
+        "file:src/Modules/RuntimeInfoModule.cpp",
+        "file:src/Modules/UIModule.cpp",
+        "file:src/Modules/TestModule.cpp",
+        "file:src/ui/DlgProductSet.cpp",
+        "file:ui/CaiHuiPrintInspection.ui"
+      ],
+      "3": [
+        "file:src/func/ImageProcessorModule.cpp",
+        "file:src/NoHardWare/TestImgPushThread.cpp",
+        "file:ui/DlgProductSet.ui"
+      ],
+      "4": [
+        "file:src/func/HalconDisplay.cpp"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:CMakeLists.txt",
+        "name": "CMakeLists.txt",
+        "summary": "项目顶层 CMake 构建配置文件，定义 C++17/Qt6 构建标准，配置 Qt MOC/RCC 自动处理，集成 OpenCV、Halcon、TensorRT、ONNX Runtime 等第三方库，并设置 windeployqt 打包和 DLL 复制后处理步骤。"
+      }
+    ],
+    "infrastructure": [],
+    "data": [],
+    "config": []
+  },
+  "clusters": [
+    {
+      "nodes": [
+        "file:src/Modules/CameraModule.cpp",
+        "file:src/Modules/Modules.cpp",
+        "file:src/Modules/ImgProModule.cpp",
+        "file:src/func/ImageProcessorModule.cpp"
+      ],
+      "edgeCount": 2
+    }
+  ],
+  "layers": {
+    "count": 0,
+    "list": []
+  },
+  "nodeSummaryIndex": {
+    "file:include/Modules/IModule.hpp": {
+      "name": "IModule.hpp",
+      "type": "file",
+      "summary": "定义模块基础接口的模板头文件，声明所有模块必须实现的 build/destroy/start/stop 四个纯虚生命周期方法，是整个模块体系的核心契约。"
+    },
+    "file:include/Modules/CameraModule.hpp": {
+      "name": "CameraModule.hpp",
+      "type": "file",
+      "summary": "相机模块头文件，负责双相机（camera1/camera2）的构建、销毁与启停控制，通过 Qt 信号槽机制传递帧数据，构建错误通过 BuildError 枚举返回。"
+    },
+    "file:include/Modules/EliminateModule.hpp": {
+      "name": "EliminateModule.hpp",
+      "type": "file",
+      "summary": "缺陷剔除模块头文件，管理两个线程安全的产品优先级队列和独立的缺陷检测预处理线程，用于实时产品缺陷的识别与剔除。"
+    },
+    "file:include/Modules/ImgSaveModule.hpp": {
+      "name": "ImgSaveModule.hpp",
+      "type": "file",
+      "summary": "图像保存模块头文件，封装多线程图像保存引擎，支持可配置的保存线程数（默认4线程）和 JPEG 压缩质量（默认80）。"
+    },
+    "file:include/Modules/RuntimeInfoModule.hpp": {
+      "name": "RuntimeInfoModule.hpp",
+      "type": "file",
+      "summary": "运行时信息模块头文件，追踪检测统计数据（废品计数）和系统运行状态（调试/移除功能开启/停止），通过独立工具线程异步更新。"
+    },
+    "file:include/Modules/UIModule.hpp": {
+      "name": "UIModule.hpp",
+      "type": "file",
+      "summary": "UI 模块头文件，作为主窗口（CaiHuiPrintInspection）和产品设置对话框（DlgProductSet）的持有者，通过前向声明解耦 UI 组件与模块系统。"
+    },
+    "class:include/Modules/IModule.hpp:IModule": {
+      "name": "IModule",
+      "type": "class",
+      "summary": "模块基础接口模板类，定义 build()、destroy()、start()、stop() 四个纯虚函数，所有功能模块必须继承并实现此接口。"
+    },
+    "class:include/Modules/CameraModule.hpp:CameraModule": {
+      "name": "CameraModule",
+      "type": "class",
+      "summary": "双相机控制模块，同时管理两个 CameraPassiveThread 实例，通过 Qt 信号槽提供帧捕获事件通知（frameCaptured1/frameCaptured2），支持按相机索引构建、销毁和启动操作。"
+    },
+    "class:include/Modules/EliminateModule.hpp:EliminateModule": {
+      "name": "EliminateModule",
+      "type": "class",
+      "summary": "缺陷剔除模块，维护两个 ThreadSafeHeap 优先级队列用于产品排序与剔除决策，通过 DetachDefectThread 在独立线程中执行缺陷检测预处理。"
+    },
+    "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule": {
+      "name": "ImgSaveModule",
+      "type": "class",
+      "summary": "图像保存模块，封装 ImageSaveEngine 实现多线程图像持久化存储，默认使用4个保存线程和 JPEG 质量80的压缩参数。"
+    },
+    "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule": {
+      "name": "RuntimeInfoModule",
+      "type": "class",
+      "summary": "运行时信息模块，通过 StatisticalInfo 内嵌结构体和原子变量追踪废品计数，通过 RunningState 枚举管理调试/移除/停止三种系统运行模式。"
+    },
+    "class:include/Modules/UIModule.hpp:UIModule": {
+      "name": "UIModule",
+      "type": "class",
+      "summary": "UI 模块，持有指向主界面 CaiHuiPrintInspection 和产品设置对话框 DlgProductSet 的裸指针，作为 UI 层与模块系统之间的桥梁。"
+    },
+    "file:include/Modules/ConfigManagerModule.hpp": {
+      "name": "ConfigManagerModule.hpp",
+      "type": "file",
+      "summary": "配置管理模块头文件，定义 ConfigManagerModule 类，继承 QObject 和 IModule<bool>，提供配置文件的加载、保存、合并功能，包含模板函数 loadConfigSafe 用于安全的配置反序列化与自动合并默认值。"
+    },
+    "file:include/Modules/ImgProModule.hpp": {
+      "name": "ImgProModule.hpp",
+      "type": "file",
+      "summary": "图像处理模块头文件，定义 ImgProModule 类，继承 QObject 和 IModule<bool>，管理图像处理流水线的构建与销毁，包含预处理上下文、多路图像处理器及信号槽驱动的参数更新机制。"
+    },
+    "file:include/Modules/Modules.hpp": {
+      "name": "Modules.hpp",
+      "type": "file",
+      "summary": "全局模块编排器头文件，定义 Modules 单例类，继承 IModule<bool>，持有并管理所有子模块（相机、图像处理、UI、配置、剔除等）的生命周期，提供统一构建/销毁/启动/停止接口及配置文件的运行时检查与格式修正功能。"
+    },
+    "file:include/Modules/ReconnectModule.hpp": {
+      "name": "ReconnectModule.hpp",
+      "type": "file",
+      "summary": "重连模块头文件，定义 ReconnectModule 类，继承 QObject 和 IModule<void>，通过后台线程 CameraAndCardStateThread 监控相机与采集卡状态以实现自动重连。"
+    },
+    "file:include/Modules/TestModule.hpp": {
+      "name": "TestModule.hpp",
+      "type": "file",
+      "summary": "测试模块头文件，定义 TestModule 类，继承 QObject 和 IModule<void>，在 BUILD_WITHOUT_HARDWARE 宏定义下启用，通过 TestImgPushThread 提供模拟图像推送功能，用于无硬件环境下的软件测试。"
+    },
+    "file:include/Modules/WarningModule.hpp": {
+      "name": "WarningModule.hpp",
+      "type": "file",
+      "summary": "告警模块头文件（空文件占位），预留用于未来实现告警/通知功能。"
+    },
+    "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule": {
+      "name": "ConfigManagerModule",
+      "type": "class",
+      "summary": "配置管理模块类，继承 QObject 和 IModule<bool>，管理应用配置的加载、保存与更新，持有 StorageContext 序列化上下文、CaiHuiPrintInspectionConfig 主配置、SetConfig 设置配置及 HalconData 向量。"
+    },
+    "class:include/Modules/ImgProModule.hpp:ImgProModule": {
+      "name": "ImgProModule",
+      "type": "class",
+      "summary": "图像处理模块类，继承 QObject 和 IModule<bool>，管理图像预处理上下文和双路 ImageProcessingModule 实例，通过信号槽 onUpdateImgProContext 接收外部参数更新通知并重置处理状态。"
+    },
+    "class:include/Modules/Modules.hpp:Modules": {
+      "name": "Modules",
+      "type": "class",
+      "summary": "全局模块编排单例类，继承 IModule<bool>，聚合所有子模块实例（Camera/Reconnect/UI/ConfigManager/RuntimeInfo/ImgSave/ImgPro/Eliminate），提供统一的 build/destroy/start/stop/connect 生命周期管理及静态配置检查工具方法。"
+    },
+    "class:include/Modules/ReconnectModule.hpp:ReconnectModule": {
+      "name": "ReconnectModule",
+      "type": "class",
+      "summary": "重连模块类，继承 QObject 和 IModule<void>，通过 CameraAndCardStateThread 后台线程持续监控相机与采集卡在线状态，异常断开时自动触发重连。"
+    },
+    "class:include/Modules/TestModule.hpp:TestModule": {
+      "name": "TestModule",
+      "type": "class",
+      "summary": "测试模块类，继承 QObject 和 IModule<void>，在无硬件编译模式 (BUILD_WITHOUT_HARDWARE) 下启用，通过 TestImgPushThread 控制模拟图像推送，用于软件功能测试与调试。"
+    },
+    "function:include/Modules/ConfigManagerModule.hpp:loadConfigSafe": {
+      "name": "loadConfigSafe",
+      "type": "function",
+      "summary": "模板函数，泛型安全加载配置文件：检查文件存在性、尝试反序列化，失败时通过 AssemblyMergeTool 合并默认配置字段后重试，实现配置文件的容错加载与自动升级。"
+    },
+    "function:include/Modules/Modules.hpp:checkFileExistAndFormat": {
+      "name": "checkFileExistAndFormat",
+      "type": "function",
+      "summary": "静态模板函数，运行时检查配置文件是否存在且格式正确，若格式不匹配则通过 AssemblyMergeTool 自动合并默认值并重新保存，若文件不存在则创建默认配置文件。"
+    },
+    "file:.understand-anything/.understandignore": {
+      "name": ".understandignore",
+      "type": "file",
+      "summary": "Understand-Anything 分析工具的忽略规则文件，定义排除分析的文件/目录模式，语法兼容 .gitignore。当前仅包含注释和示例说明，未激活任何排除规则。"
+    },
+    "document:CMakeLists.txt": {
+      "name": "CMakeLists.txt",
+      "type": "document",
+      "summary": "项目顶层 CMake 构建配置文件，定义 C++17/Qt6 构建标准，配置 Qt MOC/RCC 自动处理，集成 OpenCV、Halcon、TensorRT、ONNX Runtime 等第三方库，并设置 windeployqt 打包和 DLL 复制后处理步骤。"
+    },
+    "file:include/data/halconData.hpp": {
+      "name": "halconData.hpp",
+      "type": "file",
+      "summary": "HalconData 数据结构的头文件声明，封装 Halcon 图像处理所需的全部配置数据和运行时状态，包括模板 ID、曝光增益参数、对比度设置和感兴趣区域。"
+    },
+    "class:include/data/halconData.hpp:HalconData": {
+      "name": "HalconData",
+      "type": "class",
+      "summary": "Halcon 检测参数的数据载体类，存储每个相机的图像处理对象、形状匹配模板 ID 列表、曝光/增益参数、对比度阈值以及创建/屏蔽区域集合。"
+    },
+    "file:include/data/osoFIleUtiltyFunc.hpp": {
+      "name": "osoFIleUtiltyFunc.hpp",
+      "type": "file",
+      "summary": "ScoreConfigConvert 工具类的头文件，提供评分配置与分类 ID 映射的转换函数声明，用于将评分因子转换为剔废和缺陷判定配置。"
+    },
+    "class:include/data/osoFIleUtiltyFunc.hpp:ScoreConfigConvert": {
+      "name": "ScoreConfigConvert",
+      "type": "class",
+      "summary": "评分配置转换工具类，提供静态方法将面积因子和评分因子转换为剔废配置映射（toClassIdWithEliConfigMap）和缺陷判定配置映射（toClassIdWithDefConfigMap）。"
+    },
+    "file:include/data/Utilty.hpp": {
+      "name": "Utilty.hpp",
+      "type": "file",
+      "summary": "全局工具头文件，定义项目路径配置（GlobalPath）、缺陷分类 ID 枚举（ClassId）、相机 IP 配置（Utility）和图像信息载体（MatInfo）四个核心数据结构。"
+    },
+    "class:include/data/Utilty.hpp:GlobalPath": {
+      "name": "GlobalPath",
+      "type": "class",
+      "summary": "全局路径配置结构体，定义项目根目录、配置文件路径、模型路径和图像保存路径等关键目录，以全局单例 globalPath 实例化。"
+    },
+    "class:include/data/Utilty.hpp:ClassId": {
+      "name": "ClassId",
+      "type": "class",
+      "summary": "缺陷分类 ID 枚举结构体，定义分类编号范围（minNum/maxNum）、具体分类常量（如 dingZi）和分类名称映射表，支持扩展新的缺陷类别。"
+    },
+    "class:include/data/Utilty.hpp:Utility": {
+      "name": "Utility",
+      "type": "class",
+      "summary": "相机 IP 配置结构体，静态存储两个工业相机的 IP 地址字符串，供相机连接模块引用。"
+    },
+    "class:include/data/Utilty.hpp:MatInfo": {
+      "name": "MatInfo",
+      "type": "class",
+      "summary": "图像信息载体结构体，封装 OpenCV Mat 图像数据、拍照时间点位置和相机下标索引，用于在线程间传递图像帧信息。"
+    },
+    "file:include/DetachThread/CameraAndCardStateThread.h": {
+      "name": "CameraAndCardStateThread.h",
+      "type": "file",
+      "summary": "相机与卡状态监控线程的头文件，声明 CameraAndCardStateThread 类（继承 QThread），负责周期性检测两个相机的连接状态并通过信号更新 UI。"
+    },
+    "class:include/DetachThread/CameraAndCardStateThread.h:CameraAndCardStateThread": {
+      "name": "CameraAndCardStateThread",
+      "type": "class",
+      "summary": "相机与卡状态监控线程类（QThread 子类），提供 startThread/stopThread 控制接口，run 循环中每 2 秒检测相机连接状态，通过信号通知 UI 更新、相机构建/销毁和监控启停。"
+    },
+    "file:include/DetachThread/DetachDefectThreadProcess.h": {
+      "name": "DetachDefectThreadProcess.h",
+      "type": "file",
+      "summary": "缺陷剔废处理线程的头文件，声明 DetachDefectThread 类（继承 QThread），负责从优先级队列中取出剔废结果并执行物理剔废动作。"
+    },
+    "class:include/DetachThread/DetachDefectThreadProcess.h:DetachDefectThread": {
+      "name": "DetachDefectThread",
+      "type": "class",
+      "summary": "缺陷剔废处理线程类（QThread 子类），管理 processQueue1/processQueue2 两个队列处理函数，分别对应两个相机的剔废操作，通过 run 循环持续消费优先级队列中的缺陷判定结果。"
+    },
+    "file:include/DetachThread/DetachUtiltyThread.h": {
+      "name": "DetachUtiltyThread.h",
+      "type": "file",
+      "summary": "通用工具线程的头文件，声明 DetachUtiltyThread 类（继承 QThread），负责定时发送统计信息更新信号和周期性任务。"
+    },
+    "class:include/DetachThread/DetachUtiltyThread.h:DetachUtiltyThread": {
+      "name": "DetachUtiltyThread",
+      "type": "class",
+      "summary": "通用工具线程类（QThread 子类），每秒触发一次统计信息更新信号，内建 300 秒循环计数器，用于驱动 UI 统计数据刷新等周期性任务。"
+    },
+    "file:include/func/HalconDisplay.hpp": {
+      "name": "HalconDisplay.hpp",
+      "type": "file",
+      "summary": "Halcon 图像显示封装模块的头文件，定义 HalconDisplay 类（继承 QObject），封装 Halcon 窗口的创建、图像显示、缩放平移交互和 OpenCV Mat 互转等全部功能。"
+    },
+    "class:include/func/HalconDisplay.hpp:HalconDisplay": {
+      "name": "HalconDisplay",
+      "type": "class",
+      "summary": "Halcon 图像显示封装类，管理 Halcon 窗口生命周期，提供 initialize/closeWindow 窗口管理、displayImage/displayMat 图像显示、setDisplayPart/resetDisplayPart 缩放控制，以及 matToHObject 静态转换方法和交互式平移功能。支持移动语义，禁止拷贝。"
+    },
+    "file:include/func/ImageProcessorModule.hpp": {
+      "name": "ImageProcessorModule.hpp",
+      "type": "file",
+      "summary": "图像处理模块的头文件，定义 ImageProcessor（QThread 子类，执行缺陷检测推理）和 ImageProcessingModule（管理多消费者处理管线）两个核心类，构成多线程图像处理框架。"
+    },
+    "class:include/func/ImageProcessorModule.hpp:ImageProcessor": {
+      "name": "ImageProcessor",
+      "type": "class",
+      "summary": "图像处理器线程类（QThread 子类），从共享队列消费 MatInfo 帧数据，执行调试模式或剔废模式下的图像处理：调用 matchAllShapeModels 进行 Halcon 形状模板匹配，通过 buildObbModelEngine 加载 ONNX/TensorRT 推理引擎，处理完成后发射 imageReady 信号。"
+    },
+    "class:include/func/ImageProcessorModule.hpp:ImageProcessingModule": {
+      "name": "ImageProcessingModule",
+      "type": "class",
+      "summary": "图像处理管线管理类，通过 BuildModule 初始化指定数量的 ImageProcessor 消费者线程，接收相机回调 onFrameCaptured 将帧推入共享队列，实现生产者-消费者模式的多线程图像处理调度。"
+    },
+    "file:include/NoHardWare/TestImgPushThread.hpp": {
+      "name": "TestImgPushThread.hpp",
+      "type": "file",
+      "summary": "无硬件测试模式下的图像推送线程头文件（条件编译 BUILD_WITHOUT_HARDWARE），声明 TestImgPushThread 类，从本地目录预加载测试图像并按指定间隔推送到处理管线。"
+    },
+    "class:include/NoHardWare/TestImgPushThread.hpp:TestImgPushThread": {
+      "name": "TestImgPushThread",
+      "type": "class",
+      "summary": "测试图像推送线程类（QThread 子类，仅在 BUILD_WITHOUT_HARDWARE 宏下编译），预加载两个目录的测试图像到内存缓存，按可配置时间间隔（默认 150ms）通过 imgReady/imgReady2 信号推送图像帧，用于无相机硬件环境下的功能测试。"
+    },
+    "file:include/ui/CaiHuiPrintInspection.h": {
+      "name": "CaiHuiPrintInspection.h",
+      "type": "file",
+      "summary": "主窗口类的头文件，声明 CaiHuiPrintInspection（继承 QMainWindow），作为应用程序的顶层 UI 控制器，管理相机显示、Halcon 窗口、语言切换、产品设置和调试模式等全部界面交互。"
+    },
+    "class:include/ui/CaiHuiPrintInspection.h:CaiHuiPrintInspection": {
+      "name": "CaiHuiPrintInspection",
+      "type": "class",
+      "summary": "应用程序主窗口类（QMainWindow 子类），负责构建整体 UI 布局、初始化相机和 Halcon 显示组件、处理四路相机图像刷新显示，并提供语言切换、调试模式、剔废功能、图像保存和产品设置等完整的用户交互接口。"
+    },
+    "file:include/ui/Dlg_createshapemodel.h": {
+      "name": "Dlg_createshapemodel.h",
+      "type": "file",
+      "summary": "形状模板创建对话框的头文件，声明 Dlg_createshapemodel 类（继承 QDialog），提供 Halcon 形状模板的交互式创建功能，包括区域绘制、模板生成和参数配置。"
+    },
+    "class:include/ui/Dlg_createshapemodel.h:Dlg_createshapemodel": {
+      "name": "Dlg_createshapemodel",
+      "type": "class",
+      "summary": "Halcon 形状模板创建对话框类（QDialog 子类），嵌入 HalconDisplay 显示控件，提供读取图像、绘制/屏蔽区域、创建形状模板/XLD 轮廓、设置对比度/曝光/增益参数等完整交互功能，按模板索引（_templateIndex）区分不同相机的模板配置。"
+    },
+    "file:include/ui/DlgProductSet.h": {
+      "name": "DlgProductSet.h",
+      "type": "file",
+      "summary": "产品参数设置对话框的头文件，声明 DlgProductSet 类（继承 QDialog），提供光电传感器时序、输出信号配置和双相机限位/曝光/增益等参数的可视化编辑界面。"
+    },
+    "class:include/ui/DlgProductSet.h:DlgProductSet": {
+      "name": "DlgProductSet",
+      "type": "class",
+      "summary": "产品参数设置对话框类（QDialog 子类），管理光电屏蔽时间、输出信号延时/持续时间的编辑，以及两个相机各自的上/下/左/右限位、曝光、增益和像素当量参数配置，支持测试触发和参数变更通知信号。"
+    },
+    "file:osoFile/CaiHuiPrintInspection.oso": {
+      "name": "CaiHuiPrintInspection.oso",
+      "type": "file",
+      "summary": "Object Store Object 格式的数据模型定义文件，描述 CaiHuiPrintInspectionConfig 类的序列化结构（totalDefectiveVolume、isDebug、isDefect、isSaveImg 四个字段），由 CMake 构建时通过 oso_wrap_oso 生成对应的 C++ 头文件。"
+    },
+    "file:osoFile/SetConfig.oso": {
+      "name": "SetConfig.oso",
+      "type": "file",
+      "summary": "Object Store Object 格式的配置模型定义文件，描述 SetConfig 类的序列化结构，包含双相机限位/曝光/增益参数（各 7 项）、语言索引和形状匹配评分参数等共 22 个字段。"
+    },
+    "file:osoInclude/CaiHuiPrintInspection.hpp": {
+      "name": "CaiHuiPrintInspection.hpp",
+      "type": "file",
+      "summary": "由 osoFile/CaiHuiPrintInspection.oso 自动生成的 C++ 头文件，定义 CaiHuiPrintInspectionConfig 类的完整实现，包括从 ObjectStoreAssembly 反序列化的构造函数和序列化转换运算符。"
+    },
+    "class:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig": {
+      "name": "CaiHuiPrintInspectionConfig",
+      "type": "class",
+      "summary": "打印检测主配置类（OSO 自动生成），包含 totalDefectiveVolume（缺陷总数阈值）、isDebug（调试模式开关）、isDefect（剔废功能开关）和 isSaveImg（图像保存开关）四个运行时配置字段。"
+    },
+    "function:osoInclude/CaiHuiPrintInspection.hpp:CaiHuiPrintInspectionConfig(assembly)": {
+      "name": "CaiHuiPrintInspectionConfig(assembly)",
+      "type": "function",
+      "summary": "从 ObjectStoreAssembly 反序列化构造 CaiHuiPrintInspectionConfig，逐字段取出 totalDefectiveVolume（int）、isDebug（bool）、isDefect（bool）和 isSaveImg（bool），字段缺失时抛出 runtime_error。"
+    },
+    "function:osoInclude/CaiHuiPrintInspection.hpp:oso::ObjectStoreAssembly()": {
+      "name": "oso::ObjectStoreAssembly()",
+      "type": "function",
+      "summary": "将 CaiHuiPrintInspectionConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加四个配置项（int/bool），用于持久化保存配置到 XML 文件。"
+    },
+    "file:osoInclude/SetConfig.hpp": {
+      "name": "SetConfig.hpp",
+      "type": "file",
+      "summary": "由 osoFile/SetConfig.oso 自动生成的 C++ 头文件，定义 SetConfig 类的完整实现，包含 22 个产品参数字段的序列化/反序列化逻辑，是本项目最大的自动生成文件（314 行）。"
+    },
+    "class:osoInclude/SetConfig.hpp:SetConfig": {
+      "name": "SetConfig",
+      "type": "class",
+      "summary": "产品参数配置类（OSO 自动生成），管理光电传感器时序、双相机限位/曝光/增益/像素当量（各 7 个参数）、语言切换索引和形状匹配评分参数（Score/MaxOverlap/Greediness），共 22 个可持久化字段。"
+    },
+    "function:osoInclude/SetConfig.hpp:SetConfig(assembly)": {
+      "name": "SetConfig(assembly)",
+      "type": "function",
+      "summary": "从 ObjectStoreAssembly 反序列化构造 SetConfig，逐字段提取 22 个配置参数（15 个 double 类型限位/曝光/增益/像素当量参数、1 个 int 语言索引、3 个 double 形状匹配参数等），每个字段缺失时抛出明确的 runtime_error。"
+    },
+    "function:osoInclude/SetConfig.hpp:SetConfig(obj)": {
+      "name": "SetConfig(obj)",
+      "type": "function",
+      "summary": "SetConfig 拷贝构造函数，逐字段复制全部 22 个配置参数，确保深拷贝语义。"
+    },
+    "function:osoInclude/SetConfig.hpp:oso::ObjectStoreAssembly()": {
+      "name": "oso::ObjectStoreAssembly()",
+      "type": "function",
+      "summary": "将 SetConfig 序列化为 ObjectStoreAssembly 的转换运算符，构造 assembly 并逐一添加 22 个配置项（double/int），用于持久化保存产品参数配置到 XML 文件。"
+    },
+    "file:qrc/QiXinShiJinDanXiangJi.qrc": {
+      "name": "QiXinShiJinDanXiangJi.qrc",
+      "type": "file",
+      "summary": "Qt 资源集合文件，将 icons 目录下的 closeBlack.png 和 closeGray.png 两个图标嵌入应用程序二进制资源中，供 UI 界面引用。"
+    },
+    "file:src/data/halconData.cpp": {
+      "name": "halconData.cpp",
+      "type": "file",
+      "summary": "HalconData 类的实现文件，包含默认构造函数和析构函数的空实现，实际数据成员均为值类型无需特殊资源管理。"
+    },
+    "file:src/data/osoFIleUtiltyFunc.cpp": {
+      "name": "osoFIleUtiltyFunc.cpp",
+      "type": "file",
+      "summary": "ScoreConfigConvert 工具类的实现文件，提供 toClassIdWithEliConfigMap 和 toClassIdWithDefConfigMap 两个静态方法的具体逻辑，构建分类 ID 与剔废/缺陷判定配置的映射表。"
+    },
+    "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithEliConfigMap": {
+      "name": "toClassIdWithEliConfigMap",
+      "type": "function",
+      "summary": "构建分类 ID 到剔废配置的映射表，遍历所有 ClassId 设置基于面积和评分的通用剔废阈值配置，并对特定类别（如钉子）自定义仅启用评分判定、关闭面积判定。"
+    },
+    "function:src/data/osoFIleUtiltyFunc.cpp:ScoreConfigConvert::toClassIdWithDefConfigMap": {
+      "name": "toClassIdWithDefConfigMap",
+      "type": "function",
+      "summary": "构建分类 ID 到缺陷判定配置的映射表，默认所有类别禁用缺陷检测（isEnable=false），仅对特定类别（如钉子）启用缺陷判定功能。"
+    },
+    "file:src/data/Utilty.cpp": {
+      "name": "Utilty.cpp",
+      "type": "file",
+      "summary": "Utilty.hpp 中声明的静态成员变量初始化文件，设置两个相机的默认 IP 地址和 ClassId 的分类名称映射表与分类 ID 列表。"
+    },
+    "file:src/DetachThread/CameraAndCardStateThread.cpp": {
+      "name": "CameraAndCardStateThread.cpp",
+      "type": "file",
+      "summary": "CameraAndCardStateThread 类的实现文件，包含线程生命周期管理和两个相机状态检测逻辑的完整实现（105 行）。"
+    },
+    "function:src/DetachThread/CameraAndCardStateThread.cpp:run": {
+      "name": "run",
+      "type": "function",
+      "summary": "线程主循环，每 2 秒调用一次 check_cameraState 执行相机状态检测，内建 4 次循环计数器（runtimeCounts）用于控制检测频率。"
+    },
+    "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState1": {
+      "name": "check_cameraState1",
+      "type": "function",
+      "summary": "检测相机 1 的连接状态，仅在 runtimeCounts==0 时执行，根据相机对象是否存在和连接状态发送 updateCameraLabelState、buildCamera、destroyCamera、startMonitor 信号。"
+    },
+    "function:src/DetachThread/CameraAndCardStateThread.cpp:check_cameraState2": {
+      "name": "check_cameraState2",
+      "type": "function",
+      "summary": "检测相机 2 的连接状态，逻辑与 check_cameraState1 对称，针对 camera2 执行相同的连接检测和信号发射流程。"
+    },
+    "file:src/DetachThread/DetachDefectThreadProcess.cpp": {
+      "name": "DetachDefectThreadProcess.cpp",
+      "type": "file",
+      "summary": "DetachDefectThread 类的实现文件，包含线程生命周期管理和双队列剔废处理逻辑的完整实现（107 行），集成相机模块和配置模块执行物理剔废动作。"
+    },
+    "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue1": {
+      "name": "processQueue1",
+      "type": "function",
+      "summary": "处理相机 1 的缺陷剔废队列，从优先级队列取出剔废标记，若为缺陷则根据 SetConfig 的输出延时和持续时间配置，通过 camera1 的 outTrigger 接口执行物理剔废动作。"
+    },
+    "function:src/DetachThread/DetachDefectThreadProcess.cpp:processQueue2": {
+      "name": "processQueue2",
+      "type": "function",
+      "summary": "处理相机 2 的缺陷剔废队列，逻辑与 processQueue1 对称，通过 camera2 执行剔废动作，配置相同的输出触发参数（lineSelector=2, lineMode=8, lineSource=5）。"
+    },
+    "function:src/DetachThread/DetachDefectThreadProcess.cpp:run": {
+      "name": "run",
+      "type": "function",
+      "summary": "线程主循环，每 1ms 从 Modules 单例获取两个优先级队列，依次调用 processQueue1 和 processQueue2 处理待剔废项。"
+    },
+    "file:src/DetachThread/DetachUtiltyThread.cpp": {
+      "name": "DetachUtiltyThread.cpp",
+      "type": "file",
+      "summary": "DetachUtiltyThread 类的实现文件，包含线程生命周期管理和定时统计信息更新的完整实现（38 行）。"
+    },
+    "function:src/DetachThread/DetachUtiltyThread.cpp:run": {
+      "name": "run",
+      "type": "function",
+      "summary": "线程主循环，每秒休眠后发射 updateStatisticalInfo 信号驱动 UI 统计数据刷新，内建 300 秒循环计数器。"
+    },
+    "file:src/func/HalconDisplay.cpp": {
+      "name": "HalconDisplay.cpp",
+      "type": "file",
+      "summary": "封装 Halcon 图像显示窗口的 Qt 组件，提供图像显示、缩放平移事件处理、OpenCV cv::Mat 到 Halcon HObject 转换等核心显示功能。"
+    },
+    "file:src/func/ImageProcessorModule.cpp": {
+      "name": "ImageProcessorModule.cpp",
+      "type": "file",
+      "summary": "图像处理模块核心实现，包含生产者-消费者队列处理管线、模板匹配（matchAllShapeModels）、调试模式和剔除模式等多种图像处理流程。"
+    },
+    "file:src/main.cpp": {
+      "name": "main.cpp",
+      "type": "file",
+      "summary": "应用程序入口点，负责初始化 Qt 应用、创建 Modules 实例、构建连接、启动主窗口并以全屏模式运行。"
+    },
+    "file:src/Modules/CameraModule.cpp": {
+      "name": "CameraModule.cpp",
+      "type": "file",
+      "summary": "相机模块实现，管理双相机（camera1/camera2）的构建、销毁、启动、停止全生命周期，并提供相机元数据校验和帧捕获处理。"
+    },
+    "file:src/Modules/ConfigManagerModule.cpp": {
+      "name": "ConfigManagerModule.cpp",
+      "type": "file",
+      "summary": "配置管理模块，负责从持久化存储加载应用配置（AppConfig和SetConfig），并在销毁时安全保存。"
+    },
+    "file:src/Modules/EliminateModule.cpp": {
+      "name": "EliminateModule.cpp",
+      "type": "file",
+      "summary": "缺陷剔除模块，创建 DetachDefectThread 工作线程和两个最小堆线程安全队列，用于缺陷检测结果的排序和剔除处理。"
+    },
+    "function:src/func/HalconDisplay.cpp:initialize": {
+      "name": "initialize",
+      "type": "function",
+      "summary": "初始化 Halcon 显示窗口，通过 winId 获取窗口句柄并调用 OpenWindow 创建 Halcon 图形窗口，安装事件过滤器。"
+    },
+    "function:src/func/HalconDisplay.cpp:closeWindow": {
+      "name": "closeWindow",
+      "type": "function",
+      "summary": "关闭 Halcon 显示窗口，移除事件过滤器并调用 HalconCpp::CloseWindow 释放图形资源。"
+    },
+    "function:src/func/HalconDisplay.cpp:displayImage": {
+      "name": "displayImage",
+      "type": "function",
+      "summary": "在 Halcon 窗口中显示图像，支持自适应窗口（fitToWindow）和手动设置显示区域，包含缩放比计算和 SetPart 定位。"
+    },
+    "function:src/func/HalconDisplay.cpp:displayImageFromFile": {
+      "name": "displayImageFromFile",
+      "type": "function",
+      "summary": "从文件路径读取图像并调用 displayImage 显示，使用 Halcon ReadImage 加载。"
+    },
+    "function:src/func/HalconDisplay.cpp:clearDisplay": {
+      "name": "clearDisplay",
+      "type": "function",
+      "summary": "清除 Halcon 窗口显示内容，调用 HalconCpp::ClearWindow。"
+    },
+    "function:src/func/HalconDisplay.cpp:eventFilter": {
+      "name": "eventFilter",
+      "type": "function",
+      "summary": "事件过滤器，处理鼠标滚轮缩放、中键拖拽平移和左键绘制交互，实现图像浏览的平移缩放功能。"
+    },
+    "function:src/func/HalconDisplay.cpp:isValid": {
+      "name": "isValid",
+      "type": "function",
+      "summary": "检查 Halcon 显示窗口是否有效，返回 _isInitialized 初始化标志与窗口句柄有效性的逻辑与结果，是几乎所有公开方法的前置条件检查。"
+    },
+    "function:src/func/HalconDisplay.cpp:matToHObject": {
+      "name": "matToHObject",
+      "type": "function",
+      "summary": "将 OpenCV cv::Mat 转换为 Halcon HObject，根据图像通道数和类型自动选择 GenImage1 或 GenImage3 进行转换。"
+    },
+    "function:src/func/HalconDisplay.cpp:displayMat": {
+      "name": "displayMat",
+      "type": "function",
+      "summary": "将 OpenCV cv::Mat 图像通过 matToHObject 转换后用 displayImage 显示，包含异常处理。"
+    },
+    "function:src/func/HalconDisplay.cpp:clampAndApplyPart": {
+      "name": "clampAndApplyPart",
+      "type": "function",
+      "summary": "钳位并应用显示区域参数，确保显示范围在有效图像边界内，处理缩放因子和偏移量的约束。"
+    },
+    "function:src/func/HalconDisplay.cpp:refreshDisplay": {
+      "name": "refreshDisplay",
+      "type": "function",
+      "summary": "刷新 Halcon 显示窗口，根据当前窗口尺寸重新设置显示范围并调用覆盖绘制器。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:AllowOncePer": {
+      "name": "AllowOncePer",
+      "type": "function",
+      "summary": "基于原子变量的限流函数，确保操作在指定时间间隔内只执行一次，使用 atomic compare_exchange_strong 实现无锁控制。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:run": {
+      "name": "run",
+      "type": "function",
+      "summary": "图像处理主循环，从队列中取出帧数据，根据工作模式（调试/剔除）分发到不同处理函数。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:run_debug": {
+      "name": "run_debug",
+      "type": "function",
+      "summary": "调试模式图像处理流程，执行模板匹配并将结果转换为 QImage/QPixmap 用于界面显示。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:run_OpenRemoveFunc": {
+      "name": "run_OpenRemoveFunc",
+      "type": "function",
+      "summary": "生产剔除模式图像处理流程，执行模板匹配后根据匹配结果将图像分发到合格或不合格队列。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:matchAllShapeModels": {
+      "name": "matchAllShapeModels",
+      "type": "function",
+      "summary": "对所有形状模板执行匹配，使用 Halcon FindShapeModel、GetShapeModelContours 和 AffineTransContourXld 进行轮廓匹配与变换。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:buildObbModelEngine": {
+      "name": "buildObbModelEngine",
+      "type": "function",
+      "summary": "构建 OBB（定向包围盒）模型引擎，使用 ModelEngineFactory 创建引擎并配置图像处理上下文参数。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:BuildModule": {
+      "name": "BuildModule",
+      "type": "function",
+      "summary": "构建图像处理模块，将 ImageProcessor 实例加入线程列表并启动所有工作线程。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:ImageProcessingModule": {
+      "name": "ImageProcessingModule",
+      "type": "function",
+      "summary": "ImageProcessingModule 构造函数，初始化指定数量的图像处理器（消费者）和同步原语。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:~ImageProcessingModule": {
+      "name": "~ImageProcessingModule",
+      "type": "function",
+      "summary": "ImageProcessingModule 析构函数，请求中断所有线程、唤醒等待线程并等待全部完成。"
+    },
+    "function:src/func/ImageProcessorModule.cpp:onFrameCaptured": {
+      "name": "onFrameCaptured",
+      "type": "function",
+      "summary": "帧捕获回调，对图像进行预处理（色彩空间转换和类型转换）后加入处理队列并唤醒工作线程。"
+    },
+    "function:src/main.cpp:main": {
+      "name": "main",
+      "type": "function",
+      "summary": "应用程序主入口，创建 QApplication、构建 Modules、连接信号槽、启动主窗口并进入事件循环。"
+    },
+    "function:src/Modules/CameraModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建相机模块，依次构建 camera1 和 camera2，收集构建错误并返回。"
+    },
+    "function:src/Modules/CameraModule.cpp:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "启动两个摄像头的采集监控，根据相机启用状态调用 startMonitor。"
+    },
+    "function:src/Modules/CameraModule.cpp:stop": {
+      "name": "stop",
+      "type": "function",
+      "summary": "停止两个摄像头的采集监控，根据相机启用状态调用 stopMonitor。"
+    },
+    "function:src/Modules/CameraModule.cpp:build_camera1": {
+      "name": "build_camera1",
+      "type": "function",
+      "summary": "构建第一个相机（camera1），检查相机列表、验证元数据、创建被动采集线程并配置帧率、曝光、增益等参数。"
+    },
+    "function:src/Modules/CameraModule.cpp:build_camera2": {
+      "name": "build_camera2",
+      "type": "function",
+      "summary": "构建第二个相机（camera2），逻辑与 build_camera1 相同，使用独立的相机索引和配置。"
+    },
+    "function:src/Modules/CameraModule.cpp:onFrameCaptured": {
+      "name": "onFrameCaptured",
+      "type": "function",
+      "summary": "相机帧捕获回调，接收帧数据和相机索引，发射信号通知下游模块处理。"
+    },
+    "function:src/Modules/ConfigManagerModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建配置管理器，创建 StorageContext 并加载 AppConfig 和 SetConfig 两份配置。"
+    },
+    "function:src/Modules/EliminateModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建清除模块，创建 DetachDefectThread 线程和两个最小堆队列用于缺陷结果优先级排序。"
+    },
+    "function:src/Modules/EliminateModule.cpp:destroy": {
+      "name": "destroy",
+      "type": "function",
+      "summary": "销毁清除模块，依次重置工作线程和两个堆队列。"
+    },
+    "file:src/Modules/ImgProModule.cpp": {
+      "name": "ImgProModule.cpp",
+      "type": "file",
+      "summary": "图像处理模块管理器，负责构建图像处理上下文（模板匹配区域、检测区域、剔除区域配置）、创建图像处理前模块和后模块管线。"
+    },
+    "file:src/Modules/ImgSaveModule.cpp": {
+      "name": "ImgSaveModule.cpp",
+      "type": "file",
+      "summary": "图像保存模块，管理图像文件的自动存储和过期清理，按日期组织文件目录并定期删除超出保留天数的旧文件。"
+    },
+    "file:src/Modules/IModule.cpp": {
+      "name": "IModule.cpp",
+      "type": "file",
+      "summary": "模块接口定义文件（仅含一行代码），作为所有模块的统一抽象基类接口。"
+    },
+    "file:src/Modules/Modules.cpp": {
+      "name": "Modules.cpp",
+      "type": "file",
+      "summary": "模块管理器核心实现（单例模式），负责所有子模块（相机、图像处理、保存、剔除、UI等）的构建、销毁、启动、停止和信号连接编排。"
+    },
+    "file:src/Modules/ReconnectModule.cpp": {
+      "name": "ReconnectModule.cpp",
+      "type": "file",
+      "summary": "重连模块，创建 CameraAndCardStateThread 工作线程监控相机和采集卡状态，支持自动重连。"
+    },
+    "file:src/Modules/RuntimeInfoModule.cpp": {
+      "name": "RuntimeInfoModule.cpp",
+      "type": "file",
+      "summary": "运行时信息模块，创建 DetachUtiltyThread 工作线程用于收集和报告运行时统计信息。"
+    },
+    "function:src/Modules/ImgProModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建图像处理模块，依次调用 buildImgProContext 和 buildImageProcessingModule。"
+    },
+    "function:src/Modules/ImgProModule.cpp:destroy": {
+      "name": "destroy",
+      "type": "function",
+      "summary": "销毁图像处理模块，清理图像处理管线。"
+    },
+    "function:src/Modules/ImgProModule.cpp:buildImgProContext": {
+      "name": "buildImgProContext",
+      "type": "function",
+      "summary": "构建图像处理上下文，委托给 buildImgProContextPreProcess 完成实际构建。"
+    },
+    "function:src/Modules/ImgProModule.cpp:buildImgProContextPreProcess": {
+      "name": "buildImgProContextPreProcess",
+      "type": "function",
+      "summary": "构建图像处理上下文的预处理数据，从配置中读取模板匹配区域、检测区域、剔除区域，配置评分映射，绘制检测辅助线。"
+    },
+    "function:src/Modules/ImgProModule.cpp:buildImageProcessingModule": {
+      "name": "buildImageProcessingModule",
+      "type": "function",
+      "summary": "构建图像处理模块实例，委托给 buildImageProcessingPreModule 创建实际处理器。"
+    },
+    "function:src/Modules/ImgProModule.cpp:destroyImageProcessingModule": {
+      "name": "destroyImageProcessingModule",
+      "type": "function",
+      "summary": "销毁图像处理模块实例，释放前后处理模块的资源。"
+    },
+    "function:src/Modules/ImgProModule.cpp:buildImageProcessingPreModule": {
+      "name": "buildImageProcessingPreModule",
+      "type": "function",
+      "summary": "创建图像处理前后模块实例，构建 ImageProcessingModule 并调用 BuildModule 启动工作线程。"
+    },
+    "function:src/Modules/ImgProModule.cpp:onUpdateImgProContext": {
+      "name": "onUpdateImgProContext",
+      "type": "function",
+      "summary": "更新图像处理上下文回调，重新构建图像处理上下文并重置更新标志。"
+    },
+    "function:src/Modules/ImgProModule.cpp:resetImgProIsUpdate": {
+      "name": "resetImgProIsUpdate",
+      "type": "function",
+      "summary": "重置图像处理上下文的更新状态标志，控制是否需要重新构建上下文。"
+    },
+    "function:src/Modules/ImgSaveModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建图像保存模块，扫描图像目录、清理过期文件、创建 ImageSaveEngine 并配置保存格式、质量和路径策略。"
+    },
+    "function:src/Modules/ImgSaveModule.cpp:destroy": {
+      "name": "destroy",
+      "type": "function",
+      "summary": "销毁图像保存模块，重置引擎并停止保存线程。"
+    },
+    "function:src/Modules/Modules.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建所有子模块，按顺序构建 ConfigManager、Camera、ImgPro、ImgSave、Eliminate、UIModule、Reconnect、RuntimeInfo、TestModule。"
+    },
+    "function:src/Modules/Modules.cpp:destroy": {
+      "name": "destroy",
+      "type": "function",
+      "summary": "销毁所有子模块，按构建的逆序清理资源。"
+    },
+    "function:src/Modules/Modules.cpp:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "启动所有子模块，按依赖顺序调用各模块的 start 方法。"
+    },
+    "function:src/Modules/Modules.cpp:stop": {
+      "name": "stop",
+      "type": "function",
+      "summary": "停止所有子模块，按启动的逆序调用各模块的 stop 方法。"
+    },
+    "function:src/Modules/Modules.cpp:connect": {
+      "name": "connect",
+      "type": "function",
+      "summary": "连接模块间信号槽，编排相机帧捕获到图像处理、图像显示、缺陷剔除等模块的数据流。"
+    },
+    "function:src/Modules/Modules.cpp:check": {
+      "name": "check",
+      "type": "function",
+      "summary": "运行环境检查，验证单实例运行、关键进程状态、必要目录存在性和配置文件完整性。"
+    },
+    "function:src/Modules/Modules.cpp:EnsureDirectoryExists": {
+      "name": "EnsureDirectoryExists",
+      "type": "function",
+      "summary": "确保目录存在，若不存在则递归创建目录路径。"
+    },
+    "function:src/Modules/ReconnectModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建重连模块，创建 CameraAndCardStateThread 监控线程。"
+    },
+    "function:src/Modules/ReconnectModule.cpp:start": {
+      "name": "start",
+      "type": "function",
+      "summary": "启动重连模块，启动相机和采集卡状态监控线程。"
+    },
+    "function:src/Modules/ReconnectModule.cpp:stop": {
+      "name": "stop",
+      "type": "function",
+      "summary": "停止重连模块，停止监控线程并等待结束。"
+    },
+    "function:src/Modules/RuntimeInfoModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建运行时信息模块，创建 DetachUtiltyThread 线程。"
+    },
+    "file:src/Modules/TestModule.cpp": {
+      "name": "TestModule.cpp",
+      "type": "file",
+      "summary": "测试模块，创建 TestImgPushThread 线程用于在无硬件环境下模拟图像推送测试。"
+    },
+    "file:src/Modules/UIModule.cpp": {
+      "name": "UIModule.cpp",
+      "type": "file",
+      "summary": "UI模块管理，负责创建和销毁主窗口 CaiHuiPrintInspection 实例，管理界面生命周期。"
+    },
+    "file:src/Modules/WarningModule.cpp": {
+      "name": "WarningModule.cpp",
+      "type": "file",
+      "summary": "告警模块占位文件（当前为空实现），预留用于告警功能扩展。"
+    },
+    "file:src/NoHardWare/TestImgPushThread.cpp": {
+      "name": "TestImgPushThread.cpp",
+      "type": "file",
+      "summary": "无硬件测试图像推送线程，从本地目录读取图像文件并模拟相机帧推送，用于离线调试和验证图像处理管线。"
+    },
+    "file:src/ui/CaiHuiPrintInspection.cpp": {
+      "name": "CaiHuiPrintInspection.cpp",
+      "type": "file",
+      "summary": "主窗口实现类，管理 Halcon 显示区域（4个QLabel显示区域）、相机状态指示、产品设置/调试模式/剔除模式切换、语言切换和分数阈值设置等完整UI交互。"
+    },
+    "function:src/Modules/UIModule.cpp:build": {
+      "name": "build",
+      "type": "function",
+      "summary": "构建UI模块，创建 CaiHuiPrintInspection 主窗口实例。"
+    },
+    "function:src/Modules/UIModule.cpp:destroy": {
+      "name": "destroy",
+      "type": "function",
+      "summary": "销毁UI模块，关闭并删除主窗口实例。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:build_ui": {
+      "name": "build_ui",
+      "type": "function",
+      "summary": "构建UI界面，初始化数据、关闭对话框、设置标题并加载语言翻译。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:build_connect": {
+      "name": "build_connect",
+      "type": "function",
+      "summary": "连接UI信号槽，绑定所有按钮点击和复选框切换事件到对应的处理函数。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:build_CaiHuiPrintInspectionData": {
+      "name": "build_CaiHuiPrintInspectionData",
+      "type": "function",
+      "summary": "构建主窗口数据，从 Modules 读取应用配置并初始化控件状态（复选框、调试模式、语言等）。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:build_halconDisplay": {
+      "name": "build_halconDisplay",
+      "type": "function",
+      "summary": "构建 Halcon 显示界面，设置四个 QLabel 的尺寸、对齐方式和缩放属性，并初始化定时刷新。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:refreshDisplayLabel": {
+      "name": "refreshDisplayLabel",
+      "type": "function",
+      "summary": "刷新单个显示标签，根据 QPixmap 和最小尺寸调整标签大小并设置缩放后的像素图。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:onCameraDisplay": {
+      "name": "onCameraDisplay",
+      "type": "function",
+      "summary": "相机显示回调，根据相机索引将捕获图像刷新到对应的四个显示标签区域之一。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:updateCameraLabelState": {
+      "name": "updateCameraLabelState",
+      "type": "function",
+      "summary": "更新相机标签状态指示，根据构建结果设置相机状态文本和颜色样式（成功/失败/未构建）。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:changeLanguage": {
+      "name": "changeLanguage",
+      "type": "function",
+      "summary": "切换界面语言，根据索引设置所有UI控件的文本（支持中英文双语）并更新标签页文本。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_debug_checked": {
+      "name": "rbtn_debug_checked",
+      "type": "function",
+      "summary": "调试模式切换回调，当用户切换调试模式时调整相机触发状态和帧率配置。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:rbtn_removeFunc_checked": {
+      "name": "rbtn_removeFunc_checked",
+      "type": "function",
+      "summary": "剔除模式切换回调，当用户切换到生产剔除模式时配置相机触发源和帧率。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_resetProduct_clicked": {
+      "name": "pbtn_resetProduct_clicked",
+      "type": "function",
+      "summary": "重置产品按钮回调，打开文件对话框选择产品配置文件并刷新显示区域。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_set_clicked": {
+      "name": "pbtn_set_clicked",
+      "type": "function",
+      "summary": "设置按钮回调，打开 DlgProductSet 产品设置对话框。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:pbtn_score_clicked": {
+      "name": "pbtn_score_clicked",
+      "type": "function",
+      "summary": "分数设置按钮回调，打开数值输入对话框配置检测分数阈值并保存到模块配置。"
+    },
+    "function:src/ui/CaiHuiPrintInspection.cpp:initializeComponents": {
+      "name": "initializeComponents",
+      "type": "function",
+      "summary": "初始化所有UI组件，依次调用 build_ui、build_halconDisplay、build_camera 和 build_connect。"
+    },
+    "file:src/ui/Dlg_createshapemodel.cpp": {
+      "name": "Dlg_createshapemodel.cpp",
+      "type": "file",
+      "summary": "形状模板创建对话框实现，提供 Halcon 图像读取、ROI区域绘制（模板区域/屏蔽区域）、形状模板创建（CreateShapeModel）及 XLD 轮廓匹配验证的完整交互流程。"
+    },
+    "file:src/ui/DlgProductSet.cpp": {
+      "name": "DlgProductSet.cpp",
+      "type": "file",
+      "summary": "产品设置对话框实现，提供双相机参数配置界面，包括光电屏蔽时间、输出信号延迟/持续时间、限位值、曝光时间、增益和像素当量等完整相机参数设置。"
+    },
+    "file:ui/CaiHuiPrintInspection.ui": {
+      "name": "CaiHuiPrintInspection.ui",
+      "type": "file",
+      "summary": "主窗口 Qt Designer UI 布局文件，定义主界面的控件树结构，包括显示区域、相机状态标签、调试/剔除模式单选按钮、按钮组和选项卡布局。"
+    },
+    "file:ui/Dlg_createshapemodel.ui": {
+      "name": "Dlg_createshapemodel.ui",
+      "type": "file",
+      "summary": "形状模板创建对话框 Qt Designer UI 布局文件，定义模板参数输入控件（角度、缩放、对比度、最小长度等）和操作按钮的界面布局。"
+    },
+    "file:ui/DlgProductSet.ui": {
+      "name": "DlgProductSet.ui",
+      "type": "file",
+      "summary": "产品设置对话框 Qt Designer UI 布局文件，定义双相机参数配置选项卡界面，包含光电屏蔽、信号输出、限位值、曝光增益等参数输入控件。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:build_ui": {
+      "name": "build_ui",
+      "type": "function",
+      "summary": "构建对话框UI，创建 HalconDisplay 显示组件、初始化覆盖绘制器、设置绘制颜色/线宽并加载模板区域数据。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:refresh_ui_from_data": {
+      "name": "refresh_ui_from_data",
+      "type": "function",
+      "summary": "从 HalconData 刷新UI数据，填充模板创建参数（角度范围、缩放范围、对比度等）到对应输入控件。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:build_connect": {
+      "name": "build_connect",
+      "type": "function",
+      "summary": "连接对话框信号槽，绑定所有按钮点击、单选按钮切换、复选框状态变化等事件。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_createShapeModel_clicked": {
+      "name": "btn_createShapeModel_clicked",
+      "type": "function",
+      "summary": "创建形状模板核心函数，读取用户参数、构建模板区域和屏蔽区域、调用 Halcon CreateShapeModel 创建模板并进行 FindShapeModel 验证。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:drawRectangleAndStore": {
+      "name": "drawRectangleAndStore",
+      "type": "function",
+      "summary": "交互式绘制矩形并存储区域，通过 Halcon draw_rectangle1 在显示窗口绘制矩形 ROI，支持模板区域和屏蔽区域两种模式。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:refresh_display_with_regions": {
+      "name": "refresh_display_with_regions",
+      "type": "function",
+      "summary": "刷新显示并叠加所有区域，在 Halcon 窗口中绘制模板区域、屏蔽区域以及形状模型 XLD 轮廓。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_exit_clicked": {
+      "name": "btn_exit_clicked",
+      "type": "function",
+      "summary": "退出按钮回调，保存用户输入的模板参数到 HalconData 并关闭对话框。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_readImage_clicked": {
+      "name": "btn_readImage_clicked",
+      "type": "function",
+      "summary": "读取图像按钮回调，打开文件对话框选择图像文件并用 Halcon ReadImage 加载显示。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_mincontrast_clicked": {
+      "name": "btn_mincontrast_clicked",
+      "type": "function",
+      "summary": "最小对比度设置回调，通过数值输入对话框设置 Halcon 模板创建的最小对比度参数。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_mean_clicked": {
+      "name": "btn_mean_clicked",
+      "type": "function",
+      "summary": "均值滤波参数设置回调，通过数值输入对话框设置 MeanImage 滤波的掩码大小参数。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:showEvent": {
+      "name": "showEvent",
+      "type": "function",
+      "summary": "对话框显示事件，刷新数据、初始化 Halcon 显示并重新绘制区域。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion_clicked": {
+      "name": "btn_clearRegion_clicked",
+      "type": "function",
+      "summary": "清除绘制区域回调，清空模板区域和屏蔽区域数据并刷新显示。"
+    },
+    "function:src/ui/Dlg_createshapemodel.cpp:btn_clearRegion2_clicked": {
+      "name": "btn_clearRegion2_clicked",
+      "type": "function",
+      "summary": "撤销上一个区域回调，从模板区域和屏蔽区域栈中移除最近添加的区域并刷新显示。"
+    },
+    "function:src/ui/DlgProductSet.cpp:build_ui": {
+      "name": "build_ui",
+      "type": "function",
+      "summary": "构建产品设置对话框UI，调用 read_config 读取并填充配置数据。"
+    },
+    "function:src/ui/DlgProductSet.cpp:read_config": {
+      "name": "read_config",
+      "type": "function",
+      "summary": "读取产品配置数据，从 Modules 获取 SetConfig 并将参数填充到界面控件。"
+    },
+    "function:src/ui/DlgProductSet.cpp:build_connect": {
+      "name": "build_connect",
+      "type": "function",
+      "summary": "连接产品设置对话框的所有信号槽，绑定23个按钮点击和下拉框切换事件。"
+    },
+    "function:src/ui/DlgProductSet.cpp:changeLanguage": {
+      "name": "changeLanguage",
+      "type": "function",
+      "summary": "切换产品设置对话框语言，设置所有标签、按钮、选项卡文本的中英文显示。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_baoguang1_clicked": {
+      "name": "btn_baoguang1_clicked",
+      "type": "function",
+      "summary": "相机1曝光时间设置回调，通过数值对话框输入并调用 setExposureTime 更新硬件参数。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_zengyi1_clicked": {
+      "name": "btn_zengyi1_clicked",
+      "type": "function",
+      "summary": "相机1增益设置回调，通过数值对话框输入并调用 setGain 更新硬件参数。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_baoguang2_clicked": {
+      "name": "btn_baoguang2_clicked",
+      "type": "function",
+      "summary": "相机2曝光时间设置回调，逻辑与相机1相同。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_zengyi2_clicked": {
+      "name": "btn_zengyi2_clicked",
+      "type": "function",
+      "summary": "相机2增益设置回调，逻辑与相机1相同。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_testTrigger1_1_clicked": {
+      "name": "btn_testTrigger1_1_clicked",
+      "type": "function",
+      "summary": "相机1触发信号1测试回调，配置输出触发参数并执行触发操作。"
+    },
+    "function:src/ui/DlgProductSet.cpp:btn_close_clicked": {
+      "name": "btn_close_clicked",
+      "type": "function",
+      "summary": "关闭按钮回调，保存设置配置到持久化存储后关闭对话框。"
+    }
+  },
+  "totalNodes": 196,
+  "totalEdges": 396
+}

@@ -1,0 +1,31 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'file:.understand-anything/.understandignore' has no edges (orphan)",
+    "Node 'file:src/Modules/IModule.cpp' has no edges (orphan)",
+    "Node 'file:src/Modules/WarningModule.cpp' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 196,
+    "totalEdges": 396,
+    "totalLayers": 6,
+    "tourSteps": 12,
+    "nodeTypes": {
+      "file": 58,
+      "class": 29,
+      "function": 108,
+      "document": 1
+    },
+    "edgeTypes": {
+      "imports": 19,
+      "contains": 137,
+      "exports": 131,
+      "inherits": 10,
+      "depends_on": 31,
+      "related": 9,
+      "defines_schema": 4,
+      "calls": 52,
+      "configures": 3
+    }
+  }
+}

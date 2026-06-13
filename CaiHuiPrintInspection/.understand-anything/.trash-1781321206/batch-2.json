@@ -1,0 +1,414 @@
+{
+  "nodes": [
+    {
+      "id": "file:include/Modules/ConfigManagerModule.hpp",
+      "type": "file",
+      "name": "ConfigManagerModule.hpp",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "summary": "配置管理模块头文件，定义 ConfigManagerModule 类，继承 QObject 和 IModule<bool>，提供配置文件的加载、保存、合并功能，包含模板函数 loadConfigSafe 用于安全的配置反序列化与自动合并默认值。",
+      "tags": ["config", "serialization", "template", "module", "qt"],
+      "complexity": "moderate",
+      "languageNotes": "使用 C++ 模板实现泛型配置加载，结合 rw::oso 序列化库的 AssemblyMergeTool 进行配置文件字段合并与容错处理。"
+    },
+    {
+      "id": "file:include/Modules/ImgProModule.hpp",
+      "type": "file",
+      "name": "ImgProModule.hpp",
+      "filePath": "include/Modules/ImgProModule.hpp",
+      "summary": "图像处理模块头文件，定义 ImgProModule 类，继承 QObject 和 IModule<bool>，管理图像处理流水线的构建与销毁，包含预处理上下文、多路图像处理器及信号槽驱动的参数更新机制。",
+      "tags": ["image-processing", "module", "pipeline", "qt-signals", "preprocessing"],
+      "complexity": "moderate",
+      "languageNotes": "通过 Qt 信号槽 (onUpdateImgProContext) 实现图像处理上下文的异步更新，支持双路 ImageProcessingModule 实例并行处理。"
+    },
+    {
+      "id": "file:include/Modules/Modules.hpp",
+      "type": "file",
+      "name": "Modules.hpp",
+      "filePath": "include/Modules/Modules.hpp",
+      "summary": "全局模块编排器头文件，定义 Modules 单例类，继承 IModule<bool>，持有并管理所有子模块（相机、图像处理、UI、配置、剔除等）的生命周期，提供统一构建/销毁/启动/停止接口及配置文件的运行时检查与格式修正功能。",
+      "tags": ["entry-point", "singleton", "orchestration", "module", "lifecycle"],
+      "complexity": "complex",
+      "languageNotes": "采用 Meyer's Singleton 模式，模板函数 checkFileExistAndFormat 利用 rw::oso::AssemblyMergeTool 实现配置文件运行时格式校验与自动合并升级。"
+    },
+    {
+      "id": "file:include/Modules/ReconnectModule.hpp",
+      "type": "file",
+      "name": "ReconnectModule.hpp",
+      "filePath": "include/Modules/ReconnectModule.hpp",
+      "summary": "重连模块头文件，定义 ReconnectModule 类，继承 QObject 和 IModule<void>，通过后台线程 CameraAndCardStateThread 监控相机与采集卡状态以实现自动重连。",
+      "tags": ["reconnect", "monitoring", "module", "hardware", "thread"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/Modules/TestModule.hpp",
+      "type": "file",
+      "name": "TestModule.hpp",
+      "filePath": "include/Modules/TestModule.hpp",
+      "summary": "测试模块头文件，定义 TestModule 类，继承 QObject 和 IModule<void>，在 BUILD_WITHOUT_HARDWARE 宏定义下启用，通过 TestImgPushThread 提供模拟图像推送功能，用于无硬件环境下的软件测试。",
+      "tags": ["test", "mock", "conditional-compilation", "module"],
+      "complexity": "simple",
+      "languageNotes": "通过 #ifdef BUILD_WITHOUT_HARDWARE 条件编译控制，仅在无硬件环境下编译，用于替代真实相机模块进行联调测试。"
+    },
+    {
+      "id": "file:include/Modules/WarningModule.hpp",
+      "type": "file",
+      "name": "WarningModule.hpp",
+      "filePath": "include/Modules/WarningModule.hpp",
+      "summary": "告警模块头文件（空文件占位），预留用于未来实现告警/通知功能。",
+      "tags": ["stub", "placeholder", "module"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "class",
+      "name": "ConfigManagerModule",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "lineRange": [13, 33],
+      "summary": "配置管理模块类，继承 QObject 和 IModule<bool>，管理应用配置的加载、保存与更新，持有 StorageContext 序列化上下文、CaiHuiPrintInspectionConfig 主配置、SetConfig 设置配置及 HalconData 向量。",
+      "tags": ["config", "serialization", "data-model", "module"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "class",
+      "name": "ImgProModule",
+      "filePath": "include/Modules/ImgProModule.hpp",
+      "lineRange": [8, 39],
+      "summary": "图像处理模块类，继承 QObject 和 IModule<bool>，管理图像预处理上下文和双路 ImageProcessingModule 实例，通过信号槽 onUpdateImgProContext 接收外部参数更新通知并重置处理状态。",
+      "tags": ["image-processing", "module", "pipeline", "qt"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/Modules.hpp:Modules",
+      "type": "class",
+      "name": "Modules",
+      "filePath": "include/Modules/Modules.hpp",
+      "lineRange": [18, 64],
+      "summary": "全局模块编排单例类，继承 IModule<bool>，聚合所有子模块实例（Camera/Reconnect/UI/ConfigManager/RuntimeInfo/ImgSave/ImgPro/Eliminate），提供统一的 build/destroy/start/stop/connect 生命周期管理及静态配置检查工具方法。",
+      "tags": ["singleton", "orchestration", "lifecycle", "entry-point", "module"],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "class",
+      "name": "ReconnectModule",
+      "filePath": "include/Modules/ReconnectModule.hpp",
+      "lineRange": [8, 19],
+      "summary": "重连模块类，继承 QObject 和 IModule<void>，通过 CameraAndCardStateThread 后台线程持续监控相机与采集卡在线状态，异常断开时自动触发重连。",
+      "tags": ["reconnect", "monitoring", "module", "hardware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "class",
+      "name": "TestModule",
+      "filePath": "include/Modules/TestModule.hpp",
+      "lineRange": [10, 22],
+      "summary": "测试模块类，继承 QObject 和 IModule<void>，在无硬件编译模式 (BUILD_WITHOUT_HARDWARE) 下启用，通过 TestImgPushThread 控制模拟图像推送，用于软件功能测试与调试。",
+      "tags": ["test", "mock", "module"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:include/Modules/ConfigManagerModule.hpp:loadConfigSafe",
+      "type": "function",
+      "name": "loadConfigSafe",
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "lineRange": [35, 86],
+      "summary": "模板函数，泛型安全加载配置文件：检查文件存在性、尝试反序列化，失败时通过 AssemblyMergeTool 合并默认配置字段后重试，实现配置文件的容错加载与自动升级。",
+      "tags": ["template", "config", "serialization", "error-handling"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "function",
+      "name": "checkFileExistAndFormat",
+      "filePath": "include/Modules/Modules.hpp",
+      "lineRange": [67, 90],
+      "summary": "静态模板函数，运行时检查配置文件是否存在且格式正确，若格式不匹配则通过 AssemblyMergeTool 自动合并默认值并重新保存，若文件不存在则创建默认配置文件。",
+      "tags": ["template", "config", "validation", "runtime-check"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/CameraModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ConfigManagerModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/EliminateModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ImgProModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ImgSaveModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/ReconnectModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/RuntimeInfoModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/TestModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/UIModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "file:include/Modules/WarningModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "function:include/Modules/ConfigManagerModule.hpp:loadConfigSafe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "class:include/Modules/Modules.hpp:Modules",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/TestModule.hpp",
+      "target": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/TestModule.hpp:TestModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "class:include/Modules/Modules.hpp:Modules",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ConfigManagerModule.hpp",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ImgProModule.hpp",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ReconnectModule.hpp",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/Modules.hpp",
+      "target": "function:include/Modules/Modules.hpp:checkFileExistAndFormat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ConfigManagerModule.hpp:ConfigManagerModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ImgProModule.hpp:ImgProModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/ReconnectModule.hpp:ReconnectModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "class:include/Modules/Modules.hpp:Modules",
+      "target": "class:include/Modules/TestModule.hpp:TestModule",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

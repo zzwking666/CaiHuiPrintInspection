@@ -1,0 +1,1099 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 59,
+  "totalBatches": 4,
+  "exportsByPath": {
+    ".understand-anything/.understandignore": [],
+    "include/data/halconData.hpp": [
+      "HalconData"
+    ],
+    "include/data/osoFIleUtiltyFunc.hpp": [
+      "toClassIdWithEliConfigMap",
+      "toClassIdWithDefConfigMap",
+      "ScoreConfigConvert"
+    ],
+    "include/data/Utilty.hpp": [
+      "GlobalPath",
+      "ClassId",
+      "Utility",
+      "MatInfo"
+    ],
+    "include/DetachThread/CameraAndCardStateThread.h": [
+      "startThread",
+      "stopThread",
+      "CameraAndCardStateThread"
+    ],
+    "include/DetachThread/DetachDefectThreadProcess.h": [
+      "startThread",
+      "stopThread",
+      "processQueue1",
+      "processQueue2",
+      "DetachDefectThread"
+    ],
+    "include/DetachThread/DetachUtiltyThread.h": [
+      "DetachUtiltyThread"
+    ],
+    "include/func/HalconDisplay.hpp": [
+      "HTuple",
+      "HObject",
+      "HalconDisplay",
+      "initialize",
+      "closeWindow",
+      "isValid",
+      "displayImage",
+      "displayImageFromFile",
+      "clearDisplay",
+      "setDisplayPart",
+      "resetDisplayPart",
+      "matToHObject",
+      "displayMat",
+      "setInteractionEnabled",
+      "isInteractionEnabled",
+      "setOverlayDrawer",
+      "clearOverlayDrawer",
+      "HalconDisplay"
+    ],
+    "include/func/ImageProcessorModule.hpp": [
+      "HalconData",
+      "HObject",
+      "buildObbModelEngine",
+      "ImageProcessor",
+      "BuildModule",
+      "onFrameCaptured",
+      "imageReady",
+      "getProcessors",
+      "ImageProcessingModule"
+    ],
+    "include/Modules/CameraModule.hpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "getBuildResults",
+      "onBuildCamera",
+      "onDestroyCamera",
+      "onStartCamera",
+      "onFrameCaptured",
+      "frameCaptured1",
+      "frameCaptured2",
+      "CameraModule"
+    ],
+    "include/Modules/ConfigManagerModule.hpp": [
+      "saveSetConfig",
+      "ConfigManagerModule"
+    ],
+    "include/Modules/EliminateModule.hpp": [
+      "EliminateModule"
+    ],
+    "include/Modules/ImgProModule.hpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "onUpdateImgProContext",
+      "ImgProModule"
+    ],
+    "include/Modules/ImgSaveModule.hpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "ImgSaveModule"
+    ],
+    "include/Modules/IModule.hpp": [],
+    "include/Modules/Modules.hpp": [
+      "Modules",
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "connect",
+      "check",
+      "EnsureDirectoryExists",
+      "Modules"
+    ],
+    "include/Modules/ReconnectModule.hpp": [
+      "ReconnectModule"
+    ],
+    "include/Modules/RuntimeInfoModule.hpp": [
+      "RuntimeInfoModule"
+    ],
+    "include/Modules/TestModule.hpp": [],
+    "include/Modules/UIModule.hpp": [
+      "CaiHuiPrintInspection",
+      "DlgProductSet",
+      "UIModule"
+    ],
+    "include/Modules/WarningModule.hpp": [],
+    "include/NoHardWare/TestImgPushThread.hpp": [],
+    "include/ui/CaiHuiPrintInspection.h": [],
+    "include/ui/Dlg_createshapemodel.h": [],
+    "include/ui/DlgProductSet.h": [],
+    "osoFile/CaiHuiPrintInspection.oso": [],
+    "osoFile/SetConfig.oso": [],
+    "osoInclude/CaiHuiPrintInspection.hpp": [
+      "CaiHuiPrintInspectionConfig",
+      "~CaiHuiPrintInspectionConfig",
+      "operator==",
+      "operator!=",
+      "CaiHuiPrintInspectionConfig",
+      "CaiHuiPrintInspectionConfig",
+      "CaiHuiPrintInspectionConfig",
+      "oso::ObjectStoreAssembly",
+      "operator==",
+      "operator!="
+    ],
+    "osoInclude/SetConfig.hpp": [
+      "SetConfig",
+      "~SetConfig",
+      "operator==",
+      "operator!=",
+      "SetConfig",
+      "SetConfig",
+      "SetConfig",
+      "oso::ObjectStoreAssembly",
+      "operator==",
+      "operator!="
+    ],
+    "qrc/QiXinShiJinDanXiangJi.qrc": [],
+    "src/data/halconData.cpp": [
+      "HalconData",
+      "~HalconData"
+    ],
+    "src/data/osoFIleUtiltyFunc.cpp": [
+      "ScoreConfigConvert::toClassIdWithEliConfigMap",
+      "ScoreConfigConvert::toClassIdWithDefConfigMap"
+    ],
+    "src/data/Utilty.cpp": [],
+    "src/DetachThread/CameraAndCardStateThread.cpp": [
+      "CameraAndCardStateThread",
+      "~CameraAndCardStateThread",
+      "startThread",
+      "stopThread",
+      "run",
+      "check_cameraState",
+      "check_cameraState1",
+      "check_cameraState2"
+    ],
+    "src/DetachThread/DetachDefectThreadProcess.cpp": [
+      "DetachDefectThread",
+      "~DetachDefectThread",
+      "startThread",
+      "stopThread",
+      "processQueue1",
+      "processQueue2",
+      "run"
+    ],
+    "src/DetachThread/DetachUtiltyThread.cpp": [
+      "DetachUtiltyThread",
+      "~DetachUtiltyThread",
+      "startThread",
+      "stopThread",
+      "run"
+    ],
+    "src/func/HalconDisplay.cpp": [
+      "HalconDisplay",
+      "~HalconDisplay",
+      "HalconDisplay",
+      "initialize",
+      "closeWindow",
+      "isValid",
+      "displayImage",
+      "displayImageFromFile",
+      "clearDisplay",
+      "setDisplayPart",
+      "resetDisplayPart",
+      "eventFilter",
+      "refreshDisplay",
+      "clampAndApplyPart",
+      "matToHObject",
+      "displayMat"
+    ],
+    "src/func/ImageProcessorModule.cpp": [
+      "AllowOncePer",
+      "ImageProcessor",
+      "run",
+      "run_debug",
+      "run_OpenRemoveFunc",
+      "run_OpenRemoveFunc_emitErrorInfo",
+      "save_image",
+      "matchAllShapeModels",
+      "save_image_work",
+      "buildObbModelEngine",
+      "BuildModule",
+      "ImageProcessingModule",
+      "~ImageProcessingModule",
+      "onFrameCaptured"
+    ],
+    "src/main.cpp": [
+      "main"
+    ],
+    "src/Modules/CameraModule.cpp": [
+      "CameraModule",
+      "~CameraModule",
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "build_camera1",
+      "destroy_camera1",
+      "build_camera2",
+      "destroy_camera2",
+      "isTargetCamera",
+      "cameraMetaDataCheck",
+      "onBuildCamera",
+      "onDestroyCamera",
+      "onStartCamera",
+      "onFrameCaptured"
+    ],
+    "src/Modules/ConfigManagerModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "saveSetConfig"
+    ],
+    "src/Modules/EliminateModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop"
+    ],
+    "src/Modules/ImgProModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "buildImgProContext",
+      "buildImgProContextPreProcess",
+      "resetImgProIsUpdate",
+      "buildImageProcessingModule",
+      "destroyImageProcessingModule",
+      "buildImageProcessingPreModule",
+      "onUpdateImgProContext"
+    ],
+    "src/Modules/ImgSaveModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop"
+    ],
+    "src/Modules/IModule.cpp": [],
+    "src/Modules/Modules.cpp": [
+      "Modules",
+      "~Modules",
+      "build",
+      "destroy",
+      "start",
+      "stop",
+      "connect",
+      "check",
+      "EnsureDirectoryExists"
+    ],
+    "src/Modules/ReconnectModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop"
+    ],
+    "src/Modules/RuntimeInfoModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop"
+    ],
+    "src/Modules/TestModule.cpp": [],
+    "src/Modules/UIModule.cpp": [
+      "build",
+      "destroy",
+      "start",
+      "stop"
+    ],
+    "src/Modules/WarningModule.cpp": [],
+    "src/NoHardWare/TestImgPushThread.cpp": [],
+    "src/ui/CaiHuiPrintInspection.cpp": [
+      "CaiHuiPrintInspection",
+      "~CaiHuiPrintInspection",
+      "build_ui",
+      "build_connect",
+      "build_CaiHuiPrintInspectionData",
+      "ini_clickableTitle",
+      "build_DlgCloseForm",
+      "initializeComponents",
+      "build_halconDisplay",
+      "refreshDisplayLabel",
+      "refreshAllDisplayLabels",
+      "resizeEvent",
+      "build_camera",
+      "changeLanguage",
+      "updateCameraLabelState",
+      "onUpdateStatisticalInfoUI",
+      "onCameraDisplay",
+      "lb_title_clicked",
+      "pbtn_exit_clicked",
+      "pbtn_set_clicked",
+      "rbtn_debug_checked",
+      "rbtn_removeFunc_checked",
+      "pbtn_resetProduct_clicked",
+      "ckb_saveImg_checked",
+      "ckb_findShapemodel_1_checked",
+      "ckb_findShapemodel_2_checked",
+      "pbtn_score_clicked"
+    ],
+    "src/ui/Dlg_createshapemodel.cpp": [
+      "Dlg_createshapemodel",
+      "~Dlg_createshapemodel",
+      "build_ui",
+      "refresh_ui_from_data",
+      "showEvent",
+      "build_connect",
+      "btn_exit_clicked",
+      "btn_readImage_clicked",
+      "btn_createShapeModel_clicked",
+      "btn_paintRegion_clicked",
+      "btn_shiledRegion_clicked",
+      "btn_clearRegion_clicked",
+      "btn_paintCenterPoint_clicked",
+      "rad_findshapemodel_toggled",
+      "rad_findshapemodelXLD_toggled",
+      "btn_MinLength_clicked",
+      "btn_min_clicked",
+      "btn_max_clicked",
+      "btn_createXLD_clicked",
+      "rbtn_auto_toggled",
+      "rbtn_manual_toggled",
+      "btn_contrast_clicked",
+      "btn_mincontrast_clicked",
+      "btn_maxcontrast_clicked",
+      "btn_clearRegion2_clicked",
+      "btn_zengyi_clicked",
+      "btn_baoguang_clicked",
+      "btn_angle_clicked",
+      "btn_opening_clicked",
+      "btn_mean_clicked",
+      "ckb_mean_toggled",
+      "drawRectangleAndStore",
+      "refresh_display_with_regions"
+    ],
+    "src/ui/DlgProductSet.cpp": [
+      "DlgProductSet",
+      "~DlgProductSet",
+      "build_ui",
+      "read_config",
+      "build_connect",
+      "changeLanguage",
+      "btn_close_clicked",
+      "btn_xiangjiguangdianpingbishijian_clicked",
+      "btn_shuchuxinhaoyanshi_clicked",
+      "btn_shuchuxinhaochixushijian_clicked",
+      "btn_testTrigger1_1_clicked",
+      "btn_testTrigger2_1_clicked",
+      "btn_testTrigger1_2_clicked",
+      "btn_testTrigger2_2_clicked",
+      "btn_shangxianwei1_clicked",
+      "btn_xiaxianwei1_clicked",
+      "btn_zuoxianwei1_clicked",
+      "btn_youxianwei1_clicked",
+      "btn_baoguang1_clicked",
+      "btn_zengyi1_clicked",
+      "btn_xiangsudangliang1_clicked",
+      "btn_shangxianwei2_clicked",
+      "btn_xiaxianwei2_clicked",
+      "btn_zuoxianwei2_clicked",
+      "btn_youxianwei2_clicked",
+      "btn_baoguang2_clicked",
+      "btn_zengyi2_clicked",
+      "btn_xiangsudangliang2_clicked"
+    ],
+    "ui/CaiHuiPrintInspection.ui": [],
+    "ui/Dlg_createshapemodel.ui": [],
+    "ui/DlgProductSet.ui": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "include/Modules/CameraModule.hpp",
+          "language": "cpp",
+          "sizeLines": 54,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/EliminateModule.hpp",
+          "language": "cpp",
+          "sizeLines": 21,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/IModule.hpp",
+          "language": "cpp",
+          "sizeLines": 15,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/ImgSaveModule.hpp",
+          "language": "cpp",
+          "sizeLines": 21,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/RuntimeInfoModule.hpp",
+          "language": "cpp",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/UIModule.hpp",
+          "language": "cpp",
+          "sizeLines": 24,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "include/Modules/CameraModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/EliminateModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/IModule.hpp": [],
+        "include/Modules/ImgSaveModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/RuntimeInfoModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/UIModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ]
+      },
+      "neighborMap": {
+        "include/Modules/CameraModule.hpp": [
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          }
+        ],
+        "include/Modules/EliminateModule.hpp": [
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          }
+        ],
+        "include/Modules/IModule.hpp": [
+          {
+            "path": "include/Modules/ConfigManagerModule.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "saveSetConfig",
+              "ConfigManagerModule"
+            ]
+          },
+          {
+            "path": "include/Modules/ImgProModule.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "onUpdateImgProContext",
+              "ImgProModule"
+            ]
+          },
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          },
+          {
+            "path": "include/Modules/ReconnectModule.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "ReconnectModule"
+            ]
+          }
+        ],
+        "include/Modules/ImgSaveModule.hpp": [
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          }
+        ],
+        "include/Modules/RuntimeInfoModule.hpp": [
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          }
+        ],
+        "include/Modules/UIModule.hpp": [
+          {
+            "path": "include/Modules/Modules.hpp",
+            "batchIndex": 2,
+            "symbols": [
+              "Modules",
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "connect",
+              "check",
+              "EnsureDirectoryExists",
+              "Modules"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "include/Modules/ConfigManagerModule.hpp",
+          "language": "cpp",
+          "sizeLines": 86,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/ImgProModule.hpp",
+          "language": "cpp",
+          "sizeLines": 38,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/Modules.hpp",
+          "language": "cpp",
+          "sizeLines": 91,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/ReconnectModule.hpp",
+          "language": "cpp",
+          "sizeLines": 19,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/TestModule.hpp",
+          "language": "cpp",
+          "sizeLines": 24,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/Modules/WarningModule.hpp",
+          "language": "cpp",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "include/Modules/ConfigManagerModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/ImgProModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/Modules.hpp": [
+          "include/Modules/CameraModule.hpp",
+          "include/Modules/ConfigManagerModule.hpp",
+          "include/Modules/EliminateModule.hpp",
+          "include/Modules/ImgProModule.hpp",
+          "include/Modules/ImgSaveModule.hpp",
+          "include/Modules/IModule.hpp",
+          "include/Modules/ReconnectModule.hpp",
+          "include/Modules/RuntimeInfoModule.hpp",
+          "include/Modules/TestModule.hpp",
+          "include/Modules/UIModule.hpp",
+          "include/Modules/WarningModule.hpp"
+        ],
+        "include/Modules/ReconnectModule.hpp": [
+          "include/Modules/IModule.hpp"
+        ],
+        "include/Modules/TestModule.hpp": [],
+        "include/Modules/WarningModule.hpp": []
+      },
+      "neighborMap": {
+        "include/Modules/ConfigManagerModule.hpp": [
+          {
+            "path": "include/Modules/IModule.hpp",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ],
+        "include/Modules/ImgProModule.hpp": [
+          {
+            "path": "include/Modules/IModule.hpp",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ],
+        "include/Modules/Modules.hpp": [
+          {
+            "path": "include/Modules/CameraModule.hpp",
+            "batchIndex": 1,
+            "symbols": [
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "getBuildResults",
+              "onBuildCamera",
+              "onDestroyCamera",
+              "onStartCamera",
+              "onFrameCaptured",
+              "frameCaptured1",
+              "frameCaptured2",
+              "CameraModule"
+            ]
+          },
+          {
+            "path": "include/Modules/EliminateModule.hpp",
+            "batchIndex": 1,
+            "symbols": [
+              "EliminateModule"
+            ]
+          },
+          {
+            "path": "include/Modules/ImgSaveModule.hpp",
+            "batchIndex": 1,
+            "symbols": [
+              "build",
+              "destroy",
+              "start",
+              "stop",
+              "ImgSaveModule"
+            ]
+          },
+          {
+            "path": "include/Modules/IModule.hpp",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "include/Modules/RuntimeInfoModule.hpp",
+            "batchIndex": 1,
+            "symbols": [
+              "RuntimeInfoModule"
+            ]
+          },
+          {
+            "path": "include/Modules/UIModule.hpp",
+            "batchIndex": 1,
+            "symbols": [
+              "CaiHuiPrintInspection",
+              "DlgProductSet",
+              "UIModule"
+            ]
+          }
+        ],
+        "include/Modules/ReconnectModule.hpp": [
+          {
+            "path": "include/Modules/IModule.hpp",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": ".understand-anything/.understandignore",
+          "language": "unknown",
+          "sizeLines": 13,
+          "fileCategory": "code"
+        },
+        {
+          "path": "CMakeLists.txt",
+          "language": "txt",
+          "sizeLines": 103,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "include/data/halconData.hpp",
+          "language": "cpp",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/data/osoFIleUtiltyFunc.hpp",
+          "language": "cpp",
+          "sizeLines": 14,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/data/Utilty.hpp",
+          "language": "cpp",
+          "sizeLines": 47,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/DetachThread/CameraAndCardStateThread.h",
+          "language": "c",
+          "sizeLines": 35,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/DetachThread/DetachDefectThreadProcess.h",
+          "language": "c",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/DetachThread/DetachUtiltyThread.h",
+          "language": "c",
+          "sizeLines": 24,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/func/HalconDisplay.hpp",
+          "language": "cpp",
+          "sizeLines": 176,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/func/ImageProcessorModule.hpp",
+          "language": "cpp",
+          "sizeLines": 104,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/NoHardWare/TestImgPushThread.hpp",
+          "language": "cpp",
+          "sizeLines": 49,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/ui/CaiHuiPrintInspection.h",
+          "language": "c",
+          "sizeLines": 80,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/ui/Dlg_createshapemodel.h",
+          "language": "c",
+          "sizeLines": 74,
+          "fileCategory": "code"
+        },
+        {
+          "path": "include/ui/DlgProductSet.h",
+          "language": "c",
+          "sizeLines": 59,
+          "fileCategory": "code"
+        },
+        {
+          "path": "osoFile/CaiHuiPrintInspection.oso",
+          "language": "oso",
+          "sizeLines": 11,
+          "fileCategory": "code"
+        },
+        {
+          "path": "osoFile/SetConfig.oso",
+          "language": "oso",
+          "sizeLines": 33,
+          "fileCategory": "code"
+        },
+        {
+          "path": "osoInclude/CaiHuiPrintInspection.hpp",
+          "language": "cpp",
+          "sizeLines": 110,
+          "fileCategory": "code"
+        },
+        {
+          "path": "osoInclude/SetConfig.hpp",
+          "language": "cpp",
+          "sizeLines": 314,
+          "fileCategory": "code"
+        },
+        {
+          "path": "qrc/QiXinShiJinDanXiangJi.qrc",
+          "language": "qrc",
+          "sizeLines": 6,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/data/halconData.cpp",
+          "language": "cpp",
+          "sizeLines": 9,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/data/osoFIleUtiltyFunc.cpp",
+          "language": "cpp",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/data/Utilty.cpp",
+          "language": "cpp",
+          "sizeLines": 11,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/DetachThread/CameraAndCardStateThread.cpp",
+          "language": "cpp",
+          "sizeLines": 104,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/DetachThread/DetachDefectThreadProcess.cpp",
+          "language": "cpp",
+          "sizeLines": 107,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/DetachThread/DetachUtiltyThread.cpp",
+          "language": "cpp",
+          "sizeLines": 38,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".understand-anything/.understandignore": [],
+        "CMakeLists.txt": [],
+        "include/data/halconData.hpp": [],
+        "include/data/osoFIleUtiltyFunc.hpp": [],
+        "include/data/Utilty.hpp": [],
+        "include/DetachThread/CameraAndCardStateThread.h": [],
+        "include/DetachThread/DetachDefectThreadProcess.h": [],
+        "include/DetachThread/DetachUtiltyThread.h": [],
+        "include/func/HalconDisplay.hpp": [],
+        "include/func/ImageProcessorModule.hpp": [],
+        "include/NoHardWare/TestImgPushThread.hpp": [],
+        "include/ui/CaiHuiPrintInspection.h": [],
+        "include/ui/Dlg_createshapemodel.h": [],
+        "include/ui/DlgProductSet.h": [],
+        "osoFile/CaiHuiPrintInspection.oso": [],
+        "osoFile/SetConfig.oso": [],
+        "osoInclude/CaiHuiPrintInspection.hpp": [],
+        "osoInclude/SetConfig.hpp": [],
+        "qrc/QiXinShiJinDanXiangJi.qrc": [],
+        "src/data/halconData.cpp": [],
+        "src/data/osoFIleUtiltyFunc.cpp": [],
+        "src/data/Utilty.cpp": [],
+        "src/DetachThread/CameraAndCardStateThread.cpp": [],
+        "src/DetachThread/DetachDefectThreadProcess.cpp": [],
+        "src/DetachThread/DetachUtiltyThread.cpp": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "src/func/HalconDisplay.cpp",
+          "language": "cpp",
+          "sizeLines": 613,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/func/ImageProcessorModule.cpp",
+          "language": "cpp",
+          "sizeLines": 488,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/main.cpp",
+          "language": "cpp",
+          "sizeLines": 45,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/CameraModule.cpp",
+          "language": "cpp",
+          "sizeLines": 229,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/ConfigManagerModule.cpp",
+          "language": "cpp",
+          "sizeLines": 37,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/EliminateModule.cpp",
+          "language": "cpp",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/ImgProModule.cpp",
+          "language": "cpp",
+          "sizeLines": 306,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/ImgSaveModule.cpp",
+          "language": "cpp",
+          "sizeLines": 97,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/IModule.cpp",
+          "language": "cpp",
+          "sizeLines": 1,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/Modules.cpp",
+          "language": "cpp",
+          "sizeLines": 218,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/ReconnectModule.cpp",
+          "language": "cpp",
+          "sizeLines": 28,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/RuntimeInfoModule.cpp",
+          "language": "cpp",
+          "sizeLines": 23,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/TestModule.cpp",
+          "language": "cpp",
+          "sizeLines": 22,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/UIModule.cpp",
+          "language": "cpp",
+          "sizeLines": 25,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/Modules/WarningModule.cpp",
+          "language": "cpp",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/NoHardWare/TestImgPushThread.cpp",
+          "language": "cpp",
+          "sizeLines": 164,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/ui/CaiHuiPrintInspection.cpp",
+          "language": "cpp",
+          "sizeLines": 529,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/ui/Dlg_createshapemodel.cpp",
+          "language": "cpp",
+          "sizeLines": 829,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/ui/DlgProductSet.cpp",
+          "language": "cpp",
+          "sizeLines": 597,
+          "fileCategory": "code"
+        },
+        {
+          "path": "ui/CaiHuiPrintInspection.ui",
+          "language": "ui",
+          "sizeLines": 1215,
+          "fileCategory": "code"
+        },
+        {
+          "path": "ui/Dlg_createshapemodel.ui",
+          "language": "ui",
+          "sizeLines": 836,
+          "fileCategory": "code"
+        },
+        {
+          "path": "ui/DlgProductSet.ui",
+          "language": "ui",
+          "sizeLines": 4379,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/func/HalconDisplay.cpp": [],
+        "src/func/ImageProcessorModule.cpp": [],
+        "src/main.cpp": [],
+        "src/Modules/CameraModule.cpp": [],
+        "src/Modules/ConfigManagerModule.cpp": [],
+        "src/Modules/EliminateModule.cpp": [],
+        "src/Modules/ImgProModule.cpp": [],
+        "src/Modules/ImgSaveModule.cpp": [],
+        "src/Modules/IModule.cpp": [],
+        "src/Modules/Modules.cpp": [],
+        "src/Modules/ReconnectModule.cpp": [],
+        "src/Modules/RuntimeInfoModule.cpp": [],
+        "src/Modules/TestModule.cpp": [],
+        "src/Modules/UIModule.cpp": [],
+        "src/Modules/WarningModule.cpp": [],
+        "src/NoHardWare/TestImgPushThread.cpp": [],
+        "src/ui/CaiHuiPrintInspection.cpp": [],
+        "src/ui/Dlg_createshapemodel.cpp": [],
+        "src/ui/DlgProductSet.cpp": [],
+        "ui/CaiHuiPrintInspection.ui": [],
+        "ui/Dlg_createshapemodel.ui": [],
+        "ui/DlgProductSet.ui": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

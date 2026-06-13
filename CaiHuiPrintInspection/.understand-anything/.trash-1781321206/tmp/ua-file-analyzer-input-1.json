@@ -1,0 +1,19 @@
+{
+  "projectRoot": "D:/Projects/CaiHuiPrintInspection/CaiHuiPrintInspection",
+  "batchFiles": [
+    {"path": "include/Modules/CameraModule.hpp", "language": "cpp", "sizeLines": 54, "fileCategory": "code"},
+    {"path": "include/Modules/EliminateModule.hpp", "language": "cpp", "sizeLines": 21, "fileCategory": "code"},
+    {"path": "include/Modules/IModule.hpp", "language": "cpp", "sizeLines": 15, "fileCategory": "code"},
+    {"path": "include/Modules/ImgSaveModule.hpp", "language": "cpp", "sizeLines": 21, "fileCategory": "code"},
+    {"path": "include/Modules/RuntimeInfoModule.hpp", "language": "cpp", "sizeLines": 34, "fileCategory": "code"},
+    {"path": "include/Modules/UIModule.hpp", "language": "cpp", "sizeLines": 24, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "include/Modules/CameraModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/EliminateModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/IModule.hpp": [],
+    "include/Modules/ImgSaveModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/RuntimeInfoModule.hpp": ["include/Modules/IModule.hpp"],
+    "include/Modules/UIModule.hpp": ["include/Modules/IModule.hpp"]
+  }
+}

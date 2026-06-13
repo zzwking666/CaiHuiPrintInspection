@@ -1,0 +1,86 @@
+[
+  {
+    "order": 1,
+    "title": "应用入口与启动流程",
+    "description": "main.cpp 是整个应用程序的启动入口，负责初始化 Qt 应用实例、创建全局模块编排器 Modules 单例，依次执行环境检查、模块构建和信号槽连接，最后创建主窗口并以全屏模式进入 Qt 事件循环。理解此文件即可把握应用从启动到运行的完整生命周期。",
+    "nodeIds": ["file:src/main.cpp"],
+    "languageLesson": "C++ Qt 应用的标准启动模式：QApplication 管理事件循环，QObject::connect 建立信号槽绑定，QMainWindow::showFullScreen() 以全屏模式启动。Meyer's Singleton（局部静态变量）保证了 Modules 单例的线程安全初始化。"
+  },
+  {
+    "order": 2,
+    "title": "模块系统架构——IModule 接口与 Modules 编排器",
+    "description": "IModule.hpp 定义了整个模块体系的核心契约——所有功能模块必须实现 build/destroy/start/stop 四个纯虚生命周期方法，构成了插件式架构的基石。Modules 单例（Modules.hpp/cpp）持有并管理相机、图像处理、UI、配置、剔除等全部子模块实例，提供统一的构建/销毁/启动/停止接口，并通过 Qt 信号槽编排模块间的数据流。该文件是整个应用依赖最集中的节点（fan-in 排名第一），是理解系统架构的关键。",
+    "nodeIds": ["file:include/Modules/IModule.hpp", "file:include/Modules/Modules.hpp", "file:src/Modules/Modules.cpp"],
+    "languageLesson": "C++ CRTP（Curiously Recurring Template Pattern）风格的模板接口设计：IModule<TBuildError> 使用默认模板参数（=bool）统一不同模块的构建错误返回类型。Modules 采用 Meyer's Singleton 模式（C++11 起线程安全），通过前向声明（forward declaration）解耦头文件依赖。"
+  },
+  {
+    "order": 3,
+    "title": "数据模型与配置序列化体系",
+    "description": "Utilty.hpp 定义了全局路径配置（GlobalPath）、缺陷分类 ID 枚举（ClassId）、相机 IP（Utility）和图像信息载体（MatInfo）四个核心数据结构，构成应用的静态数据底座。halconData.hpp 封装 Halcon 检测所需的全部动态配置——模板 ID、曝光增益、对比度阈值和感兴趣区域。OSO 自定义序列化格式（osoFile/*.oso）通过 CMake 构建时自动生成 C++ 序列化代码（osoInclude/*.hpp），将 CaiHuiPrintInspectionConfig（4 字段）和 SetConfig（22 字段）两类配置持久化为 XML 文件。ConfigManagerModule 则负责运行时安全加载、合并默认值和保存配置。",
+    "nodeIds": ["file:include/data/Utilty.hpp", "file:include/data/halconData.hpp", "file:osoFile/CaiHuiPrintInspection.oso", "file:osoFile/SetConfig.oso", "file:include/Modules/ConfigManagerModule.hpp"],
+    "languageLesson": "OSO (Object Store Object) 是一种自定义跨语言序列化格式，语法类似 C# 属性声明（类型:名称:默认值）。项目通过 oso_wrap_oso 工具在 CMake 构建时将 .oso 文件编译为 C++ 序列化/反序列化代码，自动生成 operator ObjectStoreAssembly 转换运算符和 operator==/!= 比较运算符，减少手写样板代码。模板函数 loadConfigSafe 实现了配置文件容错加载——反序列化失败时自动通过 AssemblyMergeTool 合并默认值。"
+  },
+  {
+    "order": 4,
+    "title": "双相机采集与硬件控制",
+    "description": "CameraModule 负责管理两个工业相机的完整生命周期——构建时检查相机列表、验证元数据、创建被动采集线程（CameraPassiveThread）并配置帧率、曝光、增益等参数；启动/停止时控制采集监控的启停。帧数据通过 Qt 信号槽（frameCaptured1/frameCaptured2）异步传递给下游图像处理模块，实现了硬件层与处理层的松耦合分离。",
+    "nodeIds": ["file:include/Modules/CameraModule.hpp", "file:src/Modules/CameraModule.cpp"],
+    "languageLesson": "使用非标准枚举（非 enum class）定义 BuildError 位掩码，允许多个错误状态同时存在。通过 QObject 多重继承整合 Qt 元对象系统，使得相机模块既能实现 IModule 业务接口又能发射 Qt 信号。CameraPassiveThread 采用被动采集模式，通过外部触发信号控制帧捕获时机。"
+  },
+  {
+    "order": 5,
+    "title": "图像处理管线——生产者-消费者多线程架构",
+    "description": "图像处理是整个检测系统的核心引擎。ImgProModule（门面模块）负责从配置中构建图像处理上下文（模板匹配区域、检测区域、剔除区域），并创建前后两组 ImageProcessingModule 管线实例。ImageProcessor 作为消费者线程从共享队列读取帧数据，根据工作模式（调试/生产剔除）分发到不同处理函数：matchAllShapeModels 执行 Halcon 形状模板匹配，buildObbModelEngine 加载 ONNX/TensorRT 推理引擎进行深度学习缺陷检测。CameraModule（生产者）通过 onFrameCaptured 回调将预处理后的帧推入队列，形成完整的生产者-消费者流水线。",
+    "nodeIds": ["file:include/Modules/ImgProModule.hpp", "file:src/Modules/ImgProModule.cpp", "file:include/func/ImageProcessorModule.hpp", "file:src/func/ImageProcessorModule.cpp"],
+    "languageLesson": "使用 QThread + QMutex + QWaitCondition 实现经典的生产者-消费者模式：生产者线程在队列满时等待，消费者线程在队列空时等待。matchAllShapeModels 完整实现了 Halcon 模板匹配流程：FindShapeModel -> GetShapeModelContours -> VectorAngleToRigid -> AffineTransContourXld。AllowOncePer 使用 std::atomic 的 compare_exchange_strong 实现无锁限流，避免重复处理同一帧。"
+  },
+  {
+    "order": 6,
+    "title": "Halcon 图像显示与交互",
+    "description": "HalconDisplay 封装了 Halcon C++ API，以 Qt 组件的形式提供图像显示、窗口管理、鼠标滚轮缩放和中键拖拽平移等完整交互功能。核心方法 displayImage 支持自适应窗口和手动设置显示区域，matToHObject 静态方法完成 OpenCV cv::Mat 到 Halcon HObject 的自动转换（根据通道数选择 GenImage1/GenImage3）。eventFilter 通过截获 Qt 鼠标事件驱动图像缩放平移，支持 overlay 绘制器回调实现自定义图形叠加（如检测线、ROI 框等）。",
+    "nodeIds": ["file:include/func/HalconDisplay.hpp", "file:src/func/HalconDisplay.cpp"],
+    "languageLesson": "PIMPL（Pointer to Implementation）风格封装 Halcon 句柄，隐藏第三方库实现细节并降低编译依赖。使用 QWidget::eventFilter 实现鼠标交互而非子类化，更灵活地控制事件传播。clampAndApplyPart 通过边界钳位确保显示范围始终在有效图像区域内。移动语义（move semantics）支持高效的所有权转移，禁止拷贝以避免 Halcon 资源双重释放。"
+  },
+  {
+    "order": 7,
+    "title": "缺陷剔废处理流程",
+    "description": "EliminateModule 管理两个 ThreadSafeHeap 最小堆优先级队列（对应两个相机），用于缺陷检测结果的排序与剔除决策。DetachDefectThread 后台线程以 1ms 周期持续消费队列中的缺陷判定结果，通过 Modules 单例获取相机对象，根据 SetConfig 中的输出延时和持续时间配置，调用相机硬件的 outTrigger 接口执行物理剔废动作（如吹气剔除）。两个 processQueue1/processQueue2 函数分别处理相机 1 和相机 2 的剔废逻辑，使用相同的信号配置参数（lineSelector=2, lineMode=8, lineSource=5）。",
+    "nodeIds": ["file:include/Modules/EliminateModule.hpp", "file:src/Modules/EliminateModule.cpp", "file:include/DetachThread/DetachDefectThreadProcess.h", "file:src/DetachThread/DetachDefectThreadProcess.cpp"],
+    "languageLesson": "ThreadSafeHeap<bool, MinHeap> 实现线程安全的最小堆排序，通过互斥锁保护 push/pop 操作。缺陷判定采用基于面积因子和评分因子的双重判定机制，可在 ScoreConfigConvert 中对特定类别（如「钉子」）自定义评定策略。outTrigger 的配置参数（lineSelector/lineMode/lineSource）来自工业相机 SDK 的输出触发协议。"
+  },
+  {
+    "order": 8,
+    "title": "主窗口 UI 与用户交互",
+    "description": "CaiHuiPrintInspection 是应用程序的主窗口（继承 QMainWindow），由 UIModule 负责创建和销毁。主窗口通过 Qt Designer UI 文件（.ui）定义布局，集成了四个 QLabel 作为 Halcon 图像显示区域、相机状态指示标签（成功/失败/未构建）、以及调试模式/生产剔除模式的切换控件。onCameraDisplay 回调根据相机索引将处理后的图像分配至对应显示区域，updateCameraLabelState 根据相机构建结果动态更新状态文本和颜色样式。支持中英文双语切换和检测分数阈值设置。",
+    "nodeIds": ["file:include/ui/CaiHuiPrintInspection.h", "file:src/ui/CaiHuiPrintInspection.cpp", "file:ui/CaiHuiPrintInspection.ui", "file:include/Modules/UIModule.hpp"],
+    "languageLesson": "Qt Designer .ui 文件通过 setupUi() 自动生成 UI 控件树，与手写业务逻辑分离。QMainWindow 提供菜单栏、状态栏和中心部件的预定义布局。UIModule 采用前向声明（forward declaration）解耦 UI 类与模块系统，避免头文件循环依赖。语言切换通过手动设置所有控件的 text 属性实现，而非 Qt Linguist 标准的 .ts/.qm 翻译文件机制。"
+  },
+  {
+    "order": 9,
+    "title": "产品参数配置对话框",
+    "description": "DlgProductSet 提供双相机参数的可视化配置界面，包括光电屏蔽时间、输出信号延时/持续时间、相机限位值（上/下/左/右）、曝光时间、增益和像素当量等全部可调参数，共 22 个持久化字段（对应 SetConfig 数据模型）。Dlg_createshapemodel 是 Halcon 形状模板的交互式创建工具，用户可读取图像、绘制/屏蔽 ROI 区域、设置对比度和滤波参数后调用 CreateShapeModel 生成模板，并通过 FindShapeModel + GetShapeModelContours 即时验证匹配效果。两个对话框均从 Modules 单例读取/保存配置数据，通过 Qt 信号槽与主窗口通信。",
+    "nodeIds": ["file:include/ui/DlgProductSet.h", "file:src/ui/DlgProductSet.cpp", "file:ui/DlgProductSet.ui", "file:include/ui/Dlg_createshapemodel.h", "file:src/ui/Dlg_createshapemodel.cpp"],
+    "languageLesson": "QDialog 作为模态对话框的标准模式：exec() 阻塞事件循环直到 accept()/reject() 被调用。Dlg_createshapemodel 完整实现了 Halcon 形状模板创建流程：GenEmptyObj -> ConcatObj -> Union1 -> ReduceDomain -> CreateShapeModel -> FindShapeModel -> GetShapeModelContours -> AffineTransContourXld。draw_rectangle1 交互式绘制矩形 ROI，ConcatObj 合并多个区域形成复合模板区域。"
+  },
+  {
+    "order": 10,
+    "title": "后台监控线程",
+    "description": "三个 QThread 子类构成应用的后台监控体系：CameraAndCardStateThread 每 2 秒检测两个相机的连接状态，异常断开时自动触发销毁和重新构建流程；DetachUtiltyThread 每秒发射统计信息更新信号驱动 UI 数据显示，内建 300 秒循环计数器；DetachDefectThread 负责从优先级队列中消费剔废判定结果并执行物理剔废（已在步骤 7 详述）。此外，TestImgPushThread 在 BUILD_WITHOUT_HARDWARE 条件编译模式下，从本地目录预加载测试图像并按 150ms 间隔推送帧数据，用于无硬件环境的离线调试。",
+    "nodeIds": ["file:include/DetachThread/CameraAndCardStateThread.h", "file:src/DetachThread/CameraAndCardStateThread.cpp", "file:include/DetachThread/DetachUtiltyThread.h", "file:src/DetachThread/DetachUtiltyThread.cpp"],
+    "languageLesson": "QThread 的正确用法：将工作逻辑放在 run() 虚函数中（而非继承 QThread 后添加槽函数），使用 QThread::msleep 实现非阻塞等待。通过 #ifdef BUILD_WITHOUT_HARDWARE 条件编译控制测试模块的参与，保证了生产环境和测试环境的代码统一。std::atomic<bool> 用于线程间状态标志传递，避免数据竞争。"
+  },
+  {
+    "order": 11,
+    "title": "辅助支持模块",
+    "description": "ImgSaveModule 封装多线程图像保存引擎（ImageSaveEngine），支持可配置的保存线程数（默认 4 线程）和 JPEG 压缩质量（默认 80），按日期自动组织文件目录并定期清理超出保留天数的旧图像。RuntimeInfoModule 通过 std::atomic 原子变量追踪废品计数和运行状态（调试/移除/停止），由 DetachUtiltyThread 异步更新。ReconnectModule 创建 CameraAndCardStateThread 监控线程实现相机与采集卡的自动重连。TestModule（条件编译）和 WarningModule（空占位）为测试和未来扩展预留了接口。",
+    "nodeIds": ["file:include/Modules/ImgSaveModule.hpp", "file:include/Modules/RuntimeInfoModule.hpp", "file:include/Modules/ReconnectModule.hpp", "file:include/Modules/TestModule.hpp", "file:include/Modules/WarningModule.hpp"],
+    "languageLesson": "static constexpr 定义编译期常量（线程数、JPEG 质量），避免运行时常量占用内存。使用 QDir 进行跨平台文件系统操作，通过 ImageSaveEngine 的保存策略（按时间/数量）实现灵活的持久化控制。std::atomic 保证多线程环境下统计计数的读写安全性，无需额外使用互斥锁。"
+  },
+  {
+    "order": 12,
+    "title": "构建系统与项目配置",
+    "description": "CMakeLists.txt 是项目的顶层构建配置文件，定义了 C++17/Qt6 编译标准，通过 AUTOMOC/AUTORCC 自动处理 Qt 元对象编译和资源嵌入。CMake 集成 OpenCV、Halcon、TensorRT 和 ONNX Runtime 四大第三方库，通过自定义命令 oso_wrap_oso 将 .oso 数据模型文件编译为 C++ 序列化代码，并在 POST_BUILD 阶段自动调用 windeployqt 部署 Qt 运行时和 AI 推理 DLL。.qrc 资源文件将应用图标嵌入二进制，.understandignore 定义了分析工具的排除规则。",
+    "nodeIds": ["document:CMakeLists.txt", "file:qrc/QiXinShiJinDanXiangJi.qrc", "file:osoInclude/CaiHuiPrintInspection.hpp", "file:osoInclude/SetConfig.hpp"],
+    "languageLesson": "Qt6 的 AUTOMOC/AUTORCC 机制自动扫描头文件中的 Q_OBJECT 宏并生成 MOC 中间代码，无需手动调用 moc 工具。oso_wrap_oso 自定义构建命令将声明式数据模型转换为类型安全的 C++ 类，保证了序列化格式与代码的一致性。windeployqt 是 Qt 的 Windows 平台部署工具，自动分析可执行文件依赖并复制所需的 DLL 和插件。TensorRT 的 DLL 需要手动复制因为 windeployqt 无法识别非 Qt 的动态库依赖。"
+  }
+]

@@ -1,0 +1,279 @@
+{
+  "nodes": [
+    {
+      "id": "file:include/Modules/IModule.hpp",
+      "type": "file",
+      "name": "IModule.hpp",
+      "filePath": "include/Modules/IModule.hpp",
+      "summary": "定义模块基础接口的模板头文件，声明所有模块必须实现的 build/destroy/start/stop 四个纯虚生命周期方法，是整个模块体系的核心契约。",
+      "tags": ["interface", "template", "data-model", "module-system"],
+      "complexity": "simple",
+      "languageNotes": "C++ 模板类作为模块接口，使用默认模板参数 TBuildError=bool 统一不同模块的构建错误返回类型。"
+    },
+    {
+      "id": "file:include/Modules/CameraModule.hpp",
+      "type": "file",
+      "name": "CameraModule.hpp",
+      "filePath": "include/Modules/CameraModule.hpp",
+      "summary": "相机模块头文件，负责双相机（camera1/camera2）的构建、销毁与启停控制，通过 Qt 信号槽机制传递帧数据，构建错误通过 BuildError 枚举返回。",
+      "tags": ["camera", "qt-signals", "api-handler", "image-capture"],
+      "complexity": "moderate",
+      "languageNotes": "使用非标准枚举（非 enum class）定义构建错误位掩码；通过 QObject 多重继承整合 Qt 元对象系统。"
+    },
+    {
+      "id": "file:include/Modules/EliminateModule.hpp",
+      "type": "file",
+      "name": "EliminateModule.hpp",
+      "filePath": "include/Modules/EliminateModule.hpp",
+      "summary": "缺陷剔除模块头文件，管理两个线程安全的产品优先级队列和独立的缺陷检测预处理线程，用于实时产品缺陷的识别与剔除。",
+      "tags": ["defect-detection", "thread-safe", "queue", "quality-control"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:include/Modules/ImgSaveModule.hpp",
+      "type": "file",
+      "name": "ImgSaveModule.hpp",
+      "filePath": "include/Modules/ImgSaveModule.hpp",
+      "summary": "图像保存模块头文件，封装多线程图像保存引擎，支持可配置的保存线程数（默认4线程）和 JPEG 压缩质量（默认80）。",
+      "tags": ["image-save", "serialization", "multithreading", "utility"],
+      "complexity": "simple",
+      "languageNotes": "使用 static constexpr 定义编译期常量（线程数和 JPEG 质量），构建返回 void 表示无错误机制。"
+    },
+    {
+      "id": "file:include/Modules/RuntimeInfoModule.hpp",
+      "type": "file",
+      "name": "RuntimeInfoModule.hpp",
+      "filePath": "include/Modules/RuntimeInfoModule.hpp",
+      "summary": "运行时信息模块头文件，追踪检测统计数据（废品计数）和系统运行状态（调试/移除功能开启/停止），通过独立工具线程异步更新。",
+      "tags": ["monitoring", "statistics", "runtime", "utility"],
+      "complexity": "simple",
+      "languageNotes": "使用 std::atomic 保证多线程环境下的废品计数和运行状态读写安全。"
+    },
+    {
+      "id": "file:include/Modules/UIModule.hpp",
+      "type": "file",
+      "name": "UIModule.hpp",
+      "filePath": "include/Modules/UIModule.hpp",
+      "summary": "UI 模块头文件，作为主窗口（CaiHuiPrintInspection）和产品设置对话框（DlgProductSet）的持有者，通过前向声明解耦 UI 组件与模块系统。",
+      "tags": ["ui", "entry-point", "qt-widgets"],
+      "complexity": "simple",
+      "languageNotes": "采用前向声明（forward declaration）避免头文件循环依赖，构建返回 void 表示无错误机制。"
+    },
+    {
+      "id": "class:include/Modules/IModule.hpp:IModule",
+      "type": "class",
+      "name": "IModule",
+      "filePath": "include/Modules/IModule.hpp",
+      "lineRange": [6, 16],
+      "summary": "模块基础接口模板类，定义 build()、destroy()、start()、stop() 四个纯虚函数，所有功能模块必须继承并实现此接口。",
+      "tags": ["interface", "template", "module-system", "polymorphism"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "class",
+      "name": "CameraModule",
+      "filePath": "include/Modules/CameraModule.hpp",
+      "lineRange": [14, 54],
+      "summary": "双相机控制模块，同时管理两个 CameraPassiveThread 实例，通过 Qt 信号槽提供帧捕获事件通知（frameCaptured1/frameCaptured2），支持按相机索引构建、销毁和启动操作。",
+      "tags": ["camera", "qt-signals", "image-capture", "thread-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "class",
+      "name": "EliminateModule",
+      "filePath": "include/Modules/EliminateModule.hpp",
+      "lineRange": [7, 22],
+      "summary": "缺陷剔除模块，维护两个 ThreadSafeHeap 优先级队列用于产品排序与剔除决策，通过 DetachDefectThread 在独立线程中执行缺陷检测预处理。",
+      "tags": ["defect-detection", "thread-safe", "queue", "quality-control"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "class",
+      "name": "ImgSaveModule",
+      "filePath": "include/Modules/ImgSaveModule.hpp",
+      "lineRange": [8, 21],
+      "summary": "图像保存模块，封装 ImageSaveEngine 实现多线程图像持久化存储，默认使用4个保存线程和 JPEG 质量80的压缩参数。",
+      "tags": ["image-save", "serialization", "multithreading"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "class",
+      "name": "RuntimeInfoModule",
+      "filePath": "include/Modules/RuntimeInfoModule.hpp",
+      "lineRange": [16, 33],
+      "summary": "运行时信息模块，通过 StatisticalInfo 内嵌结构体和原子变量追踪废品计数，通过 RunningState 枚举管理调试/移除/停止三种系统运行模式。",
+      "tags": ["monitoring", "statistics", "atomic", "runtime"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "class",
+      "name": "UIModule",
+      "filePath": "include/Modules/UIModule.hpp",
+      "lineRange": [10, 24],
+      "summary": "UI 模块，持有指向主界面 CaiHuiPrintInspection 和产品设置对话框 DlgProductSet 的裸指针，作为 UI 层与模块系统之间的桥梁。",
+      "tags": ["ui", "qt-widgets", "bridge"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "file:include/Modules/IModule.hpp",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:include/Modules/IModule.hpp",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:include/Modules/IModule.hpp",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/CameraModule.hpp",
+      "target": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/EliminateModule.hpp",
+      "target": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/ImgSaveModule.hpp",
+      "target": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/RuntimeInfoModule.hpp",
+      "target": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:include/Modules/UIModule.hpp",
+      "target": "class:include/Modules/UIModule.hpp:UIModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:include/Modules/CameraModule.hpp:CameraModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/EliminateModule.hpp:EliminateModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/ImgSaveModule.hpp:ImgSaveModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/RuntimeInfoModule.hpp:RuntimeInfoModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:include/Modules/UIModule.hpp:UIModule",
+      "target": "class:include/Modules/IModule.hpp:IModule",
+      "type": "inherits",
+      "direction": "forward",
+      "weight": 0.9
+    }
+  ]
+}

@@ -1,0 +1,4577 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "a52b3be6fa3ea995e8c2b626c2c58f6a4f8c2837",
+  "generatedAt": "2026-06-13T03:26:23.684Z",
+  "files": {
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "72eaa89d6e6e641226f7f518bd8652fba8a0849d577ec2154b3b0f9ad702e39d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": false
+    },
+    "CMakeLists.txt": {
+      "filePath": "CMakeLists.txt",
+      "contentHash": "722885f7a11d22d50342d18c68212389f207716690e6fa9c7fa28b3f6ac96332",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 104,
+      "hasStructuralAnalysis": false
+    },
+    "include/data/halconData.hpp": {
+      "filePath": "include/data/halconData.hpp",
+      "contentHash": "9b500e01d813c4b736eb1ea5ea6dbfd9554628427d23f79bbea70ef5d8c863ad",
+      "functions": [],
+      "classes": [
+        {
+          "name": "HalconData",
+          "methods": [],
+          "properties": [
+            "processImage",
+            "hv_ModelIDs",
+            "baoguang",
+            "zengyi",
+            "isMeaning",
+            "meaning",
+            "isContrast",
+            "ckb_findShapemodel",
+            "maxcontrast",
+            "mincontrast",
+            "createRegions",
+            "shieldRegions"
+          ],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "imports": [
+        {
+          "source": "QVector",
+          "specifiers": [
+            "QVector"
+          ]
+        },
+        {
+          "source": "halconcpp/HalconCpp.h",
+          "specifiers": [
+            "halconcpp/HalconCpp.h"
+          ]
+        }
+      ],
+      "exports": [
+        "HalconData"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "include/data/osoFIleUtiltyFunc.hpp": {
+      "filePath": "include/data/osoFIleUtiltyFunc.hpp",
+      "contentHash": "e6df7d9f6327f50a4589508422d38b4797e574a6bd55107f5ceb4e0ffc85d402",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ScoreConfigConvert",
+          "methods": [
+            "toClassIdWithEliConfigMap",
+            "toClassIdWithDefConfigMap"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "imports": [
+        {
+          "source": "imgPro_DefectResultInfoFunc.hpp",
+          "specifiers": [
+            "imgPro_DefectResultInfoFunc.hpp"
+          ]
+        },
+        {
+          "source": "imgPro_EliminationInfoFunc.hpp",
+          "specifiers": [
+            "imgPro_EliminationInfoFunc.hpp"
+          ]
+        },
+        {
+          "source": "SetConfig.hpp",
+          "specifiers": [
+            "SetConfig.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "toClassIdWithEliConfigMap",
+        "toClassIdWithDefConfigMap",
+        "ScoreConfigConvert"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "include/data/Utilty.hpp": {
+      "filePath": "include/data/Utilty.hpp",
+      "contentHash": "2618cbaf4b7f908e1d27d17fdaf5912fda4ad3fe56726d48a788978f7e6dd334",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GlobalPath",
+          "methods": [],
+          "properties": [
+            "projectHome",
+            "configRootPath",
+            "modelRootPath",
+            "CaiHuiPrintInspectionConfigPath",
+            "setConfigPath",
+            "modelPath",
+            "imageSaveRootPath",
+            "testImgDirPath"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "ClassId",
+          "methods": [],
+          "properties": [
+            "minNum",
+            "dingZi",
+            "maxNum",
+            "indexCount",
+            "classIdNameMap",
+            "classids"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "Utility",
+          "methods": [],
+          "properties": [
+            "cameraIp1",
+            "cameraIp2"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "MatInfo",
+          "methods": [],
+          "properties": [
+            "image",
+            "location",
+            "index"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "imports": [
+        {
+          "source": "QString",
+          "specifiers": [
+            "QString"
+          ]
+        },
+        {
+          "source": "imgPro_ImageProcessUtilty.hpp",
+          "specifiers": [
+            "imgPro_ImageProcessUtilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "GlobalPath",
+        "ClassId",
+        "Utility",
+        "MatInfo"
+      ],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "include/DetachThread/CameraAndCardStateThread.h": {
+      "filePath": "include/DetachThread/CameraAndCardStateThread.h",
+      "contentHash": "013c23027e96f5de5e1b546260ae1310b695356c57785c45e6c1e10bfac68724",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CameraAndCardStateThread",
+          "methods": [
+            "startThread",
+            "stopThread",
+            "run",
+            "check_cameraState",
+            "check_cameraState1",
+            "check_cameraState2",
+            "updateCameraLabelState",
+            "buildCamera",
+            "destroyCamera",
+            "startMonitor"
+          ],
+          "properties": [
+            "private",
+            "running"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "imports": [
+        {
+          "source": "QThread",
+          "specifiers": [
+            "QThread"
+          ]
+        },
+        {
+          "source": "QDebug",
+          "specifiers": [
+            "QDebug"
+          ]
+        },
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        }
+      ],
+      "exports": [
+        "startThread",
+        "stopThread",
+        "CameraAndCardStateThread"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "include/DetachThread/DetachDefectThreadProcess.h": {
+      "filePath": "include/DetachThread/DetachDefectThreadProcess.h",
+      "contentHash": "722af6e1bfaf9cbebc61a5bd6a38cc6623c89a05240313fbaf86d649360e4326",
+      "functions": [],
+      "classes": [
+        {
+          "name": "DetachDefectThread",
+          "methods": [
+            "startThread",
+            "stopThread",
+            "processQueue1",
+            "processQueue2",
+            "run"
+          ],
+          "properties": [
+            "public",
+            "isProcessFinish",
+            "running"
+          ],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "imports": [
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        },
+        {
+          "source": "QThread",
+          "specifiers": [
+            "QThread"
+          ]
+        },
+        {
+          "source": "rqw_LabelWarning.h",
+          "specifiers": [
+            "rqw_LabelWarning.h"
+          ]
+        },
+        {
+          "source": "dsl_Heap.hpp",
+          "specifiers": [
+            "dsl_Heap.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "startThread",
+        "stopThread",
+        "processQueue1",
+        "processQueue2",
+        "DetachDefectThread"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "include/DetachThread/DetachUtiltyThread.h": {
+      "filePath": "include/DetachThread/DetachUtiltyThread.h",
+      "contentHash": "356d9daf9c0665801a7877d7e130b34e224a383ae734eee03a5abd3f8a49e04c",
+      "functions": [],
+      "classes": [
+        {
+          "name": "DetachUtiltyThread",
+          "methods": [
+            "startThread",
+            "stopThread",
+            "run",
+            "updateStatisticalInfo"
+          ],
+          "properties": [
+            "public",
+            "running"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "imports": [
+        {
+          "source": "QThread",
+          "specifiers": [
+            "QThread"
+          ]
+        },
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        },
+        {
+          "source": "rqw_LabelWarning.h",
+          "specifiers": [
+            "rqw_LabelWarning.h"
+          ]
+        }
+      ],
+      "exports": [
+        "DetachUtiltyThread"
+      ],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "include/func/HalconDisplay.hpp": {
+      "filePath": "include/func/HalconDisplay.hpp",
+      "contentHash": "ae58b85bacd76546917138a6a12a19ff0abe090f46647eb75382a96356975f47",
+      "functions": [
+        {
+          "name": "HalconDisplay",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "setInteractionEnabled",
+          "params": [
+            "enabled"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "isInteractionEnabled",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "setOverlayDrawer",
+          "params": [
+            "drawer"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "clearOverlayDrawer",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "HTuple",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "HObject",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "HalconDisplay",
+          "methods": [
+            "HalconDisplay",
+            "initialize",
+            "closeWindow",
+            "isValid",
+            "displayImage",
+            "displayImageFromFile",
+            "clearDisplay",
+            "setDisplayPart",
+            "resetDisplayPart",
+            "matToHObject",
+            "displayMat",
+            "setInteractionEnabled",
+            "isInteractionEnabled",
+            "setOverlayDrawer",
+            "clearOverlayDrawer",
+            "eventFilter",
+            "refreshDisplay",
+            "clampAndApplyPart"
+          ],
+          "properties": [
+            "_parentWidget",
+            "_windowHandle",
+            "_lastImage",
+            "_isInitialized",
+            "_imageWidth",
+            "_imageHeight",
+            "_partRow1",
+            "_partCol1",
+            "_partRow2",
+            "_partCol2",
+            "_maxPartWidth",
+            "_maxPartHeight",
+            "_isPanning",
+            "_lastMousePos",
+            "_interactionEnabled",
+            "_overlayDrawer"
+          ],
+          "exported": true,
+          "lineCount": 149
+        }
+      ],
+      "imports": [
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "functional",
+          "specifiers": [
+            "functional"
+          ]
+        },
+        {
+          "source": "QPoint",
+          "specifiers": [
+            "QPoint"
+          ]
+        },
+        {
+          "source": "QWidget",
+          "specifiers": [
+            "QWidget"
+          ]
+        },
+        {
+          "source": "QString",
+          "specifiers": [
+            "QString"
+          ]
+        },
+        {
+          "source": "opencv2/opencv.hpp",
+          "specifiers": [
+            "opencv2/opencv.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "HTuple",
+        "HObject",
+        "HalconDisplay",
+        "initialize",
+        "closeWindow",
+        "isValid",
+        "displayImage",
+        "displayImageFromFile",
+        "clearDisplay",
+        "setDisplayPart",
+        "resetDisplayPart",
+        "matToHObject",
+        "displayMat",
+        "setInteractionEnabled",
+        "isInteractionEnabled",
+        "setOverlayDrawer",
+        "clearOverlayDrawer",
+        "HalconDisplay"
+      ],
+      "totalLines": 177,
+      "hasStructuralAnalysis": true
+    },
+    "include/func/ImageProcessorModule.hpp": {
+      "filePath": "include/func/ImageProcessorModule.hpp",
+      "contentHash": "06c400e21c9381fceec9ddfdc372c63b8598af8a5af5a8f1f130a1869652d874",
+      "functions": [
+        {
+          "name": "getProcessors",
+          "params": [],
+          "returnType": "std::vector<ImageProcessor*>",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [
+        {
+          "name": "HalconData",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "HObject",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "ImageProcessor",
+          "methods": [
+            "run",
+            "run_debug",
+            "run_OpenRemoveFunc",
+            "run_OpenRemoveFunc_emitErrorInfo",
+            "matchAllShapeModels",
+            "imageReady",
+            "save_image",
+            "save_image_work",
+            "buildObbModelEngine"
+          ],
+          "properties": [
+            "public",
+            "_imgProcess",
+            "_queue",
+            "_mutex",
+            "_condition",
+            "_workIndex",
+            "imageProcessingModuleIndex"
+          ],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "ImageProcessingModule",
+          "methods": [
+            "BuildModule",
+            "onFrameCaptured",
+            "imageReady",
+            "getProcessors"
+          ],
+          "properties": [
+            "public",
+            "_queue",
+            "_mutex",
+            "_condition",
+            "_processors",
+            "_numConsumers",
+            "index"
+          ],
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "imports": [
+        {
+          "source": "ime_ModelEngineFactory.h",
+          "specifiers": [
+            "ime_ModelEngineFactory.h"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "QQueue",
+          "specifiers": [
+            "QQueue"
+          ]
+        },
+        {
+          "source": "QMutex",
+          "specifiers": [
+            "QMutex"
+          ]
+        },
+        {
+          "source": "QWaitCondition",
+          "specifiers": [
+            "QWaitCondition"
+          ]
+        },
+        {
+          "source": "vector",
+          "specifiers": [
+            "vector"
+          ]
+        },
+        {
+          "source": "QThread",
+          "specifiers": [
+            "QThread"
+          ]
+        },
+        {
+          "source": "QPixmap",
+          "specifiers": [
+            "QPixmap"
+          ]
+        },
+        {
+          "source": "imgPro_ImageProcess.hpp",
+          "specifiers": [
+            "imgPro_ImageProcess.hpp"
+          ]
+        },
+        {
+          "source": "rqw_CameraObjectCore.hpp",
+          "specifiers": [
+            "rqw_CameraObjectCore.hpp"
+          ]
+        },
+        {
+          "source": "rqw_ImageSaveEngine.h",
+          "specifiers": [
+            "rqw_ImageSaveEngine.h"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "HalconData",
+        "HObject",
+        "buildObbModelEngine",
+        "ImageProcessor",
+        "BuildModule",
+        "onFrameCaptured",
+        "imageReady",
+        "getProcessors",
+        "ImageProcessingModule"
+      ],
+      "totalLines": 105,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/CameraModule.hpp": {
+      "filePath": "include/Modules/CameraModule.hpp",
+      "contentHash": "cb3a9e204c680d66d79c3dad1b03bba3c9e4a98d4ca592ffb770cd5e59649d6a",
+      "functions": [
+        {
+          "name": "getBuildResults",
+          "params": [],
+          "returnType": "std::vector<BuildError>",
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "CameraModule",
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "build_camera1",
+            "destroy_camera1",
+            "build_camera2",
+            "destroy_camera2",
+            "getBuildResults",
+            "isTargetCamera",
+            "cameraMetaDataCheck",
+            "onBuildCamera",
+            "onDestroyCamera",
+            "onStartCamera",
+            "onFrameCaptured",
+            "frameCaptured1",
+            "frameCaptured2"
+          ],
+          "properties": [
+            "public",
+            "_buildResults",
+            "camera1",
+            "camera2"
+          ],
+          "exported": true,
+          "lineCount": 41
+        }
+      ],
+      "imports": [
+        {
+          "source": "memory",
+          "specifiers": [
+            "memory"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "rqw_CameraObjectThread.hpp",
+          "specifiers": [
+            "rqw_CameraObjectThread.hpp"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "getBuildResults",
+        "onBuildCamera",
+        "onDestroyCamera",
+        "onStartCamera",
+        "onFrameCaptured",
+        "frameCaptured1",
+        "frameCaptured2",
+        "CameraModule"
+      ],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/ConfigManagerModule.hpp": {
+      "filePath": "include/Modules/ConfigManagerModule.hpp",
+      "contentHash": "5ba76a6ce894e5a41238bf7fecd3c4996901a165108f982c73402cb502ad7019",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ConfigManagerModule",
+          "methods": [
+            "destroy",
+            "start",
+            "stop",
+            "saveSetConfig"
+          ],
+          "properties": [
+            "public",
+            "storeContext",
+            "caihuiPrintInspectionConfig",
+            "setConfig",
+            "halconDatas"
+          ],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "imports": [
+        {
+          "source": "QFile",
+          "specifiers": [
+            "QFile"
+          ]
+        },
+        {
+          "source": "QDebug",
+          "specifiers": [
+            "QDebug"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "oso_StorageContext.hpp",
+          "specifiers": [
+            "oso_StorageContext.hpp"
+          ]
+        },
+        {
+          "source": "SetConfig.hpp",
+          "specifiers": [
+            "SetConfig.hpp"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.hpp",
+          "specifiers": [
+            "CaiHuiPrintInspection.hpp"
+          ]
+        },
+        {
+          "source": "halconData.hpp",
+          "specifiers": [
+            "halconData.hpp"
+          ]
+        },
+        {
+          "source": "oso_func.hpp",
+          "specifiers": [
+            "oso_func.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "saveSetConfig",
+        "ConfigManagerModule"
+      ],
+      "totalLines": 87,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/EliminateModule.hpp": {
+      "filePath": "include/Modules/EliminateModule.hpp",
+      "contentHash": "6c7793bece6402a4ddf063f3a79c49d8cd5f87c8638718faaa7db1e499164eb0",
+      "functions": [],
+      "classes": [
+        {
+          "name": "EliminateModule",
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "productPriorityQueue1",
+            "productPriorityQueue2",
+            "detachDefectThreadPreProcess"
+          ],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "imports": [
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "DetachDefectThreadProcess.h",
+          "specifiers": [
+            "DetachDefectThreadProcess.h"
+          ]
+        }
+      ],
+      "exports": [
+        "EliminateModule"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/ImgProModule.hpp": {
+      "filePath": "include/Modules/ImgProModule.hpp",
+      "contentHash": "7eacd64ab2da9e6ef4ab4c26cc0e2bfb3ac5142a9450f5aeadf8891c3ea33913",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ImgProModule",
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "buildImgProContext",
+            "buildImgProContextPreProcess",
+            "resetImgProIsUpdate",
+            "buildImageProcessingModule",
+            "destroyImageProcessingModule",
+            "buildImageProcessingPreModule",
+            "onUpdateImgProContext"
+          ],
+          "properties": [
+            "private",
+            "imageProcessContext_PreProcess",
+            "imgProIsUpdate",
+            "imageProcessingModule1",
+            "imageProcessingModule2"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "imports": [
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "ImageProcessorModule.hpp",
+          "specifiers": [
+            "ImageProcessorModule.hpp"
+          ]
+        },
+        {
+          "source": "imgPro_ImageProcess.hpp",
+          "specifiers": [
+            "imgPro_ImageProcess.hpp"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "onUpdateImgProContext",
+        "ImgProModule"
+      ],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/ImgSaveModule.hpp": {
+      "filePath": "include/Modules/ImgSaveModule.hpp",
+      "contentHash": "df8afc3f9cd0c5d982e27d24036b35b731c9bac61b2295ffba5f825d7b8d2763",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ImgSaveModule",
+          "methods": [
+            "build",
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "private",
+            "cimgSaveQuality",
+            "imageSaveEngine"
+          ],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "rqw_ImageSaveEngine.h",
+          "specifiers": [
+            "rqw_ImageSaveEngine.h"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "ImgSaveModule"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/IModule.hpp": {
+      "filePath": "include/Modules/IModule.hpp",
+      "contentHash": "af6eb6fd26f4757e11d27379886996deb6a9a37980f684040e2ea2a53345d7f6",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vector",
+          "specifiers": [
+            "vector"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/Modules.hpp": {
+      "filePath": "include/Modules/Modules.hpp",
+      "contentHash": "51350aff5196c5df243491781395ca7c5b12dad2306b3aca3e55f7fe1ea7d1cc",
+      "functions": [
+        {
+          "name": "Modules",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "Modules",
+          "methods": [
+            "Modules",
+            "build",
+            "destroy",
+            "start",
+            "stop",
+            "connect",
+            "check",
+            "EnsureDirectoryExists"
+          ],
+          "properties": [
+            "cameraModule",
+            "reconnectModule",
+            "uiModule",
+            "configManagerModule",
+            "runtimeInfoModule",
+            "imgSaveModule",
+            "imgProModule",
+            "eliminateModule"
+          ],
+          "exported": true,
+          "lineCount": 47
+        }
+      ],
+      "imports": [
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "CameraModule.hpp",
+          "specifiers": [
+            "CameraModule.hpp"
+          ]
+        },
+        {
+          "source": "ConfigManagerModule.hpp",
+          "specifiers": [
+            "ConfigManagerModule.hpp"
+          ]
+        },
+        {
+          "source": "EliminateModule.hpp",
+          "specifiers": [
+            "EliminateModule.hpp"
+          ]
+        },
+        {
+          "source": "ImgProModule.hpp",
+          "specifiers": [
+            "ImgProModule.hpp"
+          ]
+        },
+        {
+          "source": "ImgSaveModule.hpp",
+          "specifiers": [
+            "ImgSaveModule.hpp"
+          ]
+        },
+        {
+          "source": "oso_func.hpp",
+          "specifiers": [
+            "oso_func.hpp"
+          ]
+        },
+        {
+          "source": "RuntimeInfoModule.hpp",
+          "specifiers": [
+            "RuntimeInfoModule.hpp"
+          ]
+        },
+        {
+          "source": "UIModule.hpp",
+          "specifiers": [
+            "UIModule.hpp"
+          ]
+        },
+        {
+          "source": "ReconnectModule.hpp",
+          "specifiers": [
+            "ReconnectModule.hpp"
+          ]
+        },
+        {
+          "source": "rqw_RunEnvCheck.hpp",
+          "specifiers": [
+            "rqw_RunEnvCheck.hpp"
+          ]
+        },
+        {
+          "source": "TestModule.hpp",
+          "specifiers": [
+            "TestModule.hpp"
+          ]
+        },
+        {
+          "source": "WarningModule.hpp",
+          "specifiers": [
+            "WarningModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "Modules",
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "connect",
+        "check",
+        "EnsureDirectoryExists",
+        "Modules"
+      ],
+      "totalLines": 92,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/ReconnectModule.hpp": {
+      "filePath": "include/Modules/ReconnectModule.hpp",
+      "contentHash": "e3c9c32ed924a1903273bdc6462a2ae6d7ef198140e6be0fc53e462ec02b1eba",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ReconnectModule",
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "monitorCameraAndCardStateThread"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "imports": [
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "CameraAndCardStateThread.h",
+          "specifiers": [
+            "CameraAndCardStateThread.h"
+          ]
+        }
+      ],
+      "exports": [
+        "ReconnectModule"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/RuntimeInfoModule.hpp": {
+      "filePath": "include/Modules/RuntimeInfoModule.hpp",
+      "contentHash": "907ab3e87ba5fe2ee2fbe4589918bfed5a88d0369eb0c80247848c766af6f7d4",
+      "functions": [],
+      "classes": [
+        {
+          "name": "RuntimeInfoModule",
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "statisticalInfo",
+            "runningState",
+            "detachUtiltyThread"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "imports": [
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "DetachUtiltyThread.h",
+          "specifiers": [
+            "DetachUtiltyThread.h"
+          ]
+        }
+      ],
+      "exports": [
+        "RuntimeInfoModule"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/TestModule.hpp": {
+      "filePath": "include/Modules/TestModule.hpp",
+      "contentHash": "dba1756a18fe01c243ea64c6380b611739eff566ab5f974989b08842072cce71",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/UIModule.hpp": {
+      "filePath": "include/Modules/UIModule.hpp",
+      "contentHash": "6987a0159d24cfdb40e2dbe9a97e6fdb372fa0643bfaf19281dfdedc15bacd6b",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CaiHuiPrintInspection",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "DlgProductSet",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "UIModule",
+          "methods": [
+            "destroy",
+            "start",
+            "stop"
+          ],
+          "properties": [
+            "public",
+            "_dlgProductSet",
+            "_caiHuiPrintInspection"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "imports": [
+        {
+          "source": "QCheckBox",
+          "specifiers": [
+            "QCheckBox"
+          ]
+        },
+        {
+          "source": "QObject",
+          "specifiers": [
+            "QObject"
+          ]
+        },
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "CaiHuiPrintInspection",
+        "DlgProductSet",
+        "UIModule"
+      ],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "include/Modules/WarningModule.hpp": {
+      "filePath": "include/Modules/WarningModule.hpp",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "include/NoHardWare/TestImgPushThread.hpp": {
+      "filePath": "include/NoHardWare/TestImgPushThread.hpp",
+      "contentHash": "8e3dd39a5b0ac4c70c7b3a4ef20f1c0ac7c0773fd4c2982370b50aa7e99107b6",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "QThread",
+          "specifiers": [
+            "QThread"
+          ]
+        },
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        },
+        {
+          "source": "opencv2/core/mat.hpp",
+          "specifiers": [
+            "opencv2/core/mat.hpp"
+          ]
+        },
+        {
+          "source": "rqw_CameraObjectCore.hpp",
+          "specifiers": [
+            "rqw_CameraObjectCore.hpp"
+          ]
+        },
+        {
+          "source": "rqw_LabelWarning.h",
+          "specifiers": [
+            "rqw_LabelWarning.h"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "include/ui/CaiHuiPrintInspection.h": {
+      "filePath": "include/ui/CaiHuiPrintInspection.h",
+      "contentHash": "0dbf47461a2f53c813fbff4220d6350eb38f7a213f19c3ebc6bc5024f8147278",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "QMainWindow",
+          "specifiers": [
+            "QMainWindow"
+          ]
+        },
+        {
+          "source": "memory",
+          "specifiers": [
+            "memory"
+          ]
+        },
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        },
+        {
+          "source": "QCheckBox",
+          "specifiers": [
+            "QCheckBox"
+          ]
+        },
+        {
+          "source": "QPixmap",
+          "specifiers": [
+            "QPixmap"
+          ]
+        },
+        {
+          "source": "rqw_LabelClickable.h",
+          "specifiers": [
+            "rqw_LabelClickable.h"
+          ]
+        },
+        {
+          "source": "DlgCloseForm.h",
+          "specifiers": [
+            "DlgCloseForm.h"
+          ]
+        },
+        {
+          "source": "oso_StorageContext.hpp",
+          "specifiers": [
+            "oso_StorageContext.hpp"
+          ]
+        },
+        {
+          "source": "rqw_RunEnvCheck.hpp",
+          "specifiers": [
+            "rqw_RunEnvCheck.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 81,
+      "hasStructuralAnalysis": true
+    },
+    "include/ui/Dlg_createshapemodel.h": {
+      "filePath": "include/ui/Dlg_createshapemodel.h",
+      "contentHash": "9b331f555b92cebea19c972823aa8a93972f263c3fbd07a7a372b38f8b461790",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ui_Dlg_createshapemodel.h",
+          "specifiers": [
+            "ui_Dlg_createshapemodel.h"
+          ]
+        },
+        {
+          "source": "memory",
+          "specifiers": [
+            "memory"
+          ]
+        },
+        {
+          "source": "QSize",
+          "specifiers": [
+            "QSize"
+          ]
+        },
+        {
+          "source": "QShowEvent",
+          "specifiers": [
+            "QShowEvent"
+          ]
+        },
+        {
+          "source": "QVector",
+          "specifiers": [
+            "QVector"
+          ]
+        },
+        {
+          "source": "halconData.hpp",
+          "specifiers": [
+            "halconData.hpp"
+          ]
+        },
+        {
+          "source": "HalconDisplay.hpp",
+          "specifiers": [
+            "HalconDisplay.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 75,
+      "hasStructuralAnalysis": true
+    },
+    "include/ui/DlgProductSet.h": {
+      "filePath": "include/ui/DlgProductSet.h",
+      "contentHash": "ecd09a35894cb7c0e2a9a5bcfa37f624f73fcad91e25a3c7332f7aa7641cf69d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "QDialog",
+          "specifiers": [
+            "QDialog"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "osoFile/CaiHuiPrintInspection.oso": {
+      "filePath": "osoFile/CaiHuiPrintInspection.oso",
+      "contentHash": "ccbbc97844ade4646ad7208190d181966a70afbf2b277a17d296ef6ec6a97cc2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": false
+    },
+    "osoFile/SetConfig.oso": {
+      "filePath": "osoFile/SetConfig.oso",
+      "contentHash": "4264277e7dfc41c8d6d50442f51086a84e7f0d106d63b3c93d57002d2856dc44",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": false
+    },
+    "osoInclude/CaiHuiPrintInspection.hpp": {
+      "filePath": "osoInclude/CaiHuiPrintInspection.hpp",
+      "contentHash": "f0ad9b338bc625f7e450d6058ff9396add6e32871a75258f559df90c54a08eae",
+      "functions": [
+        {
+          "name": "CaiHuiPrintInspectionConfig",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "~CaiHuiPrintInspectionConfig",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "CaiHuiPrintInspectionConfig",
+          "params": [
+            "assembly"
+          ],
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "CaiHuiPrintInspectionConfig",
+          "params": [
+            "obj"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "oso::ObjectStoreAssembly",
+          "params": [],
+          "returnType": "CaiHuiPrintInspectionConfig::operator",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "operator==",
+          "params": [
+            "obj"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "operator!=",
+          "params": [
+            "obj"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "CaiHuiPrintInspectionConfig",
+          "methods": [
+            "CaiHuiPrintInspectionConfig",
+            "~CaiHuiPrintInspectionConfig",
+            "operator==",
+            "operator!="
+          ],
+          "properties": [
+            "totalDefectiveVolume",
+            "isDebug",
+            "isDefect",
+            "isSaveImg"
+          ],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "imports": [
+        {
+          "source": "oso_core.h",
+          "specifiers": [
+            "oso_core.h"
+          ]
+        },
+        {
+          "source": "string",
+          "specifiers": [
+            "string"
+          ]
+        }
+      ],
+      "exports": [
+        "CaiHuiPrintInspectionConfig",
+        "~CaiHuiPrintInspectionConfig",
+        "operator==",
+        "operator!=",
+        "CaiHuiPrintInspectionConfig",
+        "CaiHuiPrintInspectionConfig",
+        "CaiHuiPrintInspectionConfig",
+        "oso::ObjectStoreAssembly",
+        "operator==",
+        "operator!="
+      ],
+      "totalLines": 111,
+      "hasStructuralAnalysis": true
+    },
+    "osoInclude/SetConfig.hpp": {
+      "filePath": "osoInclude/SetConfig.hpp",
+      "contentHash": "8cac71e2e91d0f0d90649913d1206c8dc6119fcf4b57e1468c802dccba511242",
+      "functions": [
+        {
+          "name": "SetConfig",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "~SetConfig",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "SetConfig",
+          "params": [
+            "assembly"
+          ],
+          "exported": true,
+          "lineCount": 113
+        },
+        {
+          "name": "SetConfig",
+          "params": [
+            "obj"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "oso::ObjectStoreAssembly",
+          "params": [],
+          "returnType": "SetConfig::operator",
+          "exported": true,
+          "lineCount": 90
+        },
+        {
+          "name": "operator==",
+          "params": [
+            "obj"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "operator!=",
+          "params": [
+            "obj"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "SetConfig",
+          "methods": [
+            "SetConfig",
+            "~SetConfig",
+            "operator==",
+            "operator!="
+          ],
+          "properties": [
+            "xiangjiguangdianpingbishijian",
+            "shuchuxinhaoyanshi",
+            "shuchuxinhaochixushijian",
+            "shangxianwei1",
+            "xiaxianwei1",
+            "zuoxianwei1",
+            "youxianwei1",
+            "baoguang1",
+            "zengyi1",
+            "xiangsudangliang1",
+            "shangxianwei2",
+            "xiaxianwei2",
+            "zuoxianwei2",
+            "youxianwei2",
+            "baoguang2",
+            "zengyi2",
+            "xiangsudangliang2",
+            "changeLanguageIndex",
+            "shapemodelScore",
+            "shapemodelMaxOverlap",
+            "shapemodelGreediness"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "imports": [
+        {
+          "source": "oso_core.h",
+          "specifiers": [
+            "oso_core.h"
+          ]
+        },
+        {
+          "source": "string",
+          "specifiers": [
+            "string"
+          ]
+        }
+      ],
+      "exports": [
+        "SetConfig",
+        "~SetConfig",
+        "operator==",
+        "operator!=",
+        "SetConfig",
+        "SetConfig",
+        "SetConfig",
+        "oso::ObjectStoreAssembly",
+        "operator==",
+        "operator!="
+      ],
+      "totalLines": 315,
+      "hasStructuralAnalysis": true
+    },
+    "qrc/QiXinShiJinDanXiangJi.qrc": {
+      "filePath": "qrc/QiXinShiJinDanXiangJi.qrc",
+      "contentHash": "493adfc98f32c881f25da02ff6c3db76465cb498dd9cc62e4bc5bc3f1f68d126",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": false
+    },
+    "src/data/halconData.cpp": {
+      "filePath": "src/data/halconData.cpp",
+      "contentHash": "59c173b719ac2d0e08dbff8c5752fbfe3097bb20c8fcbb7002890d799b736895",
+      "functions": [
+        {
+          "name": "HalconData",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "~HalconData",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "halconData.hpp",
+          "specifiers": [
+            "halconData.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "HalconData",
+        "~HalconData"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/osoFIleUtiltyFunc.cpp": {
+      "filePath": "src/data/osoFIleUtiltyFunc.cpp",
+      "contentHash": "647ae6fd69d4e3ba1589a158d20d5b6635e1caf079bcdc2a0f256a03af4fbc86",
+      "functions": [
+        {
+          "name": "ScoreConfigConvert::toClassIdWithEliConfigMap",
+          "params": [
+            "areaFactor",
+            "scoreFactor"
+          ],
+          "returnType": "rw::imgPro::EliminationInfoFunc::ClassIdWithConfigMap",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "ScoreConfigConvert::toClassIdWithDefConfigMap",
+          "params": [],
+          "returnType": "rw::imgPro::DefectResultInfoFunc::ClassIdWithConfigMap",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "osoFIleUtiltyFunc.hpp",
+          "specifiers": [
+            "osoFIleUtiltyFunc.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "ScoreConfigConvert::toClassIdWithEliConfigMap",
+        "ScoreConfigConvert::toClassIdWithDefConfigMap"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/Utilty.cpp": {
+      "filePath": "src/data/Utilty.cpp",
+      "contentHash": "16eb4cc55d51fcf431669100158dcfacb16494701305a2b0142ede1ec5a26665",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/DetachThread/CameraAndCardStateThread.cpp": {
+      "filePath": "src/DetachThread/CameraAndCardStateThread.cpp",
+      "contentHash": "cf8581032e496338af8a1eabc1f41449a9207dcb9aca804398e3a2780dc15b15",
+      "functions": [
+        {
+          "name": "CameraAndCardStateThread",
+          "params": [
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "~CameraAndCardStateThread",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "startThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stopThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "run",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "check_cameraState",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "check_cameraState1",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "check_cameraState2",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CameraAndCardStateThread.h",
+          "specifiers": [
+            "CameraAndCardStateThread.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "CameraAndCardStateThread",
+        "~CameraAndCardStateThread",
+        "startThread",
+        "stopThread",
+        "run",
+        "check_cameraState",
+        "check_cameraState1",
+        "check_cameraState2"
+      ],
+      "totalLines": 105,
+      "hasStructuralAnalysis": true
+    },
+    "src/DetachThread/DetachDefectThreadProcess.cpp": {
+      "filePath": "src/DetachThread/DetachDefectThreadProcess.cpp",
+      "contentHash": "dc569a557e4532cf8e95e70ef5e781ddc80479393da050355f80c3d120686540",
+      "functions": [
+        {
+          "name": "DetachDefectThread",
+          "params": [
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "~DetachDefectThread",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "startThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stopThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "processQueue1",
+          "params": [
+            "queue"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "processQueue2",
+          "params": [
+            "queue"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "run",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "DetachDefectThreadProcess.h",
+          "specifiers": [
+            "DetachDefectThreadProcess.h"
+          ]
+        },
+        {
+          "source": "chrono",
+          "specifiers": [
+            "chrono"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "DetachDefectThread",
+        "~DetachDefectThread",
+        "startThread",
+        "stopThread",
+        "processQueue1",
+        "processQueue2",
+        "run"
+      ],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "src/DetachThread/DetachUtiltyThread.cpp": {
+      "filePath": "src/DetachThread/DetachUtiltyThread.cpp",
+      "contentHash": "cd117783e9b3c6dc60943b52c53a3127e82eb12d9b8de8462f69129f6bd08d28",
+      "functions": [
+        {
+          "name": "DetachUtiltyThread",
+          "params": [
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "~DetachUtiltyThread",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "startThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stopThread",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "run",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "DetachUtiltyThread.h",
+          "specifiers": [
+            "DetachUtiltyThread.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "DetachUtiltyThread",
+        "~DetachUtiltyThread",
+        "startThread",
+        "stopThread",
+        "run"
+      ],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "src/func/HalconDisplay.cpp": {
+      "filePath": "src/func/HalconDisplay.cpp",
+      "contentHash": "3f02ccf3bc5d2cd41c8b5dd3389829b79e3e52838670aeb72c2876627f264426",
+      "functions": [
+        {
+          "name": "HalconDisplay",
+          "params": [
+            "parentWidget"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "~HalconDisplay",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "HalconDisplay",
+          "params": [
+            "other"
+          ],
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "initialize",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 49
+        },
+        {
+          "name": "closeWindow",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "isValid",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "displayImage",
+          "params": [
+            "image",
+            "fitToWindow"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 86
+        },
+        {
+          "name": "displayImageFromFile",
+          "params": [
+            "imagePath",
+            "fitToWindow"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "clearDisplay",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "setDisplayPart",
+          "params": [
+            "row1",
+            "col1",
+            "row2",
+            "col2"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "resetDisplayPart",
+          "params": [
+            "imageWidth",
+            "imageHeight"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "eventFilter",
+          "params": [
+            "watched",
+            "event"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 101
+        },
+        {
+          "name": "refreshDisplay",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "clampAndApplyPart",
+          "params": [
+            "row1",
+            "col1",
+            "row2",
+            "col2"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 51
+        },
+        {
+          "name": "matToHObject",
+          "params": [
+            "mat"
+          ],
+          "returnType": "HalconCpp::HObject",
+          "exported": true,
+          "lineCount": 71
+        },
+        {
+          "name": "displayMat",
+          "params": [
+            "mat",
+            "fitToWindow"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "HalconDisplay.hpp",
+          "specifiers": [
+            "HalconDisplay.hpp"
+          ]
+        },
+        {
+          "source": "algorithm",
+          "specifiers": [
+            "algorithm"
+          ]
+        },
+        {
+          "source": "QDebug",
+          "specifiers": [
+            "QDebug"
+          ]
+        },
+        {
+          "source": "QEvent",
+          "specifiers": [
+            "QEvent"
+          ]
+        },
+        {
+          "source": "QMouseEvent",
+          "specifiers": [
+            "QMouseEvent"
+          ]
+        },
+        {
+          "source": "QString",
+          "specifiers": [
+            "QString"
+          ]
+        },
+        {
+          "source": "QWheelEvent",
+          "specifiers": [
+            "QWheelEvent"
+          ]
+        },
+        {
+          "source": "halconcpp/HalconCpp.h",
+          "specifiers": [
+            "halconcpp/HalconCpp.h"
+          ]
+        },
+        {
+          "source": "opencv2/opencv.hpp",
+          "specifiers": [
+            "opencv2/opencv.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "HalconDisplay",
+        "~HalconDisplay",
+        "HalconDisplay",
+        "initialize",
+        "closeWindow",
+        "isValid",
+        "displayImage",
+        "displayImageFromFile",
+        "clearDisplay",
+        "setDisplayPart",
+        "resetDisplayPart",
+        "eventFilter",
+        "refreshDisplay",
+        "clampAndApplyPart",
+        "matToHObject",
+        "displayMat"
+      ],
+      "totalLines": 614,
+      "hasStructuralAnalysis": true
+    },
+    "src/func/ImageProcessorModule.cpp": {
+      "filePath": "src/func/ImageProcessorModule.cpp",
+      "contentHash": "24e1fba7edae49ba2856cdc268e3f8f6cb4b431b34dcf171952230d32afa2162",
+      "functions": [
+        {
+          "name": "AllowOncePer",
+          "params": [
+            "lastNs",
+            "minInterval"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "ImageProcessor",
+          "params": [
+            "queue",
+            "mutex",
+            "condition",
+            "workIndex",
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "run",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "run_debug",
+          "params": [
+            "frame"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 57
+        },
+        {
+          "name": "run_OpenRemoveFunc",
+          "params": [
+            "frame"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 83
+        },
+        {
+          "name": "run_OpenRemoveFunc_emitErrorInfo",
+          "params": [
+            "isbad"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "save_image",
+          "params": [
+            "imageInfo",
+            "image"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "matchAllShapeModels",
+          "params": [
+            "halconDataPtr",
+            "hoImage",
+            "image"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 138
+        },
+        {
+          "name": "save_image_work",
+          "params": [
+            "imageInfo",
+            "image"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "buildObbModelEngine",
+          "params": [
+            "enginePath"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "BuildModule",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "ImageProcessingModule",
+          "params": [
+            "numConsumers",
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "~ImageProcessingModule",
+          "params": [],
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "onFrameCaptured",
+          "params": [
+            "matInfo",
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ImageProcessorModule.hpp",
+          "specifiers": [
+            "ImageProcessorModule.hpp"
+          ]
+        },
+        {
+          "source": "qfuture.h",
+          "specifiers": [
+            "qfuture.h"
+          ]
+        },
+        {
+          "source": "qtconcurrentrun.h",
+          "specifiers": [
+            "qtconcurrentrun.h"
+          ]
+        },
+        {
+          "source": "atomic",
+          "specifiers": [
+            "atomic"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "QFileInfo",
+          "specifiers": [
+            "QFileInfo"
+          ]
+        },
+        {
+          "source": "QDateTime",
+          "specifiers": [
+            "QDateTime"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        },
+        {
+          "source": "halconcpp/HalconCpp.h",
+          "specifiers": [
+            "halconcpp/HalconCpp.h"
+          ]
+        },
+        {
+          "source": "Halcon.h",
+          "specifiers": [
+            "Halcon.h"
+          ]
+        },
+        {
+          "source": "HalconDisplay.hpp",
+          "specifiers": [
+            "HalconDisplay.hpp"
+          ]
+        },
+        {
+          "source": "QPainter",
+          "specifiers": [
+            "QPainter"
+          ]
+        },
+        {
+          "source": "QPen",
+          "specifiers": [
+            "QPen"
+          ]
+        },
+        {
+          "source": "cmath",
+          "specifiers": [
+            "cmath"
+          ]
+        },
+        {
+          "source": "algorithm",
+          "specifiers": [
+            "algorithm"
+          ]
+        },
+        {
+          "source": "limits",
+          "specifiers": [
+            "limits"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        }
+      ],
+      "exports": [
+        "AllowOncePer",
+        "ImageProcessor",
+        "run",
+        "run_debug",
+        "run_OpenRemoveFunc",
+        "run_OpenRemoveFunc_emitErrorInfo",
+        "save_image",
+        "matchAllShapeModels",
+        "save_image_work",
+        "buildObbModelEngine",
+        "BuildModule",
+        "ImageProcessingModule",
+        "~ImageProcessingModule",
+        "onFrameCaptured"
+      ],
+      "totalLines": 489,
+      "hasStructuralAnalysis": true
+    },
+    "src/main.cpp": {
+      "filePath": "src/main.cpp",
+      "contentHash": "73cc97249a9fce4c0e479fcee437c06ad24e49ef9dd431bc6827473472313ad5",
+      "functions": [
+        {
+          "name": "main",
+          "params": [
+            "argc",
+            "argv"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 39
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "QMessageBox",
+          "specifiers": [
+            "QMessageBox"
+          ]
+        },
+        {
+          "source": "QtWidgets/QApplication",
+          "specifiers": [
+            "QtWidgets/QApplication"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        }
+      ],
+      "exports": [
+        "main"
+      ],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/CameraModule.cpp": {
+      "filePath": "src/Modules/CameraModule.cpp",
+      "contentHash": "878c4073fa11c9bc48a0d14dfbfaa6ac90785609aeec503bd1921664747b89cb",
+      "functions": [
+        {
+          "name": "CameraModule",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "~CameraModule",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "std::vector<BuildError>",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "build_camera1",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "destroy_camera1",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "build_camera2",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "destroy_camera2",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "isTargetCamera",
+          "params": [
+            "cameraIndex",
+            "targetName"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "cameraMetaDataCheck",
+          "params": [
+            "cameraIndex",
+            "cameraInfo"
+          ],
+          "returnType": "rw::rqw::CameraMetaData",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "onBuildCamera",
+          "params": [
+            "index"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "onDestroyCamera",
+          "params": [
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "onStartCamera",
+          "params": [
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "onFrameCaptured",
+          "params": [
+            "frame",
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CameraModule.hpp",
+          "specifiers": [
+            "CameraModule.hpp"
+          ]
+        },
+        {
+          "source": "QRegularExpression",
+          "specifiers": [
+            "QRegularExpression"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "CameraModule",
+        "~CameraModule",
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "build_camera1",
+        "destroy_camera1",
+        "build_camera2",
+        "destroy_camera2",
+        "isTargetCamera",
+        "cameraMetaDataCheck",
+        "onBuildCamera",
+        "onDestroyCamera",
+        "onStartCamera",
+        "onFrameCaptured"
+      ],
+      "totalLines": 230,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/ConfigManagerModule.cpp": {
+      "filePath": "src/Modules/ConfigManagerModule.cpp",
+      "contentHash": "9c7430ce1ae5bfdccd5419e27f88b4caa22d700812e4c0c5ac7b195b1521d87d",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "saveSetConfig",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ConfigManagerModule.hpp",
+          "specifiers": [
+            "ConfigManagerModule.hpp"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "saveSetConfig"
+      ],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/EliminateModule.cpp": {
+      "filePath": "src/Modules/EliminateModule.cpp",
+      "contentHash": "e3e9c68491d22f1da922607892fba73c10c523b9db6d67381aa9872ef2974870",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "EliminateModule.hpp",
+          "specifiers": [
+            "EliminateModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/ImgProModule.cpp": {
+      "filePath": "src/Modules/ImgProModule.cpp",
+      "contentHash": "2599fbc946e75b67c1ee8ffa8649ac8d666faf403ad6f61bf90a658da66c69c9",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "buildImgProContext",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "buildImgProContextPreProcess",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 232
+        },
+        {
+          "name": "resetImgProIsUpdate",
+          "params": [
+            "state"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "buildImageProcessingModule",
+          "params": [
+            "num"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "destroyImageProcessingModule",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "buildImageProcessingPreModule",
+          "params": [
+            "num"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "onUpdateImgProContext",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ImgProModule.hpp",
+          "specifiers": [
+            "ImgProModule.hpp"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "osoFIleUtiltyFunc.hpp",
+          "specifiers": [
+            "osoFIleUtiltyFunc.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "buildImgProContext",
+        "buildImgProContextPreProcess",
+        "resetImgProIsUpdate",
+        "buildImageProcessingModule",
+        "destroyImageProcessingModule",
+        "buildImageProcessingPreModule",
+        "onUpdateImgProContext"
+      ],
+      "totalLines": 307,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/ImgSaveModule.cpp": {
+      "filePath": "src/Modules/ImgSaveModule.cpp",
+      "contentHash": "2936a8a257a8924982261085e3da137d041f1528dd1e08c02f1de8f684ec2872",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 67
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ImgSaveModule.hpp",
+          "specifiers": [
+            "ImgSaveModule.hpp"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop"
+      ],
+      "totalLines": 98,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/IModule.cpp": {
+      "filePath": "src/Modules/IModule.cpp",
+      "contentHash": "37d7279ec954967dc0b26319beaa8686b7f88d6f9f190122a2754184076e680c",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "IModule.hpp",
+          "specifiers": [
+            "IModule.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/Modules.cpp": {
+      "filePath": "src/Modules/Modules.cpp",
+      "contentHash": "1392a2c6aa368bdd5fb851c9d4080c8cf039afdd53d1c65036d11fad0a32fc5a",
+      "functions": [
+        {
+          "name": "Modules",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "~Modules",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "connect",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 58
+        },
+        {
+          "name": "check",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 48
+        },
+        {
+          "name": "EnsureDirectoryExists",
+          "params": [
+            "dirPath"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "QMessageBox",
+          "specifiers": [
+            "QMessageBox"
+          ]
+        },
+        {
+          "source": "DlgProductSet.h",
+          "specifiers": [
+            "DlgProductSet.h"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.hpp",
+          "specifiers": [
+            "CaiHuiPrintInspection.hpp"
+          ]
+        },
+        {
+          "source": "rqw_RunEnvCheck.hpp",
+          "specifiers": [
+            "rqw_RunEnvCheck.hpp"
+          ]
+        },
+        {
+          "source": "SetConfig.hpp",
+          "specifiers": [
+            "SetConfig.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "Modules",
+        "~Modules",
+        "build",
+        "destroy",
+        "start",
+        "stop",
+        "connect",
+        "check",
+        "EnsureDirectoryExists"
+      ],
+      "totalLines": 219,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/ReconnectModule.cpp": {
+      "filePath": "src/Modules/ReconnectModule.cpp",
+      "contentHash": "fa7938260a922ff0d53812a8bd9c6a4d52241b74b3e8910d0c3a58c2b9139543",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ReconnectModule.hpp",
+          "specifiers": [
+            "ReconnectModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop"
+      ],
+      "totalLines": 29,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/RuntimeInfoModule.cpp": {
+      "filePath": "src/Modules/RuntimeInfoModule.cpp",
+      "contentHash": "5ef944c90d273eeb1f48e3d6f67f535ceb7927ed4e8bdeda0cafa386a04573d1",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "RuntimeInfoModule.hpp",
+          "specifiers": [
+            "RuntimeInfoModule.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/TestModule.cpp": {
+      "filePath": "src/Modules/TestModule.cpp",
+      "contentHash": "bd12d336cdf0e40c4a407f34af96652446e53f6ff23da249178b115e7ce15ec0",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "TestModule.hpp",
+          "specifiers": [
+            "TestModule.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/UIModule.cpp": {
+      "filePath": "src/Modules/UIModule.cpp",
+      "contentHash": "d77ee4d69a5da489834c657384b2c7e62a323c10fdab511d9366a5d56ec0d7a1",
+      "functions": [
+        {
+          "name": "build",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "destroy",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "stop",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "UIModule.hpp",
+          "specifiers": [
+            "UIModule.hpp"
+          ]
+        },
+        {
+          "source": "DlgProductSet.h",
+          "specifiers": [
+            "DlgProductSet.h"
+          ]
+        },
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        },
+        {
+          "source": "ui_DlgProductSet.h",
+          "specifiers": [
+            "ui_DlgProductSet.h"
+          ]
+        }
+      ],
+      "exports": [
+        "build",
+        "destroy",
+        "start",
+        "stop"
+      ],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/Modules/WarningModule.cpp": {
+      "filePath": "src/Modules/WarningModule.cpp",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/NoHardWare/TestImgPushThread.cpp": {
+      "filePath": "src/NoHardWare/TestImgPushThread.cpp",
+      "contentHash": "0f4d6ed7cd6adc9e031d7aa98dbeea86fce86ba9dce4150dc82d2584f6e64fa5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "TestImgPushThread.hpp",
+          "specifiers": [
+            "TestImgPushThread.hpp"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        },
+        {
+          "source": "random",
+          "specifiers": [
+            "random"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 165,
+      "hasStructuralAnalysis": true
+    },
+    "src/ui/CaiHuiPrintInspection.cpp": {
+      "filePath": "src/ui/CaiHuiPrintInspection.cpp",
+      "contentHash": "7cbe7d5ec7db8b9625147b8227889c287c4c15457483784c7126c66bdc390ce6",
+      "functions": [
+        {
+          "name": "CaiHuiPrintInspection",
+          "params": [
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "~CaiHuiPrintInspection",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "build_ui",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "build_connect",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 49
+        },
+        {
+          "name": "build_CaiHuiPrintInspectionData",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "ini_clickableTitle",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "build_DlgCloseForm",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "initializeComponents",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "build_halconDisplay",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "refreshDisplayLabel",
+          "params": [
+            "label",
+            "pixmap",
+            "minimumSize"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "refreshAllDisplayLabels",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "resizeEvent",
+          "params": [
+            "event"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "build_camera",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "changeLanguage",
+          "params": [
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "updateCameraLabelState",
+          "params": [
+            "cameraIndex",
+            "state"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 57
+        },
+        {
+          "name": "onUpdateStatisticalInfoUI",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "onCameraDisplay",
+          "params": [
+            "index",
+            "image"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "lb_title_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "pbtn_exit_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "pbtn_set_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "rbtn_debug_checked",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "rbtn_removeFunc_checked",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "pbtn_resetProduct_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "ckb_saveImg_checked",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "ckb_findShapemodel_1_checked",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "ckb_findShapemodel_2_checked",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "pbtn_score_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CaiHuiPrintInspection.h",
+          "specifiers": [
+            "CaiHuiPrintInspection.h"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "QFileDialog",
+          "specifiers": [
+            "QFileDialog"
+          ]
+        },
+        {
+          "source": "QLabel",
+          "specifiers": [
+            "QLabel"
+          ]
+        },
+        {
+          "source": "QMessageBox",
+          "specifiers": [
+            "QMessageBox"
+          ]
+        },
+        {
+          "source": "QProcess",
+          "specifiers": [
+            "QProcess"
+          ]
+        },
+        {
+          "source": "QResizeEvent",
+          "specifiers": [
+            "QResizeEvent"
+          ]
+        },
+        {
+          "source": "QTimer",
+          "specifiers": [
+            "QTimer"
+          ]
+        },
+        {
+          "source": "ui_CaiHuiPrintInspection.h",
+          "specifiers": [
+            "ui_CaiHuiPrintInspection.h"
+          ]
+        },
+        {
+          "source": "QPushButton",
+          "specifiers": [
+            "QPushButton"
+          ]
+        },
+        {
+          "source": "DlgProductSet.h",
+          "specifiers": [
+            "DlgProductSet.h"
+          ]
+        },
+        {
+          "source": "Dlg_createshapemodel.h",
+          "specifiers": [
+            "Dlg_createshapemodel.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "NumberKeyboard.h",
+          "specifiers": [
+            "NumberKeyboard.h"
+          ]
+        },
+        {
+          "source": "rqw_RunEnvCheck.hpp",
+          "specifiers": [
+            "rqw_RunEnvCheck.hpp"
+          ]
+        },
+        {
+          "source": "Utilty.hpp",
+          "specifiers": [
+            "Utilty.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "CaiHuiPrintInspection",
+        "~CaiHuiPrintInspection",
+        "build_ui",
+        "build_connect",
+        "build_CaiHuiPrintInspectionData",
+        "ini_clickableTitle",
+        "build_DlgCloseForm",
+        "initializeComponents",
+        "build_halconDisplay",
+        "refreshDisplayLabel",
+        "refreshAllDisplayLabels",
+        "resizeEvent",
+        "build_camera",
+        "changeLanguage",
+        "updateCameraLabelState",
+        "onUpdateStatisticalInfoUI",
+        "onCameraDisplay",
+        "lb_title_clicked",
+        "pbtn_exit_clicked",
+        "pbtn_set_clicked",
+        "rbtn_debug_checked",
+        "rbtn_removeFunc_checked",
+        "pbtn_resetProduct_clicked",
+        "ckb_saveImg_checked",
+        "ckb_findShapemodel_1_checked",
+        "ckb_findShapemodel_2_checked",
+        "pbtn_score_clicked"
+      ],
+      "totalLines": 530,
+      "hasStructuralAnalysis": true
+    },
+    "src/ui/Dlg_createshapemodel.cpp": {
+      "filePath": "src/ui/Dlg_createshapemodel.cpp",
+      "contentHash": "34988f4490708bf689a08ffeea43a45bbbb75c189dd4f441a50687b2b34c98d6",
+      "functions": [
+        {
+          "name": "Dlg_createshapemodel",
+          "params": [
+            "templateIndex",
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "~Dlg_createshapemodel",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "build_ui",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 60
+        },
+        {
+          "name": "refresh_ui_from_data",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "showEvent",
+          "params": [
+            "event"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "build_connect",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "btn_exit_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "btn_readImage_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "btn_createShapeModel_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 248
+        },
+        {
+          "name": "btn_paintRegion_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "btn_shiledRegion_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "btn_clearRegion_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "btn_paintCenterPoint_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "rad_findshapemodel_toggled",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "rad_findshapemodelXLD_toggled",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_MinLength_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_min_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_max_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_createXLD_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "rbtn_auto_toggled",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "rbtn_manual_toggled",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "btn_contrast_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_mincontrast_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_maxcontrast_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_clearRegion2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "btn_zengyi_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_baoguang_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_angle_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_opening_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "btn_mean_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "ckb_mean_toggled",
+          "params": [
+            "checked"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "drawRectangleAndStore",
+          "params": [
+            "isShieldRegion"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 70
+        },
+        {
+          "name": "refresh_display_with_regions",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 59
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "Dlg_createshapemodel.h",
+          "specifiers": [
+            "Dlg_createshapemodel.h"
+          ]
+        },
+        {
+          "source": "QDir",
+          "specifiers": [
+            "QDir"
+          ]
+        },
+        {
+          "source": "QFileDialog",
+          "specifiers": [
+            "QFileDialog"
+          ]
+        },
+        {
+          "source": "QMessageBox",
+          "specifiers": [
+            "QMessageBox"
+          ]
+        },
+        {
+          "source": "QTimer",
+          "specifiers": [
+            "QTimer"
+          ]
+        },
+        {
+          "source": "QtGlobal",
+          "specifiers": [
+            "QtGlobal"
+          ]
+        },
+        {
+          "source": "algorithm",
+          "specifiers": [
+            "algorithm"
+          ]
+        },
+        {
+          "source": "stdexcept",
+          "specifiers": [
+            "stdexcept"
+          ]
+        },
+        {
+          "source": "halconcpp/HalconCpp.h",
+          "specifiers": [
+            "halconcpp/HalconCpp.h"
+          ]
+        },
+        {
+          "source": "NumberKeyboard.h",
+          "specifiers": [
+            "NumberKeyboard.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        }
+      ],
+      "exports": [
+        "Dlg_createshapemodel",
+        "~Dlg_createshapemodel",
+        "build_ui",
+        "refresh_ui_from_data",
+        "showEvent",
+        "build_connect",
+        "btn_exit_clicked",
+        "btn_readImage_clicked",
+        "btn_createShapeModel_clicked",
+        "btn_paintRegion_clicked",
+        "btn_shiledRegion_clicked",
+        "btn_clearRegion_clicked",
+        "btn_paintCenterPoint_clicked",
+        "rad_findshapemodel_toggled",
+        "rad_findshapemodelXLD_toggled",
+        "btn_MinLength_clicked",
+        "btn_min_clicked",
+        "btn_max_clicked",
+        "btn_createXLD_clicked",
+        "rbtn_auto_toggled",
+        "rbtn_manual_toggled",
+        "btn_contrast_clicked",
+        "btn_mincontrast_clicked",
+        "btn_maxcontrast_clicked",
+        "btn_clearRegion2_clicked",
+        "btn_zengyi_clicked",
+        "btn_baoguang_clicked",
+        "btn_angle_clicked",
+        "btn_opening_clicked",
+        "btn_mean_clicked",
+        "ckb_mean_toggled",
+        "drawRectangleAndStore",
+        "refresh_display_with_regions"
+      ],
+      "totalLines": 830,
+      "hasStructuralAnalysis": true
+    },
+    "src/ui/DlgProductSet.cpp": {
+      "filePath": "src/ui/DlgProductSet.cpp",
+      "contentHash": "f7cb055fdb9c53876a7eb7ba97a4e79c52198bad6f3dfcbfb21d54d6693cceec",
+      "functions": [
+        {
+          "name": "DlgProductSet",
+          "params": [
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "~DlgProductSet",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "build_ui",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "read_config",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "build_connect",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "changeLanguage",
+          "params": [
+            "index"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 87
+        },
+        {
+          "name": "btn_close_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "btn_xiangjiguangdianpingbishijian_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_shuchuxinhaoyanshi_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_shuchuxinhaochixushijian_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_testTrigger1_1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "btn_testTrigger2_1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "btn_testTrigger1_2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "btn_testTrigger2_2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "btn_shangxianwei1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_xiaxianwei1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_zuoxianwei1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_youxianwei1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_baoguang1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "btn_zengyi1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "btn_xiangsudangliang1_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_shangxianwei2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_xiaxianwei2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_zuoxianwei2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_youxianwei2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "btn_baoguang2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "btn_zengyi2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "btn_xiangsudangliang2_clicked",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "DlgProductSet.h",
+          "specifiers": [
+            "DlgProductSet.h"
+          ]
+        },
+        {
+          "source": "ui_DlgProductSet.h",
+          "specifiers": [
+            "ui_DlgProductSet.h"
+          ]
+        },
+        {
+          "source": "QMessageBox",
+          "specifiers": [
+            "QMessageBox"
+          ]
+        },
+        {
+          "source": "QTabWidget",
+          "specifiers": [
+            "QTabWidget"
+          ]
+        },
+        {
+          "source": "QtConcurrent/qtconcurrentrun.h",
+          "specifiers": [
+            "QtConcurrent/qtconcurrentrun.h"
+          ]
+        },
+        {
+          "source": "Modules.hpp",
+          "specifiers": [
+            "Modules.hpp"
+          ]
+        },
+        {
+          "source": "NumberKeyboard.h",
+          "specifiers": [
+            "NumberKeyboard.h"
+          ]
+        }
+      ],
+      "exports": [
+        "DlgProductSet",
+        "~DlgProductSet",
+        "build_ui",
+        "read_config",
+        "build_connect",
+        "changeLanguage",
+        "btn_close_clicked",
+        "btn_xiangjiguangdianpingbishijian_clicked",
+        "btn_shuchuxinhaoyanshi_clicked",
+        "btn_shuchuxinhaochixushijian_clicked",
+        "btn_testTrigger1_1_clicked",
+        "btn_testTrigger2_1_clicked",
+        "btn_testTrigger1_2_clicked",
+        "btn_testTrigger2_2_clicked",
+        "btn_shangxianwei1_clicked",
+        "btn_xiaxianwei1_clicked",
+        "btn_zuoxianwei1_clicked",
+        "btn_youxianwei1_clicked",
+        "btn_baoguang1_clicked",
+        "btn_zengyi1_clicked",
+        "btn_xiangsudangliang1_clicked",
+        "btn_shangxianwei2_clicked",
+        "btn_xiaxianwei2_clicked",
+        "btn_zuoxianwei2_clicked",
+        "btn_youxianwei2_clicked",
+        "btn_baoguang2_clicked",
+        "btn_zengyi2_clicked",
+        "btn_xiangsudangliang2_clicked"
+      ],
+      "totalLines": 598,
+      "hasStructuralAnalysis": true
+    },
+    "ui/CaiHuiPrintInspection.ui": {
+      "filePath": "ui/CaiHuiPrintInspection.ui",
+      "contentHash": "57311bdb1e125680d0be1e22bf083ee519ef0b774bb0b4826cdfe5eedd659463",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1216,
+      "hasStructuralAnalysis": false
+    },
+    "ui/Dlg_createshapemodel.ui": {
+      "filePath": "ui/Dlg_createshapemodel.ui",
+      "contentHash": "825dd3819ad5e2a0d342a70f04ded974844f6ebdd7aff964f18f7a5b842c872a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 837,
+      "hasStructuralAnalysis": false
+    },
+    "ui/DlgProductSet.ui": {
+      "filePath": "ui/DlgProductSet.ui",
+      "contentHash": "fd8bd4611ef7a1c0c593996f6cbe4a4c3f5e3e6959b8ffbac1ee7f0a4e10f873",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4380,
+      "hasStructuralAnalysis": false
+    }
+  }
+}
